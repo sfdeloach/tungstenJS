@@ -1,0 +1,35 @@
+{
+  "name": "tungstenjs",
+  "version": "1.0.0",
+  "description": "City of Altamonte Springs wellness app based on a deprecated Cooper Aerobic Standard",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sfdeloach/tungstenJS.git"
+  },
+  "keywords": [
+    "express",
+    "nunjucks",
+    "node",
+    "mongodb",
+    "heroku",
+    "wellness",
+    "passport",
+    "foundation"
+  ],
+  "author": "Steven DeLoach",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sfdeloach/tungstenJS/issues"
+  },
+  "homepage": "https://github.com/sfdeloach/tungstenJS#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "consolidate": "^0.14.5",
+    "express": "^4.15.2",
+    "nunjucks": "^3.0.0"
+  }
+}
