@@ -2,22 +2,42 @@
 "use strict";
 
 var express = require('express'),
-    app = express(),
-    cons = require('consolidate'),
-    bodyParser = require('body-parser');
+    mongoose = require('mongoose'),
+    nunjucks = require('nunjucks'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
+    methodOverride = require('method-override'),
+    bodyParser = require('body-parser'),
+    Participant = require('./models/participant'),
+    Assessment = require('./models/assessment'),
+    Worksheet = require('./models/worksheet'),
+    User = require('./models/user'),
+    seedDb = require('./seeds');
 
-app.engine('njk', cons.nunjucks);
-app.set('view engine', 'njk');
-app.set('views', __dirname + '/views');
+var app = express();
+
+var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost/tungsten';
+mongoose.connect(connectionURL);
+
+// Seed database for testing -- currently disabled
+seedDb();
+
+nunjucks.configure('./views', {
+    autoescape: true,
+    express: app
+});
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.get('/worksheet', function (req, res) {
-    res.render('worksheet');
+app.get('/wellness/worksheet', function (req, res) {
+    res.render('worksheet.njk');
 });
 
-// TODO update for heroku and local testing
-app.listen(3000, function () {
-    console.log('Tungsten listening on port 3000!');
+// Start server
+var server = app.listen(process.env.PORT || 3000, function () {
+    var activePort = server.address().port,
+        startDate = new Date().toLocaleString();
+    console.log('[%s] Tungsten server is listening on port %s', startDate, activePort);
 });

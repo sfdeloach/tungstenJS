@@ -12,6 +12,8 @@
 
     <title>Altamonte Springs Wellness</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
+
     <!-- STYLE SHEETS
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
@@ -20,10 +22,91 @@
 </head>
 
 <body>
-    <h1>You have reached the worksheet page!</h1>
+    <div class="title-bar">
+        <div class="title-bar-left">
+            <button class="menu-icon" type="button"></button>
+            <span class="title-bar-title">Wellness</span>
+        </div>
+        <div class="title-bar-right">
+            <button class="menu-icon" type="button"></button>
+        </div>
+    </div>
 
-    <!-- SCRIPTS
-    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <div class="row">
+        <div class="column large-12">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Body Comp</th>
+                        <th>Flex</th>
+                        <th>Situp</th>
+                        <th>Bench</th>
+                        <th>Leg</th>
+                        <th>Cardio</th>
+                        <th>Time</th>
+                        <th>Heart</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="align-middle align-center">
+                            <select>
+                              <option value="id457">Acosta, Kevin</option>
+                              <option value="id531">DeLoach, Steven</option>
+                              <option value="id555">Miller, David</option>
+                              <option value="id483">Murphy, Tim</option>
+                            </select>
+                        </td>
+                        <td class="align-middle align-center"><input type="number" value="15"></td>
+                        <td class="align-middle align-center"><input type="number" value="26"></td>
+                        <td class="align-middle align-center"><input type="number" value="50"></td>
+                        <td class="align-middle align-center"><input type="number" value="200"></td>
+                        <td class="align-middle align-center"><input type="number" value="400"></td>
+                        <td class="align-middle align-center">
+                            <select>
+                              <option value="id457">Walk</option>
+                              <option value="id531">Run</option>
+                            </select>
+                        </td>
+                        <td class="align-middle align-center"><input type="time"></td>
+                        <td class="align-middle align-center"><input type="number" value="100"></td>
+                        <td class="align-middle align-center"><input type="button" value="X"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select>
+                              <option value="id457">Acosta, Kevin</option>
+                              <option value="id531">DeLoach, Steven</option>
+                              <option value="id555">Miller, David</option>
+                              <option value="id483">Murphy, Tim</option>
+                            </select>
+                        </td>
+                        <td><input type="number" value="15"></td>
+                        <td><input type="number" value="26"></td>
+                        <td><input type="number" value="50"></td>
+                        <td><input type="number" value="200"></td>
+                        <td><input type="number" value="400"></td>
+                        <td>
+                            <select>
+                              <option value="id457">Walk</option>
+                              <option value="id531">Run</option>
+                            </select>
+                        </td>
+                        <td><input type="time"></td>
+                        <td><input type="number" value="100"></td>
+                        <td><input type="button" value="X"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js"></script>
+    <!--
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     -->
 </body>

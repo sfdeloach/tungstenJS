@@ -1,0 +1,17 @@
+/*jslint node: true */
+"use strict";
+
+var mongoose = require('mongoose');
+
+var participantSchema = new mongoose.Schema({
+    name: {
+        first: { type: String, lowercase: true },
+        last: { type: String, lowercase: true }
+    },
+    dept_id: { type: String, trim: true },
+    dob: Date,
+    sex: { type: String, enum: ["m", "f"] },
+    group: { type: String, enum: ["applicant", "pd", "city", "test", "other"] }
+});
+
+module.exports = mongoose.model("Participant", participantSchema);

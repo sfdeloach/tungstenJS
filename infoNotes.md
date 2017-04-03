@@ -1,0 +1,26 @@
+# tungstenJS
+
+A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org) featuring a MongoDB backend and authentication
+
+### Notes:
+* All routes will require an authenticated user (3 levels of auth)
+* It is implied the admin route will have access to all routes
+* All users are pre-loaded with their email addresses
+* Registration/password reset sends an email to their address with a temp password
+* A link to the main app page /wellness will be available in the menu bar on all routes
+* Lock a worksheet after three months
+* Calc (calculations from the participant's assessment)
+
+### Main App Page
+a black & white photo full in the background large orange and blue circle divided in half with these two options
+* Participants
+* Worksheets
+
+## objectives
+
+### var num = 0;
+* complete the schema for db
+* create seed data and test
+
+### var num = 1;
+* create and test routes
