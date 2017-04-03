@@ -1,12 +1,13 @@
 /*jslint node: true */
 "use strict";
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    participantSchema = require('./participant').schema;
 
 var assessmentSchema = new mongoose.Schema({
-    is_active: Timestamp, // active if null, inactivated on the date entered if !null
-    created: Timestamp,
-    participant: participantSchema, // note it is not an objectId
+    is_active: Date, // active if null, inactivated on the date entered if !null
+    created: Date,
+    participant: participantSchema, // note it is not an objectId, test for db durability (see info/notes.md)
     worksheet: mongoose.Schema.ObjectId,
     eval_date: Date,
     weight: { type: Number, min: 0 },

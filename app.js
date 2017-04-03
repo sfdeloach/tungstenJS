@@ -12,7 +12,7 @@ var express = require('express'),
     Assessment = require('./models/assessment'),
     Worksheet = require('./models/worksheet'),
     User = require('./models/user'),
-    seedDb = require('./seeds');
+    seedDb = require('./testing/seeds');
 
 var app = express();
 
