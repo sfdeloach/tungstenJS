@@ -33,6 +33,16 @@ var participantData = [
         "dob": "3/13/1968",
         "sex": "m",
         "group": "pd"
+    },
+    {
+        "name": {
+            "first": "Saul",
+            "last": "Goodman"
+        },
+        "dept_id": "777",
+        "dob": "5/3/1962",
+        "sex": "m",
+        "group": "applicant"
     }
 ];
 
@@ -57,9 +67,44 @@ var assessmentData = {
     }
 };
 
+var worksheetData = {
+    inactive_on: null,
+    created: "4/4/2017",
+    is_locked: null,
+    title: "Wellness Test Worksheet",
+    author: null, // object ID
+    assessments: [] // array of object IDs
+};
+
+var userData = [
+    {
+        username: "admin",
+        email: "admin@tungsten.info",
+        password: "admin",
+        needs_reset: true,
+        auth_level: "admin"
+    },
+    {
+        username: "editor",
+        email: "editor@tungsten.info",
+        password: "editor",
+        needs_reset: true,
+        auth_level: "editor"
+    },
+    {
+        username: "viewer",
+        email: "viewer@tungsten.info",
+        password: "viewer",
+        needs_reset: true,
+        auth_level: "viewer"
+    }
+];
+
 var seedData = {
+    assessmentData: assessmentData,
     participantData: participantData,
-    assessmentData: assessmentData
+    userData: userData,
+    worksheetData: worksheetData
 };
 
 module.exports = seedData;

@@ -1,6 +1,7 @@
 /*jslint node: true */
 "use strict";
 
+// Setup dependencies
 var express = require('express'),
     mongoose = require('mongoose'),
     nunjucks = require('nunjucks'),
@@ -8,6 +9,7 @@ var express = require('express'),
     LocalStrategy = require('passport-local'),
     methodOverride = require('method-override'),
     bodyParser = require('body-parser'),
+    assert = require('assert'),
     Participant = require('./models/participant'),
     Assessment = require('./models/assessment'),
     Worksheet = require('./models/worksheet'),
@@ -16,21 +18,29 @@ var express = require('express'),
 
 var app = express();
 
+// Prepare database
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost/tungsten';
+mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
 
-// Seed database for testing
+// Database Testing - START ///////////////////////////////////////////////////
 seedDb();
+var query = Participant.findOne({
+    "name.last": "Goodman"
+});
+assert.equal(query.exec().constructor, global.Promise);
+// Database Testing - END /////////////////////////////////////////////////////
 
+// Configure middleware
 nunjucks.configure('./views', {
     autoescape: true,
     express: app
 });
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// Setup routes
 app.get('/wellness/worksheet', function (req, res) {
     res.render('worksheet.njk');
 });

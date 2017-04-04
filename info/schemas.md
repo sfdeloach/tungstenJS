@@ -50,10 +50,7 @@ var worksheetSchema = new mongoose.Schema({
 ### User Schema
 ```javascript
 var userSchema = new mongoose.Schema({
-    name: {
-        first: { type: String, lowercase: true },
-        last: { type: String, lowercase: true }
-    },
+    username: { type: String, lowercase: true }, // required field by passport
     email: { type: String, lowercase: true },
     password: String,
     needs_reset: Boolean, // if true, user redirected to create a new password, otherwise normal login occurs

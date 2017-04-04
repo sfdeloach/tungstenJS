@@ -1,40 +1,71 @@
 /*jslint node: true */
+/*jslint nomen: true */
 "use strict";
 
-var mongoose = require('mongoose'),
-    Participant = require('../models/participant'),
-    Assessment = require('../models/assessment'),
+var User = require('../models/user'),
     Worksheet = require('../models/worksheet'),
+    Assessment = require('../models/assessment'),
+    Participant = require('../models/participant'),
     seedData = require('./seedData');
 
-function createAssessmentData(seed) {
-    // first create a participant
-    Participant.create(seed, function (err, participant) {
+// The callbacks are executed in the following order (although coded in the reverse):
+//     0. dropUserData --> create user data
+//     1. dropWorksheetData
+//     2. dropAssessmentData
+//     3. dropParticipantData
+//     4. createData (welcome to callback hell)
+
+function createData() {
+    Worksheet.create(seedData.worksheetData, function (err, newWorksheet) {
         if (err) {
             console.log(err);
         } else {
-            console.log("...added " + seed.name.last + " to participant collection");
-            // next prepare the assessment data by injecting participant data
-            seedData.assessmentData.participant = seed;
-            // finally create the assessment
-            Assessment.create(seedData.assessmentData, function (err, assessment) {
+            console.log("...worksheet created:   " + newWorksheet._id);
+            seedData.participantData.forEach(function (partSeed) {
+                // create a participant
+                Participant.create(partSeed, function (err, newParticipant) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("...participant created: " + newParticipant._id);
+                        // prepare the assessment data by injecting participant data, note that this is NOT an id
+                        seedData.assessmentData.participant = partSeed;
+                        // create the assessment
+                        Assessment.create(seedData.assessmentData, function (err, newAssessment) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("...assessment created:  " + newAssessment._id);
+                                // push assessment to worksheet.assessments array
+                                // newWorksheet.assessments.addToSet(newAssessment);
+                                // newWorksheet.save();
+                                Worksheet.update({ _id: newWorksheet._id }, { $push: { assessments: newAssessment._id }}, function (err, updatedWorksheet) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        console.log("Saved %s to worksheet", newAssessment._id);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+            // associate a user to the worksheet
+            User.findOne({ 'username': 'editor' }, function (err, foundUser) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("...assessment added to " + seed.name.last);
+                    console.log("Found editor at: " + foundUser._id);
+                    Worksheet.update({ _id: newWorksheet._id }, { $set: { author: foundUser._id }}, function (err, updatedWorksheet) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("Saved user to worksheet");
+                        }
+                    });
                 }
             });
-        }
-    });
-}
-
-function dropAssessmentData() {
-    Assessment.remove({}, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("...assessment collection dropped");
-            seedData.participantData.forEach(createAssessmentData);
         }
     });
 }
@@ -44,61 +75,57 @@ function dropParticipantData() {
         if (err) {
             console.log(err);
         } else {
-            console.log("...participant collection dropped");
+            console.log("Participant collection dropped");
+            createData();
+        }
+    });
+}
+
+function dropAssessmentData() {
+    Assessment.remove({}, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Assessment collection dropped");
+            dropParticipantData();
+        }
+    });
+}
+
+function dropWorksheetData() {
+    Worksheet.remove({}, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Worksheet collection dropped");
             dropAssessmentData();
         }
     });
 }
 
-// This is the function that starts a number of callback functions that seed the db
-// The callbacks are executed in the following order (although coded in the reverse):
-//     0. ??? dropWellness
-//     1. dropParticipantData
-//     2. dropAssessmentData
-//     3. createParticipantData and createAssessmentData
-function seedDb() {
-    dropParticipantData();
+function dropUserData() {
+    User.remove({}, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("User collection dropped");
+            dropWorksheetData();
+            // add three levels of users users
+            seedData.userData.forEach(function (userSeed) {
+                User.create(userSeed, function (err, newUser) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("...user created:        " + newUser._id);
+                    }
+                });
+            });
+        }
+    });
 }
 
-//function seedDb() {
-//    // Wipeout the comments and campground collection
-//    Comment.remove({}, function (err) {
-//        if (err) {
-//            console.log(err);
-//        } else {
-//            console.log('...comment collection dropped');
-//            Campground.remove({}, function (err) {
-//                if (err) {
-//                    console.log(err);
-//                } else {
-//                    console.log('...campground collection dropped');
-//                    // Add campgrounds
-//                    campgroundData.forEach(function (seed) {
-//                        Campground.create(seed, function (err, campground) {
-//                            if (err) {
-//                                console.log(err);
-//                            } else {
-//                                console.log('...added a campground');
-//                                // Create and attach a comment
-//                                Comment.create({
-//                                    text: "Meatloaf pork belly boudin short ribs landjaeger burgdoggen.",
-//                                    author: "Homer Simpson"
-//                                }, function (err, comment) {
-//                                    if (err) {
-//                                        console.log(err);
-//                                    } else {
-//                                        campground.comments.push(comment);
-//                                        campground.save();
-//                                        console.log('...created new comment');
-//                                    }
-//                                });
-//                            }
-//                        });
-//                    });
-//                }
-//            });
-//        }
-//    });
-//}
+function seedDb() {
+    dropUserData();
+}
 
 module.exports = seedDb;

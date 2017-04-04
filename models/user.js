@@ -5,10 +5,7 @@ var mongoose = require('mongoose'),
     passportLocalMongoose = require('passport-local-mongoose');
 
 var userSchema = new mongoose.Schema({
-    name: {
-        first: { type: String, lowercase: true },
-        last: { type: String, lowercase: true }
-    },
+    username: { type: String, lowercase: true },
     email: { type: String, lowercase: true },
     password: String,
     needs_reset: Boolean, // if true, user redirected to create a new password, otherwise normal login occurs
