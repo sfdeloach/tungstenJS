@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     participantSchema = require('./participant').schema;
 
 var assessmentSchema = new mongoose.Schema({
-    is_active: Date, // active if null, inactivated on the date entered if !null
+    inactive_on: Date, // active if null, inactivated on the date entered if !null
     created: Date,
     participant: participantSchema, // note it is not an objectId, test for db durability (see info/notes.md)
     worksheet: mongoose.Schema.ObjectId,

@@ -11,6 +11,7 @@ A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.al
 * Lock a worksheet after three months
 * Calc (calculations from the participant's assessment)
 * Files containing PII have the *.seed extension in order to be ignored by git
+* Depending on auth level, a soft delete of data may be the only option available
 
 ### Main App Page
 a black & white photo full in the background large orange and blue circle divided in half with these two options
@@ -20,13 +21,10 @@ a black & white photo full in the background large orange and blue circle divide
 ## objectives
 
 ### var num = 0;
-* complete the schema for db
-* create seed data and test
-* run this test to validate the choice to use participantSchema in the assessmentSchema as opposed to an object ID
- * Create a participant and place into an assessment
- * Update the participants name and place into a new assessment
- * Are the participants names differnt or the same? Compare _id's as well
- * Use case for an officer who gets married and changes their name
+* completed the schema for db
+* created seed data for participants and assessments
+* confirmed using a participant schema type in the assessment schema freezes the data
+* decided a static embed instead of a dynamic embed in this situation is preferred so name changes can be preserved
 
 ### var num = 1;
 * create and test routes

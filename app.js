@@ -19,7 +19,7 @@ var app = express();
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost/tungsten';
 mongoose.connect(connectionURL);
 
-// Seed database for testing -- currently disabled
+// Seed database for testing
 seedDb();
 
 nunjucks.configure('./views', {

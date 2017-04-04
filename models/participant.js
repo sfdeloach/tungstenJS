@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 
 var participantSchema = new mongoose.Schema({
     name: {
-        first: { type: String, lowercase: true },
-        last: { type: String, lowercase: true }
+        first: String,
+        last: String
     },
     dept_id: { type: String, trim: true },
     dob: Date,

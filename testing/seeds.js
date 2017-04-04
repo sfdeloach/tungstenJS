@@ -5,29 +5,59 @@ var mongoose = require('mongoose'),
     Participant = require('../models/participant'),
     Assessment = require('../models/assessment'),
     Worksheet = require('../models/worksheet'),
-    participantData = require('./seedData');
+    seedData = require('./seedData');
 
-function addParticipantData(seed) {
+function createAssessmentData(seed) {
+    // first create a participant
     Participant.create(seed, function (err, participant) {
         if (err) {
             console.log(err);
         } else {
             console.log("...added " + seed.name.last + " to participant collection");
-            // next function goes here
-            
+            // next prepare the assessment data by injecting participant data
+            seedData.assessmentData.participant = seed;
+            // finally create the assessment
+            Assessment.create(seedData.assessmentData, function (err, assessment) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("...assessment added to " + seed.name.last);
+                }
+            });
         }
     });
 }
 
-function seedDb() {
+function dropAssessmentData() {
+    Assessment.remove({}, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("...assessment collection dropped");
+            seedData.participantData.forEach(createAssessmentData);
+        }
+    });
+}
+
+function dropParticipantData() {
     Participant.remove({}, function (err) {
         if (err) {
             console.log(err);
         } else {
             console.log("...participant collection dropped");
-            participantData.forEach(addParticipantData);
+            dropAssessmentData();
         }
     });
+}
+
+// This is the function that starts a number of callback functions that seed the db
+// The callbacks are executed in the following order (although coded in the reverse):
+//     0. ??? dropWellness
+//     1. dropParticipantData
+//     2. dropAssessmentData
+//     3. createParticipantData and createAssessmentData
+function seedDb() {
+    dropParticipantData();
 }
 
 //function seedDb() {

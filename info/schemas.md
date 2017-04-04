@@ -4,8 +4,8 @@
 ```javascript
 var participantSchema = new mongoose.Schema({
     name: {
-        first: { type: String, lowercase: true },
-        last: { type: String, lowercase: true }
+        first: String,
+        last: String
     },
     dept_id: { type: String, trim: true },
     dob: Date,
@@ -16,14 +16,14 @@ var participantSchema = new mongoose.Schema({
 ### Assessment Schema (docs created via the worksheet routes)
 ```javascript
 var assessmentSchema = new mongoose.Schema({
-    is_active: Timestamp, // active if null, inactivated on the date entered if !null
-    created: Timestamp,
-    participant: participantSchema, // note it is not an objectId
+    inactive_on: Date, // active if null, inactivated on the date entered if !null
+    created: Date,
+    participant: participantSchema, // note it is not an objectId, test for db durability (see info/notes.md)
     worksheet: mongoose.Schema.ObjectId,
     eval_date: Date,
     weight: { type: Number, min: 0 },
     heart_rate: { type: String, trim: true },
-    blood_pressure: { type: String, trim: true }    ,
+    blood_pressure: { type: String, trim: true },
     body_fat: { type: Number, min: 0 },
     flex: { type: Number, min: 0 },
     situp: { type: Number, min: 0 },
@@ -39,9 +39,9 @@ var assessmentSchema = new mongoose.Schema({
 ### Worksheet Schema
 ```javascript
 var worksheetSchema = new mongoose.Schema({
-    is_active: Timestamp, // active if null, inactivated on the date entered if !null
-    created: Timestamp,
-    is_locked: Timestamp, // unlocked if null, locked on the date entered if !null
+    inactive_on: Date, // active if null, inactivated on the date entered if !null
+    created: Date,
+    is_locked: Date, // unlocked if null, locked on the date entered if !null
     title: String,
     author: mongoose.Schema.ObjectId, // from user schema
     assessments: [mongoose.Schema.ObjectId]

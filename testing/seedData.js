@@ -1,7 +1,7 @@
 /*jslint node: true */
 "use strict";
 
-// false test data, not actual PII
+// dummy test data, not actual PII
 
 var participantData = [
     {
@@ -36,4 +36,30 @@ var participantData = [
     }
 ];
 
-module.exports = participantData;
+var assessmentData = {
+    inactive_on: null, // date inactivated
+    created: "4/3/2017",
+    participant: null, // add later???
+    worksheet: null, // object id
+    eval_date: "4/3/2017",
+    weight: 175,
+    heart_rate: "72",
+    blood_pressure: "120/80",
+    body_fat: 15.2,
+    flex: 27.5,
+    situp: 51,
+    bench: 225,
+    press: 425,
+    cardio: {
+        type: "walk",
+        time: 722, // in seconds
+        heart_rate: 132
+    }
+};
+
+var seedData = {
+    participantData: participantData,
+    assessmentData: assessmentData
+};
+
+module.exports = seedData;
