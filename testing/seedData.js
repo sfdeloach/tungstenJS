@@ -48,10 +48,10 @@ var participantData = [
 
 var assessmentData = {
     inactive_on: null, // date inactivated
-    created: "4/3/2017",
+    created: new Date(),
     participant: null, // object id added later
     worksheet: null, // object id added later
-    eval_date: "4/3/2017",
+    eval_date: new Date(),
     weight: 185,
     heart_rate: "72",
     blood_pressure: "120/80",
@@ -59,7 +59,7 @@ var assessmentData = {
     flex: 27.5,
     situp: 51,
     bench: 225,
-    press: 425,
+    leg: 425,
     cardio: {
         type: "walk",
         time: 722, // in seconds
@@ -69,7 +69,7 @@ var assessmentData = {
 
 var worksheetData = {
     inactive_on: null,
-    created: "4/4/2017",
+    created: new Date(),
     is_locked: null,
     title: "Wellness Test Worksheet",
     author: null, // object ID

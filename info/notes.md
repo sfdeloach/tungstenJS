@@ -29,8 +29,10 @@ a black & white photo full in the background large orange and blue circle divide
 * decided to make the dept_id key in participant unique, this will be the query key when trying to find all assessments for one participant
 * learned when using passport, there must be a 'username' key in your Users schema
 * completed seeds.js which does not require mongoose and populates and associates all four collections, there was an issue using the save() method where duplicate object ids were pushed to the array
+* configured passport, passwords are hashed and stored in database
 *
-* NEXT: is there a way for passport to encrypt the passwords as they are stored in the db?
+* TODO: convert all csv data from old wellness to json, setup in a tables directory
+*       develop an interpolate function and logic that calculates results
 
 ### var num = 1; // Express
 * setup routes

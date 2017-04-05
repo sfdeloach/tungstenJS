@@ -24,12 +24,24 @@ mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
 
 // Database Testing - START ///////////////////////////////////////////////////
-seedDb();
+seedDb({ verbose: true });
 var query = Participant.findOne({
     "name.last": "Goodman"
 });
 assert.equal(query.exec().constructor, global.Promise);
 // Database Testing - END /////////////////////////////////////////////////////
+
+// Configure Passport
+app.use(require("express-session")({
+    secret: "special secret message!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Configure middleware
 nunjucks.configure('./views', {

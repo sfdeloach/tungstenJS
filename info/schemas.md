@@ -28,7 +28,7 @@ var assessmentSchema = new mongoose.Schema({
     flex: { type: Number, min: 0 },
     situp: { type: Number, min: 0 },
     bench: { type: Number, min: 0 },
-    press: { type: Number, min: 0 },
+    leg: { type: Number, min: 0 },
     cardio: {
         type: { type: String, enum: ["walk", "run"] },
         time: { type: Number, min: 0 }, // in seconds
