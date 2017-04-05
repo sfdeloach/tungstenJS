@@ -19,7 +19,7 @@ var express = require('express'),
 var app = express();
 
 // Prepare database
-var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost/tungsten';
+var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/tungsten';
 mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
 

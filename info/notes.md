@@ -31,7 +31,6 @@ a black & white photo full in the background large orange and blue circle divide
 * completed seeds.js which does not require mongoose and populates and associates all four collections, there was an issue using the save() method where duplicate object ids were pushed to the array
 *
 * NEXT: is there a way for passport to encrypt the passwords as they are stored in the db?
-* NEXT: can we drop mongoose altogether?
 
 ### var num = 1; // Express
 * setup routes

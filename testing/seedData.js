@@ -49,10 +49,10 @@ var participantData = [
 var assessmentData = {
     inactive_on: null, // date inactivated
     created: "4/3/2017",
-    participant: null, // add later???
-    worksheet: null, // object id
+    participant: null, // object id added later
+    worksheet: null, // object id added later
     eval_date: "4/3/2017",
-    weight: 175,
+    weight: 185,
     heart_rate: "72",
     blood_pressure: "120/80",
     body_fat: 15.2,

@@ -16,19 +16,20 @@ var User = require('../models/user'),
 //     4. createData (welcome to callback hell)
 
 function createData() {
+    // create a single worksheet
     Worksheet.create(seedData.worksheetData, function (err, newWorksheet) {
         if (err) {
             console.log(err);
         } else {
             console.log("...worksheet created:   " + newWorksheet._id);
+            // create a few participants
             seedData.participantData.forEach(function (partSeed) {
-                // create a participant
                 Participant.create(partSeed, function (err, newParticipant) {
                     if (err) {
                         console.log(err);
                     } else {
                         console.log("...participant created: " + newParticipant._id);
-                        // prepare the assessment data by injecting participant data, note that this is NOT an id
+                        // add participant info to the assessment seed
                         seedData.assessmentData.participant = partSeed;
                         // create the assessment
                         Assessment.create(seedData.assessmentData, function (err, newAssessment) {
@@ -37,8 +38,6 @@ function createData() {
                             } else {
                                 console.log("...assessment created:  " + newAssessment._id);
                                 // push assessment to worksheet.assessments array
-                                // newWorksheet.assessments.addToSet(newAssessment);
-                                // newWorksheet.save();
                                 Worksheet.update({ _id: newWorksheet._id }, { $push: { assessments: newAssessment._id }}, function (err, updatedWorksheet) {
                                     if (err) {
                                         console.log(err);
@@ -123,6 +122,22 @@ function dropUserData() {
         }
     });
 }
+
+//router.post("/register", function (req, res) {
+//    var newUser = new User({
+//        username: req.body.username
+//    });
+//    User.register(newUser, req.body.password, function (err, user) {
+//        if (err) {
+//            req.flash("error", err.message);
+//            return res.redirect("/register");
+//        }
+//        passport.authenticate("local")(req, res, function () {
+//            req.flash("success", "Welcome to YelpCamp, " + user.username);
+//            res.redirect("/campgrounds");
+//        });
+//    });
+//});
 
 function seedDb() {
     dropUserData();
