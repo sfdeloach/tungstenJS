@@ -6,7 +6,7 @@ var User = require('../models/user'),
     Worksheet = require('../models/worksheet'),
     Assessment = require('../models/assessment'),
     Participant = require('../models/participant'),
-    seedData = require('./seedData_PII'),
+    seedData = require('./seedData'),
     verbose = false;
 
 // The callbacks are executed in the following order (although coded in the reverse):
