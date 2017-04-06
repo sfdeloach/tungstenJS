@@ -1,4 +1,5 @@
 /*jslint node: true */
+/*jslint nomen: true */
 "use strict";
 
 // Setup dependencies
@@ -17,6 +18,7 @@ var express = require('express'),
     seedDb = require('./testing/seeds');
 
 var app = express();
+app.use(express.static(__dirname + '/public'));
 
 // Prepare database
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/tungsten';
@@ -24,16 +26,16 @@ mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
 
 // Database Testing - START ///////////////////////////////////////////////////
-seedDb({ verbose: true });
-var query = Participant.findOne({
-    "name.last": "Goodman"
-});
-assert.equal(query.exec().constructor, global.Promise);
+// seedDb({ verbose: false });
+// var query = Participant.findOne({
+//     "name.last": "Goodman"
+// });
+// assert.equal(query.exec().constructor, global.Promise);
 // Database Testing - END /////////////////////////////////////////////////////
 
 // Configure Passport
 app.use(require("express-session")({
-    secret: "special secret message!",
+    secret: "the summer of george",
     resave: false,
     saveUninitialized: false
 }));
@@ -53,6 +55,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Setup routes
+app.get('/wellness', function (req, res) {
+    res.render('splash.html');
+});
+
 app.get('/wellness/worksheet', function (req, res) {
     res.render('worksheet.njk');
 });
