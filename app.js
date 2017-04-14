@@ -26,11 +26,11 @@ mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
 
 // Database Testing - START ///////////////////////////////////////////////////
-// seedDb({ verbose: false });
-// var query = Participant.findOne({
-//     "name.last": "Goodman"
-// });
-// assert.equal(query.exec().constructor, global.Promise);
+//seedDb({ verbose: false });
+//var query = Participant.findOne({
+//    "name.last": "Goodman"
+//});
+//assert.equal(query.exec().constructor, global.Promise);
 // Database Testing - END /////////////////////////////////////////////////////
 
 // Configure Passport
@@ -54,14 +54,11 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// Setup routes
-app.get('/wellness', function (req, res) {
-    res.render('splash.html');
-});
-
-app.get('/wellness/worksheet', function (req, res) {
-    res.render('worksheet.njk');
-});
+// Wellness app routing
+var worksheetRoutes = require('./routes/worksheets'),
+    indexRoutes = require('./routes/index');
+app.use("/worksheets", worksheetRoutes);
+app.use(indexRoutes);
 
 // Start server
 var server = app.listen(process.env.PORT || 3000, function () {

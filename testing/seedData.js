@@ -36,6 +36,26 @@ var participantData = [
     },
     {
         "name": {
+            "first": "City",
+            "last": "Worker"
+        },
+        "dept_id": "c1",
+        "dob": "3/13/1968",
+        "sex": "m",
+        "group": "city"
+    },
+    {
+        "name": {
+            "first": "Another City",
+            "last": "Worker"
+        },
+        "dept_id": "c2",
+        "dob": "3/13/1968",
+        "sex": "m",
+        "group": "city"
+    },
+    {
+        "name": {
             "first": "Saul",
             "last": "Goodman"
         },

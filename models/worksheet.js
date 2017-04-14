@@ -9,7 +9,10 @@ var worksheetSchema = new mongoose.Schema({
     is_locked: Date, // unlocked if null, locked on the date entered if !null
     title: String,
     author: mongoose.Schema.ObjectId, // from user schema
-    assessments: [mongoose.Schema.ObjectId]
+    assessments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Assessment"
+    }]
 });
 
 module.exports = mongoose.model("Worksheet", worksheetSchema);

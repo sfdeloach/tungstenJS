@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 var assessmentSchema = new mongoose.Schema({
     inactive_on: Date, // active if null, inactivated on the date entered if !null
     created: Date,
-    participant: participantSchema, // note it is not an objectId, test for db durability (see info/notes.md)
+    participant: participantSchema, // note it is not an objectId, inserted as an embedded doc
     worksheet: mongoose.Schema.ObjectId,
     eval_date: Date,
     weight: { type: Number, min: 0 },

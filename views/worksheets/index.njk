@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Steven DeLoach (sfdeloach@gmail.com)">
+
+    <meta name="description" content="City of Altamonte Springs wellness app based on a deprecated Cooper Aerobic Standard">
+    <meta name="keywords" content="express, nunjucks, node, mongodb, heroku, wellness, passport, foundation">
+
+    <title>Altamonte Springs Wellness</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    
+    <!-- STYLE SHEETS
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/webDevBoot-7-74.css">
+    -->
+</head>
+
+<body>
+    <div class="title-bar">
+        <div class="title-bar-left">
+            <button class="menu-icon" type="button"></button>
+            <span class="title-bar-title">Wellness</span>
+        </div>
+        <div class="title-bar-right">
+            <button class="menu-icon" type="button"></button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="column large-12">
+            <h1>Worksheets</h1>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date Created</th>
+                </tr>
+                {% for worksheet in worksheets %}
+                <tr>
+                    <td><a href="/worksheets/{{ worksheet._id }}">{{ worksheet.title }}</a></td>
+                    <td>{{ worksheet.username }}</td>
+                    <td>{{ worksheet.createdDate }}</td>
+                </tr>
+                {% else %}
+                    <td>no worksheets to display</td>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js"></script>
+    <!--
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    -->
+</body>
+
+</html>
