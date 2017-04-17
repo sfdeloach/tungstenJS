@@ -8,19 +8,17 @@
     <div class="container">
         <div class="jumbotron">
             <h2><i class="fa fa-table fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;{{ worksheet.title }}</h2>
+            <h4>created by <strong>{{ worksheet.author.username }}</strong> on {{ worksheet.created }}</h4>
         </div>
         <div class="row">
             <div class="column col-sm-12">
-                <div>
-                    <a class="btn btn-primary" href="/worksheets/{{ worksheet._id }}/edit" role="button">
-                        <i class="fa fa-edit" aria-hidden="true"></i>
-                        &nbsp;&nbsp;edit worksheet
-                    </a>
-                </div>
-                <table id="showTable" class="tablesorter table table-striped">
+                <button class="btn btn-success pull-right add-participant" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> add participant</button>
+            </div>
+            <div class="column col-sm-12">
+                <table id="showTable" class="tablesorter table table-striped header-fixed">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th class="name-col">Name</th>
                             <th>Body-%</th>
                             <th>Flex</th>
                             <th>Situp</th>
@@ -29,13 +27,15 @@
                             <th>Cardio</th>
                             <th>Time</th>
                             <th>Heart</th>
-                            <th></th>
+                            <th class="edit-delete-col">Edit/Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="showTableBody">
                         {% for assessment in worksheet.assessments %}
                         <tr>
-                            <td><a href="todo">{{ assessment.participant.name.last }}, {{ assessment.participant.name.first }}</a></td>
+                            <td class="name-col">
+                                <a href="todo">{{ assessment.participant.name.last }}, {{ assessment.participant.name.first}}</a>
+                            </td>
                             <td>{{ assessment.body_fat }}</td>
                             <td>{{ assessment.flex }}</td>
                             <td>{{ assessment.situp }}</td>
@@ -44,7 +44,14 @@
                             <td>{{ assessment.cardio.type }}</td>
                             <td>{{ assessment.cardio.time }}</td>
                             <td>{{ assessment.cardio.heart_rate }}</td>
-                            <td><a href="todo"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td class="edit-delete-col">
+                                <button class="btn btn-primary btn-xs edit" type="submit">
+                                    <i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-danger btn-xs delete" type="submit">
+                                    <i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+                                </button>
+                            </td>
                         </tr>
                         {% else %}
                             <td>no assessments to display</td>

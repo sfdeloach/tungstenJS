@@ -45,10 +45,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Wellness app routing
-var worksheetRoutes = require('./routes/worksheets'),
-    indexRoutes = require('./routes/index');
-app.use("/worksheets", worksheetRoutes);
+var indexRoutes = require('./routes/index'),
+    participantRoutes = require('./routes/participants'),
+    worksheetRoutes = require('./routes/worksheets');
 app.use(indexRoutes);
+app.use("/participants", participantRoutes);
+app.use("/worksheets", worksheetRoutes);
 
 // Start server
 var server = app.listen(process.env.PORT || 3000, function () {
