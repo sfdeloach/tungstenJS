@@ -2,6 +2,15 @@
 /*jslint nomen: true */
 "use strict";
 
+/*******************************************************************************************************************
+ *                                                                                                                 *
+ * NOTE:                                                                                                           *
+ *                                                                                                                 *
+ * This script is no longer valid, it is based on a slightly different schema, please refer to the file 'data.js'  *
+ * for mongo commands that manually populate the database for testing                                              *
+ *                                                                                                                 *
+ *******************************************************************************************************************/
+
 var User = require('../models/user'),
     Worksheet = require('../models/worksheet'),
     Assessment = require('../models/assessment'),

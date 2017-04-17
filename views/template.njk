@@ -1,0 +1,57 @@
+{% block header %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Steven DeLoach (sfdeloach@gmail.com)">
+    <meta name="description" content="City of Altamonte Springs wellness app based on a deprecated Cooper Aerobic Standard">
+    <meta name="keywords" content="express, nunjucks, node, mongodb, heroku, wellness, passport, foundation">
+    <title>Altamonte Springs Wellness</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+{% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block menu %}
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Wellness</a>
+          </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
+            <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;&nbsp;Register</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+{% block footer %}
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/jquery.tablesorter.min.js"></script>
+    <script src="/scripts/script.js"></script>
+</body>
+</html>
+{% endblock %}

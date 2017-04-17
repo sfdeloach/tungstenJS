@@ -30,6 +30,7 @@ a black & white photo full in the background large orange and blue circle divide
 * learned when using passport, there must be a 'username' key in your Users schema
 * completed seeds.js which does not require mongoose and populates and associates all four collections, there was an issue using the save() method where duplicate object ids were pushed to the array
 * configured passport, passwords are hashed and stored in database
+* abandoned seeds file due to a change in collection schema, assessments are now embedded in worksheets as an array, as such the assessment file has been deleted
 *
 * TODO: convert all csv data from old wellness to json, setup in a tables directory
 *       develop an interpolate function and logic that calculates results

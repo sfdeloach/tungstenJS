@@ -1,116 +1,59 @@
-<!doctype html>
+{% extends "../template.njk" %}
 
-<html lang="en">
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Steven DeLoach (sfdeloach@gmail.com)">
-
-    <meta name="description" content="City of Altamonte Springs wellness app based on a deprecated Cooper Aerobic Standard">
-    <meta name="keywords" content="express, nunjucks, node, mongodb, heroku, wellness, passport, foundation">
-
-    <title>Altamonte Springs Wellness</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
-    <link rel="stylesheet" href="./stylesheets/style.css">
-    
-    <!-- STYLE SHEETS
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/webDevBoot-7-74.css">
-    -->
-</head>
-
-<body>
-    <div class="title-bar">
-        <div class="title-bar-left">
-            <button class="menu-icon" type="button"></button>
-            <span class="title-bar-title">Wellness</span>
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-table fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;editing "{{ worksheet.title }}"</h2>
         </div>
-        <div class="title-bar-right">
-            <button class="menu-icon" type="button"></button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="column large-12">
-            {{ worksheet }}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Body Comp</th>
-                        <th>Flex</th>
-                        <th>Situp</th>
-                        <th>Bench</th>
-                        <th>Leg</th>
-                        <th>Cardio</th>
-                        <th>Time</th>
-                        <th>Heart</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="align-middle align-center">
-                            <select>
-                              <option value="id457">Acosta, Kevin</option>
-                              <option value="id531">DeLoach, Steven</option>
-                              <option value="id555">Miller, David</option>
-                              <option value="id483">Murphy, Tim</option>
-                            </select>
-                        </td>
-                        <td class="align-middle align-center"><input type="number" value="15"></td>
-                        <td class="align-middle align-center"><input type="number" value="26"></td>
-                        <td class="align-middle align-center"><input type="number" value="50"></td>
-                        <td class="align-middle align-center"><input type="number" value="200"></td>
-                        <td class="align-middle align-center"><input type="number" value="400"></td>
-                        <td class="align-middle align-center">
-                            <select>
-                              <option value="id457">Walk</option>
-                              <option value="id531">Run</option>
-                            </select>
-                        </td>
-                        <td class="align-middle align-center"><input type="time"></td>
-                        <td class="align-middle align-center"><input type="number" value="100"></td>
-                        <td class="align-middle align-center"><input type="button" value="X"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select>
-                              <option value="id457">Acosta, Kevin</option>
-                              <option value="id531">DeLoach, Steven</option>
-                              <option value="id555">Miller, David</option>
-                              <option value="id483">Murphy, Tim</option>
-                            </select>
-                        </td>
-                        <td><input type="number" value="15"></td>
-                        <td><input type="number" value="26"></td>
-                        <td><input type="number" value="50"></td>
-                        <td><input type="number" value="200"></td>
-                        <td><input type="number" value="400"></td>
-                        <td>
-                            <select>
-                              <option value="id457">Walk</option>
-                              <option value="id531">Run</option>
-                            </select>
-                        </td>
-                        <td><input type="time"></td>
-                        <td><input type="number" value="100"></td>
-                        <td><input type="button" value="X"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="column col-sm-12">
+                <form action="TODO">
+                    <input class="btn btn-success" type="submit" value="save worksheet">
+                    <table id="showTable" class="tablesorter table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-3">Name</th>
+                                <th class="col-sm-1">Body-%</th>
+                                <th class="col-sm-1">Flex</th>
+                                <th class="col-sm-1">Situp</th>
+                                <th class="col-sm-1">Bench</th>
+                                <th class="col-sm-1">Leg</th>
+                                <th class="col-sm-1">Cardio</th>
+                                <th class="col-sm-1">Time</th>
+                                <th class="col-sm-1">Heart</th>
+                                <th class="col-sm-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for assessment in worksheet.assessments %}
+                            <tr>
+                                <td>
+                                    <input class="form-control" list="participants" name="participant" value="{{ assessment.participant.name.last }}, {{ assessment.participant.name.first }}">
+                                    <datalist id="participants">
+                                    {% for part in participants %}
+                                        <option value="{{ part.name.last }}, {{ part.name.first }}">
+                                    {% endfor %}
+                                    </datalist>
+                                </td>
+                                <td><input class="form-control" type="number" value="{{ assessment.body_fat }}"></td>
+                                <td><input class="form-control" type="number" value="{{ assessment.flex }}"></td>
+                                <td><input class="form-control" type="number" value="{{ assessment.situp }}"></td>
+                                <td><input class="form-control" type="number" value="{{ assessment.bench }}"></td>
+                                <td><input class="form-control" type="number" value="{{ assessment.leg }}"></td>
+                                <td><input class="form-control" type="text" value="{{ assessment.cardio.type     }}"></td>
+                                <td><input class="form-control" type="number" value="{{ assessment.cardio.time }}"></td>
+                                <td><input class="form-control" type="number" value="{{ assessment.cardio.heart_rate }}"></td>
+                                <td><a href="TODO"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
         </div>
     </div>
-
-    <!-- SCRIPTS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js"></script>
-    <!--
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    -->
-</body>
-
-</html>
+{% endblock %}

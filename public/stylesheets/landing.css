@@ -1,23 +1,19 @@
-div {
-    background-color: blue;
-    display: inline-block;
-    margin: 0;
-    vertical-align: middle;
-    text-align: center;
+body {
+    background-image: url("/images/background.jpg");
+    font-family: 'Ubuntu', sans-serif;
 }
 
-.right,
-.left {
-    height: 360px;
-    width: 180px;
+.row {
+    margin-top: 25%;
 }
 
-.right {
-    border-bottom-right-radius: 360px;
-    border-top-right-radius: 360px;
+.btn-xl {
+    padding: 18px 30px;
+    font-size: 32px;
+    line-height: 1.3333333;
+    border-radius: 12px;
 }
 
-.left {
-    border-bottom-left-radius: 360px;
-    border-top-left-radius: 360px;
+div.col-md-6, div.col-sm-12 {
+    padding: 10px;
 }

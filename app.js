@@ -12,10 +12,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     assert = require('assert'),
     Participant = require('./models/participant'),
-    Assessment = require('./models/assessment'),
     Worksheet = require('./models/worksheet'),
-    User = require('./models/user'),
-    seedDb = require('./testing/seeds');
+    User = require('./models/user');
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
@@ -24,14 +22,6 @@ app.use(express.static(__dirname + '/public'));
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/tungsten';
 mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
-
-// Database Testing - START ///////////////////////////////////////////////////
-//seedDb({ verbose: false });
-//var query = Participant.findOne({
-//    "name.last": "Goodman"
-//});
-//assert.equal(query.exec().constructor, global.Promise);
-// Database Testing - END /////////////////////////////////////////////////////
 
 // Configure Passport
 app.use(require("express-session")({
