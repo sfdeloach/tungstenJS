@@ -5,13 +5,13 @@
 var express = require("express"),
     router = express.Router(),
     Participant = require('../models/participant'),
-    Worksheet = require('../models/worksheet'),
-    User = require('../models/user');
+    User = require('../models/user'),
+    Worksheet = require('../models/worksheet');
 
-// index route - json response
-router.get('/json', function (req, res) {
+// index route
+router.get('/', function (req, res) {
     Participant.find({}, function (err, foundParticipants) {
-        res.send(foundParticipants);
+        res.send("You have hit the participants index page.");
     });
 });
 

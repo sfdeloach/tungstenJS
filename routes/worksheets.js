@@ -5,8 +5,8 @@
 var express = require("express"),
     router = express.Router(),
     Participant = require('../models/participant'),
-    Worksheet = require('../models/worksheet'),
-    User = require('../models/user');
+    User = require('../models/user'),
+    Worksheet = require('../models/worksheet');
 
 // index route
 router.get('/', function (req, res) {

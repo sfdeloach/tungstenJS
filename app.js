@@ -12,8 +12,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     assert = require('assert'),
     Participant = require('./models/participant'),
-    Worksheet = require('./models/worksheet'),
-    User = require('./models/user');
+    User = require('./models/user'),
+    Worksheet = require('./models/worksheet');
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
@@ -46,9 +46,11 @@ app.use(bodyParser.urlencoded({
 
 // Wellness app routing
 var indexRoutes = require('./routes/index'),
+    jsonRoutes = require('./routes/json'),
     participantRoutes = require('./routes/participants'),
     worksheetRoutes = require('./routes/worksheets');
 app.use(indexRoutes);
+app.use("/json", jsonRoutes);
 app.use("/participants", participantRoutes);
 app.use("/worksheets", worksheetRoutes);
 

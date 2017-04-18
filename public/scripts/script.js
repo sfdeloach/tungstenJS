@@ -45,15 +45,12 @@ $(document).ready(function () {
 
     $("button.add-participant").on("click", function () {
         $.ajax({
-            url: "/participants/json",
-            data: {}, // query criteria, i.e. db.participants.find(data)
+            url: "/json/participants",
+            //data: {}, // query criteria, i.e. db.participants.find(data)
             type: "GET",
-            dataType: "html"
+            dataType: "json"
         }).done(function (response) {
-            // success
-            console.log("add participant");
-            $(newTableRowForm).appendTo("#showTableBody");
-            console.log(response);
+            $(newTableRowForm).appendTo("#showTableBody"); // TODO
         }).fail(function (xhr, status, err) {
             alert("Sorry, there was a problem retrieving names from the participants collection!");
             console.log("Error: " + err);

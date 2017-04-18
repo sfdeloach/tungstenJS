@@ -1,0 +1,39 @@
+{% extends "../template.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-database fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;JSON index</h2>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <table class="tablesorter table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Collection</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/json/participants">Participants</a></td>
+                            <td>A collection of all participants who may perform in a wellness assesment</td>
+                        </tr>
+                        <tr>
+                            <td><a href="/json/users">Users</a></td>
+                            <td>A collection of all users authorized to use the app</td>
+                        </tr>
+                        <tr>
+                            <td><a href="/json/worksheets">Worksheets</a></td>
+                            <td>A collection of all worksheets, each consisting of an array of assessments</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
