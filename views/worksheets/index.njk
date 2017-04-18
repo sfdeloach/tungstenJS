@@ -19,22 +19,22 @@
                 <table id="indexTable" class="tablesorter table table-striped">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Date Created</th>
+                            <th class="col-width40">Title</th>
+                            <th class="col-width20">Author</th>
+                            <th class="col-width40">Date Created</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for worksheet in worksheets %}
                         <tr>
-                            <td><a href="/worksheets/{{ worksheet._id }}">{{ worksheet.title }}</a></td>
-                            <td>{{ worksheet.author.username }}</td>
-                            <td>{{ worksheet.prettyDate }}</td>
+                            <td class="col-width40"><a href="/worksheets/{{ worksheet._id }}">{{ worksheet.title }}</a></td>
+                            <td class="col-width20">{{ worksheet.author.username }}</td>
+                            <td class="col-width40">{{ worksheet.prettyDate }}</td>
                         </tr>
                         {% else %}
-                            <td>no worksheets to display</td>
-                            <td> - </td>
-                            <td> - </td>
+                            <td class="col-width40">no worksheets to display</td>
+                            <td class="col-width20"> - </td>
+                            <td class="col-width40"> - </td>
                         {% endfor %}
                     </tbody>
                 </table>

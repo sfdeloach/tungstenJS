@@ -32,23 +32,48 @@ body {
 
 .header-fixed>tbody {
     overflow-y: auto;
-    height: 70vh;
+    height: 60vh;
 }
 
-.header-fixed>tbody>tr>td.name-col,
-.header-fixed>thead>tr>th.name-col {
-    width: 18%;
-    float: left;
-}
-
-.header-fixed>tbody>tr>td,
-.header-fixed>thead>tr>th {
+.table>tbody>tr>td,
+.table>thead>tr>th {
     width: 9%;
     float: left;
+    text-align: center;
 }
 
-.header-fixed>tbody>tr>td.edit-delete-col,
-.header-fixed>thead>tr>th.edit-delete-col {
+.table>tbody>tr>td.col-width40,
+.table>thead>tr>th.col-width40 {
+    width: 40%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width20,
+.table>thead>tr>th.col-width20 {
+    width: 20%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width18,
+.table>thead>tr>th.col-width18 {
+    width: 18%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width10,
+.table>thead>tr>th.col-width10 {
     width: 10%;
     float: left;
+    text-align: right;
+}
+
+.empty-row {
+    height: 25px;
+}
+
+#delete-form {
+    display: inline;
 }

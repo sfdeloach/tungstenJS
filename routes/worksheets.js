@@ -18,46 +18,89 @@ router.get('/', function (req, res) {
         Worksheet.find({}, function (err, foundWorksheets) {
             if (err) {
                 console.log(err);
+            } else if (count === 0) {
+                res.render('worksheets/index.njk', {
+                    worksheets: foundWorksheets
+                });
+            } else {
+                foundWorksheets.forEach(function (worksheet) {
+                    worksheet.prettyDate = new Date(worksheet.created).toLocaleDateString();
+                    totalWorksheets += 1;
+                    if (totalWorksheets === count) {
+                        res.render('worksheets/index.njk', {
+                            worksheets: foundWorksheets
+                        });
+                    }
+                });
             }
-            foundWorksheets.forEach(function (worksheet) {
-                worksheet.prettyDate = new Date(worksheet.created).toLocaleDateString();
-                totalWorksheets  += 1;
-                if (totalWorksheets === count) {
-                    res.render('worksheets/index.njk', {
-                        worksheets: foundWorksheets
-                    });
-                }
-            });
         });
     });
 });
 
-// show route
+// show a worksheet and its assessments
 router.get('/:id', function (req, res) {
     var id = req.params.id;
     Worksheet.findById(id, function (err, foundWorksheet) {
         if (err) {
             console.log(err);
         }
-        res.render('worksheets/show.njk', {
-            worksheet: foundWorksheet
-        });
-    });
-});
-
-// edit route
-router.get('/:id/edit', function (req, res) {
-    var id = req.params.id;
-    Worksheet.findById(id, function (err, foundWorksheet) {
-        if (err) {
-            console.log(err);
-        }
         Participant.find({}, function (err, foundParticipants) {
-            res.render('worksheets/edit.njk', {
+            res.render('worksheets/show.njk', {
                 worksheet: foundWorksheet,
                 participants: foundParticipants
             });
         });
+    });
+});
+
+// create and append a new assessment to a worksheet
+router.post('/:id', function (req, res) {
+    var id = req.params.id,
+        newAssessment = req.body.assessment,
+        cardio = {
+            type: newAssessment.cardio_type,
+            time: newAssessment.cardio_time,
+            heart_rate: newAssessment.cardio_heartrate
+        };
+    newAssessment.cardio = cardio;
+    Worksheet.findById(id, function (err, foundWorksheet) {
+        if (err) {
+            console.log(err);
+        }
+        Participant.findOne({
+            'dept_id': newAssessment.dept_id
+        }, function (err, foundParticipant) {
+            newAssessment.participant = foundParticipant;
+            foundWorksheet.assessments.push(newAssessment);
+            foundWorksheet.save(function (err, updatedWorksheet) {
+                if (err) {
+                    console.log(err);
+                }
+                res.redirect("/worksheets/" + id);
+            });
+        });
+    });
+});
+
+// remove an assessment from a worksheet
+router.delete('/:worksheet_id/assessments/:assessment_id', function (req, res) {
+    var worksheetID = req.params.worksheet_id,
+        assessmentID = req.params.assessment_id;
+    Worksheet.update({
+        _id: worksheetID
+    }, {
+        $pull: {
+            assessments: {
+                _id: assessmentID
+            }
+        }
+    }, {
+        safe: true
+    }, function (err, obj) {
+        if (err) {
+            console.log(err);
+        }
+        res.redirect("/worksheets/" + worksheetID);
     });
 });
 

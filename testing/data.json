@@ -25,6 +25,23 @@ db.participants.insertMany([
         dept_id: "106", dob: ISODate("1964-04-15T00:00:00.000Z"), sex: "m", group: "applicant" }
 ]);
 
+// worksheets with no assessments
+db.worksheets.insertMany([
+    { inactive_on: null, created: ISODate("2017-04-11T00:00:00.000Z"), is_locked: null, title: "Sample Worksheet A",
+    author: { username: "admin", email: "admin@altamonte.org", needs_reset: false, auth_level: "admin" },
+    assessments: [] },
+    { inactive_on: null, created: ISODate("2017-04-13T00:00:00.000Z"), is_locked: null, title: "Sample Worksheet B",
+    author: { username: "editor", email: "editor@altamonte.org", needs_reset: false, auth_level: "editor" },
+    assessments: [] },
+    { inactive_on: null, created: ISODate("2017-04-15T00:00:00.000Z"), is_locked: null, title: "Sample Worksheet C",
+    author: { username: "editor", email: "editor@altamonte.org", needs_reset: false, auth_level: "editor" },
+    assessments: [] },
+    { inactive_on: null, created: ISODate("2017-04-17T00:00:00.000Z"), is_locked: null, title: "Sample Worksheet D",
+    author: { username: "admin", email: "admin@altamonte.org", needs_reset: false, auth_level: "admin" },
+    assessments: [] }
+]);
+
+// full worksheets
 db.worksheets.insertMany([
     { inactive_on: null, created: ISODate("2017-04-11T00:00:00.000Z"), is_locked: null, title: "Full Worksheet",
     author: { username: "admin", email: "admin@altamonte.org", needs_reset: false, auth_level: "admin" },

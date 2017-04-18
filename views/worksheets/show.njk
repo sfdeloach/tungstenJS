@@ -12,13 +12,10 @@
         </div>
         <div class="row">
             <div class="column col-sm-12">
-                <button class="btn btn-success pull-right add-participant" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> add participant</button>
-            </div>
-            <div class="column col-sm-12">
-                <table id="showTable" class="tablesorter table table-striped header-fixed">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th class="name-col">Name</th>
+                            <th class="col-width18">Name</th>
                             <th>Body-%</th>
                             <th>Flex</th>
                             <th>Situp</th>
@@ -27,13 +24,59 @@
                             <th>Cardio</th>
                             <th>Time</th>
                             <th>Heart</th>
-                            <th class="edit-delete-col">Edit/Delete</th>
+                            <th class="col-width10">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <form action="/worksheets/{{ worksheet._id }}" method="POST">
+                            <td class="col-width18">
+                                <input class='form-control' list='participants' name='assessment[dept_id]' type='text' required>
+                                <datalist id="participants">
+                                {% for participant in participants %}
+                                    <option value="{{ participant.dept_id }}">{{ participant.name.last }}, {{ participant.name.first }}</option>
+                                {% endfor %}
+                                </datalist>
+                            </td>
+                            <td><input class='form-control' name='assessment[body_fat]' type='number' step=0.1 required></td>
+                            <td><input class='form-control' name='assessment[flex]' type='number' step=0.1 required></td>
+                            <td><input class='form-control' name='assessment[situp]' type='number' required></td>
+                            <td><input class='form-control' name='assessment[bench]' type='number' step=0.1 required></td>
+                            <td><input class='form-control' name='assessment[leg]' type='number' step=0.1 required></td>
+                            <td>
+                                <select class='form-control' name='assessment[cardio_type]' >
+                                    <option value="walk">walk</option>
+                                    <option value="run">run</option>
+                                </select>
+                            </td>
+                            <td><input class='form-control' name='assessment[cardio_time]' type='number' required></td>
+                            <td><input class='form-control' name='assessment[cardio_heartrate]' type='number'></td>
+                            <td class="col-width10">
+                                <input class="btn btn-success btn-sm btn-block" type="submit" value="save">
+                            </td>
+                        </form>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="showTable" class="tablesorter table table-striped header-fixed">
+                    <thead>
+                        <tr>
+                            <th class="col-width18">Name</th>
+                            <th>Body-%</th>
+                            <th>Flex</th>
+                            <th>Situp</th>
+                            <th>Bench</th>
+                            <th>Leg</th>
+                            <th>Cardio</th>
+                            <th>Time</th>
+                            <th>Heart</th>
+                            <th class="col-width10">Edit/Delete</th>
                         </tr>
                     </thead>
                     <tbody id="showTableBody">
                         {% for assessment in worksheet.assessments %}
                         <tr>
-                            <td class="name-col">
+                            <td class="col-width18">
                                 <a href="todo">{{ assessment.participant.name.last }}, {{ assessment.participant.name.first}}</a>
                             </td>
                             <td>{{ assessment.body_fat }}</td>
@@ -44,13 +87,16 @@
                             <td>{{ assessment.cardio.type }}</td>
                             <td>{{ assessment.cardio.time }}</td>
                             <td>{{ assessment.cardio.heart_rate }}</td>
-                            <td class="edit-delete-col">
+                            <td class="col-width10">
                                 <button class="btn btn-primary btn-xs edit" type="submit">
                                     <i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                                 </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-danger btn-xs delete" type="submit">
-                                    <i class="fa fa-trash fa-fw" aria-hidden="true"></i>
-                                </button>
+                                <form id="delete-form" action="/worksheets/{{ worksheet._id }}/assessments/{{ assessment._id }}?_method=DELETE" method="POST">
+                                    <button class="btn btn-danger btn-xs delete" type="submit">
+                                        <i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                                
                             </td>
                         </tr>
                         {% else %}

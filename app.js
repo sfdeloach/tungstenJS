@@ -43,6 +43,7 @@ nunjucks.configure('./views', {
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(methodOverride("_method"));
 
 // Wellness app routing
 var indexRoutes = require('./routes/index'),
