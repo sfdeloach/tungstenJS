@@ -9,6 +9,10 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
+.btn-xs {
+    margin: 2px 2px;
+}
+
 .header-fixed {
     width: 100%
 }
@@ -74,6 +78,6 @@ body {
     height: 25px;
 }
 
-#delete-form {
+.delete-form {
     display: inline;
 }

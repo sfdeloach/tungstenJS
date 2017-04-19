@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th class="col-width18">Name</th>
-                            <th>Body-%</th>
+                            <th>Body</th>
                             <th>Flex</th>
                             <th>Situp</th>
                             <th>Bench</th>
@@ -62,7 +62,7 @@
                     <thead>
                         <tr>
                             <th class="col-width18">Name</th>
-                            <th>Body-%</th>
+                            <th>Body</th>
                             <th>Flex</th>
                             <th>Situp</th>
                             <th>Bench</th>
@@ -90,8 +90,8 @@
                             <td class="col-width10">
                                 <button class="btn btn-primary btn-xs edit" type="submit">
                                     <i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                                </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <form id="delete-form" action="/worksheets/{{ worksheet._id }}/assessments/{{ assessment._id }}?_method=DELETE" method="POST">
+                                </button>
+                                <form class="delete-form" action="/worksheets/{{ worksheet._id }}/{{ assessment._id }}?_method=DELETE" method="POST">
                                     <button class="btn btn-danger btn-xs delete" type="submit">
                                         <i class="fa fa-trash fa-fw" aria-hidden="true"></i>
                                     </button>

@@ -8,7 +8,7 @@ var express = require("express"),
     User = require('../models/user'),
     Worksheet = require('../models/worksheet');
 
-// index route
+// worksheet index
 router.get('/', function (req, res) {
     var totalWorksheets = 0;
     Worksheet.count({}, function (err, count) {
@@ -35,6 +35,18 @@ router.get('/', function (req, res) {
             }
         });
     });
+});
+
+// new worksheet form
+router.get('/new', function (req, res) {
+    res.render('worksheets/new.njk');
+});
+
+// create new worksheet
+router.post('/', function (req, res) {
+    var newWorksheet = req.body.worksheet;
+    newWorksheet.created = new Date();
+    res.send("post create worksheet: \n" + JSON.stringify(newWorksheet));
 });
 
 // show a worksheet and its assessments
@@ -83,7 +95,7 @@ router.post('/:id', function (req, res) {
 });
 
 // remove an assessment from a worksheet
-router.delete('/:worksheet_id/assessments/:assessment_id', function (req, res) {
+router.delete('/:worksheet_id/:assessment_id', function (req, res) {
     var worksheetID = req.params.worksheet_id,
         assessmentID = req.params.assessment_id;
     Worksheet.update({
@@ -94,8 +106,6 @@ router.delete('/:worksheet_id/assessments/:assessment_id', function (req, res) {
                 _id: assessmentID
             }
         }
-    }, {
-        safe: true
     }, function (err, obj) {
         if (err) {
             console.log(err);
