@@ -7,14 +7,20 @@
 {% block body %}
     <div class="container">
         <div class="jumbotron">
-            <h2><i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;worksheets</h2>
+            <h2><i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Create a new worksheet</h2>
+            <div class="form-group">
+                <a href="/worksheets" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to index
+                </a>
+            </div>
         </div>
         <div class="row">
             <div class="column col-sm-12">
                 <form action="/worksheets" method="POST">
                     <div class="form-group">
-                        <label for="title">Worksheet Title</label>
-                        <input type="text" class="form-control" name="worksheet[title]" placeholder="...enter a title for this worksheet">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" name="worksheet[title]" placeholder="...enter a title for this worksheet" autofocus>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>

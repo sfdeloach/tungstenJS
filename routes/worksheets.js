@@ -44,9 +44,22 @@ router.get('/new', function (req, res) {
 
 // create new worksheet
 router.post('/', function (req, res) {
-    var newWorksheet = req.body.worksheet;
-    newWorksheet.created = new Date();
-    res.send("post create worksheet: \n" + JSON.stringify(newWorksheet));
+    // TODO: use the logged in user here instead of finding the admin user
+    User.findOne({username: "admin"}, function (err, foundUser) {
+        var newWorksheet = req.body.worksheet;
+        newWorksheet.created = new Date();
+        newWorksheet.inactive_on = null;
+        newWorksheet.is_locked = null;
+        newWorksheet.author = foundUser;
+        newWorksheet.assessments = [];
+        Worksheet.create(newWorksheet, function (err, createdWorksheet) {
+            if (err) {
+                console.log("Watch out! Your about to get a fail pie right to the face!");
+                console.log(err);
+            }
+            res.redirect('/worksheets');
+        });
+    });
 });
 
 // show a worksheet and its assessments
@@ -74,6 +87,8 @@ router.post('/:id', function (req, res) {
             time: newAssessment.cardio_time,
             heart_rate: newAssessment.cardio_heartrate
         };
+    newAssessment.inactive_on = null;
+    newAssessment.created = new Date();
     newAssessment.cardio = cardio;
     Worksheet.findById(id, function (err, foundWorksheet) {
         if (err) {

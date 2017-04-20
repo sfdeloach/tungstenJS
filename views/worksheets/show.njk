@@ -9,6 +9,12 @@
         <div class="jumbotron">
             <h2><i class="fa fa-table fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;{{ worksheet.title }}</h2>
             <h4>created by <strong>{{ worksheet.author.username }}</strong> on {{ worksheet.created }}</h4>
+            <div class="form-group">
+                <a href="/worksheets" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to index
+                </a>
+            </div>
         </div>
         <div class="row">
             <div class="column col-sm-12">
@@ -31,7 +37,7 @@
                         <tr>
                         <form action="/worksheets/{{ worksheet._id }}" method="POST">
                             <td class="col-width18">
-                                <input class='form-control' list='participants' name='assessment[dept_id]' type='text' required>
+                                <input class='form-control' list='participants' name='assessment[dept_id]' type='text' required autofocus>
                                 <datalist id="participants">
                                 {% for participant in participants %}
                                     <option value="{{ participant.dept_id }}">{{ participant.name.last }}, {{ participant.name.first }}</option>
