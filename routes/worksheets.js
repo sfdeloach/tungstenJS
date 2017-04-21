@@ -54,7 +54,6 @@ router.post('/', function (req, res) {
         newWorksheet.assessments = [];
         Worksheet.create(newWorksheet, function (err, createdWorksheet) {
             if (err) {
-                console.log("Watch out! Your about to get a fail pie right to the face!");
                 console.log(err);
             }
             res.redirect('/worksheets');
@@ -69,6 +68,7 @@ router.get('/:id', function (req, res) {
         if (err) {
             console.log(err);
         }
+        foundWorksheet.prettyDate = foundWorksheet.created.toLocaleDateString();
         Participant.find({}, function (err, foundParticipants) {
             res.render('worksheets/show.njk', {
                 worksheet: foundWorksheet,

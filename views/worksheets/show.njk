@@ -8,7 +8,14 @@
     <div class="container">
         <div class="jumbotron">
             <h2><i class="fa fa-table fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;{{ worksheet.title }}</h2>
-            <h4>created by <strong>{{ worksheet.author.username }}</strong> on {{ worksheet.created }}</h4>
+            <h4>created by <strong>{{ worksheet.author.username }}</strong> on {{ worksheet.prettyDate }}</h4>
+            <h6>Description:
+                {% if worksheet.description %}
+                    <em>{{ worksheet.description }}</em>
+                {% else %}
+                    <em>(no description was provided)</em>
+                {% endif %}
+            </h6>
             <div class="form-group">
                 <a href="/worksheets" class="btn btn-default">
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
