@@ -4,6 +4,7 @@
 
 var express = require("express"),
     router = express.Router(),
+    dateHelper = require('../helpers/kram-datetime'),
     Participant = require('../models/participant'),
     User = require('../models/user'),
     Worksheet = require('../models/worksheet');
@@ -67,14 +68,17 @@ router.get('/:id', function (req, res) {
     Worksheet.findById(id, function (err, foundWorksheet) {
         if (err) {
             console.log(err);
-        }
-        foundWorksheet.prettyDate = foundWorksheet.created.toLocaleDateString();
-        Participant.find({}, function (err, foundParticipants) {
-            res.render('worksheets/show.njk', {
-                worksheet: foundWorksheet,
-                participants: foundParticipants
+        } else {
+            foundWorksheet.prettyDate = function (date) {
+                return new Date(date).toLocaleDateString();
+            };
+            Participant.find({}, function (err, foundParticipants) {
+                res.render('worksheets/show.njk', {
+                    worksheet: foundWorksheet,
+                    participants: foundParticipants
+                });
             });
-        });
+        }
     });
 });
 
@@ -82,14 +86,18 @@ router.get('/:id', function (req, res) {
 router.post('/:id', function (req, res) {
     var id = req.params.id,
         newAssessment = req.body.assessment,
+        secondsToString = ((newAssessment.cardio_sec < 10) ? ("0" + newAssessment.cardio_sec) : newAssessment.cardio_sec),
         cardio = {
             type: newAssessment.cardio_type,
-            time: newAssessment.cardio_time,
+            min: newAssessment.cardio_min,
+            sec: newAssessment.cardio_sec,
+            time: newAssessment.cardio_min + ":" + secondsToString,
             heart_rate: newAssessment.cardio_heartrate
         };
+    newAssessment.cardio = cardio;
     newAssessment.inactive_on = null;
     newAssessment.created = new Date();
-    newAssessment.cardio = cardio;
+    newAssessment.eval_date = dateHelper.htmlToDb(newAssessment.eval_date);
     Worksheet.findById(id, function (err, foundWorksheet) {
         if (err) {
             console.log(err);
@@ -102,8 +110,10 @@ router.post('/:id', function (req, res) {
             foundWorksheet.save(function (err, updatedWorksheet) {
                 if (err) {
                     console.log(err);
+                    res.send(err);
+                } else {
+                    res.redirect("/worksheets/" + id);
                 }
-                res.redirect("/worksheets/" + id);
             });
         });
     });
@@ -126,6 +136,13 @@ router.delete('/:worksheet_id/:assessment_id', function (req, res) {
             console.log(err);
         }
         res.redirect("/worksheets/" + worksheetID);
+    });
+});
+
+// destroy participant
+router.delete('/:id', function (req, res) {
+    Worksheet.findByIdAndRemove(req.params.id, function (err) {
+        res.redirect("/worksheets");
     });
 });
 

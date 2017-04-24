@@ -1,0 +1,81 @@
+{% extends "../template.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Create a new participant</h2>
+            <div class="form-group">
+                <a href="/participants" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to participant index
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <form id="partnew-form" action="/participants" method="POST">
+                    <div class="form-group">
+                        <label for="participant[name.first]">First Name</label>
+                        <input type="text" class="form-control" name="participant[name.first]" autofocus required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant[name.last]">Last Name</label>
+                        <input type="text" class="form-control" name="participant[name.last]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant[dept_id]">ID Number</label>
+                        <input id="partnew-id" type="text" class="form-control" name="participant[dept_id]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant[dob]">Date of Birth</label>
+                        <input type="date" class="form-control" name="participant[dob]" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Sex </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline" name="participant[sex]" value="m" checked/>
+                                    <span class="space-out">male</span>
+                                    <input type="radio" class="radio inline" name="participant[sex]" value="f"/>
+                                    <span class="space-out">female</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Group </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline partnew-pd" name="participant[group]" value="pd" checked>
+                                    <span class="space-out">Police Department Employee</span>
+                                    <input type="radio" class="radio inline partnew-nonpd" name="participant[group]" value="city">
+                                    <span class="space-out">Other City Department Employee</span>
+                                    <input type="radio" class="radio inline partnew-nonpd" name="participant[group]" value="applicant">
+                                    <span class="space-out">Applicant</span>
+                                    <input type="radio" class="radio inline partnew-nonpd" name="participant[group]" value="other">
+                                    <span class="space-out">Other</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Create Participant
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

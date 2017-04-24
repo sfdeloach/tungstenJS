@@ -39,9 +39,10 @@ body {
     height: 60vh;
 }
 
+/*default column width*/
 .table>tbody>tr>td,
 .table>thead>tr>th {
-    width: 9%;
+    width: 6%;
     float: left;
     text-align: center;
 }
@@ -49,6 +50,13 @@ body {
 .table>tbody>tr>td.col-width40,
 .table>thead>tr>th.col-width40 {
     width: 40%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width30,
+.table>thead>tr>th.col-width30 {
+    width: 30%;
     float: left;
     text-align: left;
 }
@@ -67,9 +75,58 @@ body {
     text-align: left;
 }
 
-.table>tbody>tr>td.col-width10,
-.table>thead>tr>th.col-width10 {
+.table>tbody>tr>td.col-width16,
+.table>thead>tr>th.col-width16 {
+    width: 16%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width12,
+.table>thead>tr>th.col-width12 {
+    width: 12%;
+    float: left;
+    text-align: center;
+}
+
+.table>tbody>tr>td.col-width11,
+.table>thead>tr>th.col-width11 {
+    width: 11%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width10-right,
+.table>thead>tr>th.col-width10-right {
     width: 10%;
+    float: left;
+    text-align: right;
+}
+
+.table>tbody>tr>td.col-width10-left,
+.table>thead>tr>th.col-width10-left {
+    width: 10%;
+    float: left;
+    text-align: left;
+}
+
+.table>tbody>tr>td.col-width10-center,
+.table>thead>tr>th.col-width10-center {
+    width: 10%;
+    float: left;
+    text-align: center;
+}
+
+.table>tbody>tr>td.col-width09,
+.table>thead>tr>th.col-width09 {
+    width: 9%;
+    float: left;
+    text-align: center;
+}
+
+.table>tbody>tr>td.col-width05-right,
+.table>thead>tr>th.col-width05-right {
+    width: 5%;
     float: left;
     text-align: right;
 }
@@ -80,4 +137,14 @@ body {
 
 .delete-form {
     display: inline;
+}
+
+.form-inline>.controls-row>div>span.space-out,
+.form-inline>.controls-row>label>span.space-out {
+    margin-right: 16px;
+    margin-left: 4px;
+}
+
+.form-inline>.controls-row>label.control-label {
+    margin-bottom: 6px;
 }

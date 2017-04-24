@@ -1,0 +1,56 @@
+{% extends "../template.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-users fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Participant Index</h2>
+            <div class="form-group">
+                <a href="/" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to main
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <a class="btn btn-primary pull-right" href="/participants/new" role="button">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;new participants
+                </a>
+            </div>
+            <div class="column col-sm-12">
+                <table id="participantIndexTable" class="tablesorter table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col-width40">Name</th>
+                            <th class="col-width10-left">ID No.</th>
+                            <th class="col-width10-left">DOB</th>
+                            <th class="col-width10-left">Sex</th>
+                            <th class="col-width30">Group</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for participant in participants %}
+                        <tr>
+                            <td class="col-width40"><a href="/participants/{{ participant._id }}/edit">{{ participant.name.last }}, {{ participant.name.first }}</a></td>
+                            <td class="col-width10-left">{{ participant.dept_id }}</td>
+                            <td class="col-width10-left">{{ participant.pretty_dob }}</td>
+                            <td class="col-width10-left">{{ participant.sex }}</td>
+                            <td class="col-width30">{{ participant.group }}</td>
+                        </tr>
+                        {% else %}
+                            <td class="col-width40">no participants to display</td>
+                            <td class="col-width10-left"> - </td>
+                            <td class="col-width10-left"> - </td>
+                            <td class="col-width10-left"> - </td>
+                            <td class="col-width30"> - </td>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

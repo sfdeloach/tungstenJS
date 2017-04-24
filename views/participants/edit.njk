@@ -1,0 +1,91 @@
+{% extends "../template.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-edit fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Edit participant</h2>
+            <div class="form-group">
+                <a href="/participants" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to participant index
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <form action="/participants/{{ participant._id }}?_method=PUT" method="POST">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="participant[name.first]">First Name</label>
+                        <input type="text" class="form-control" name="participant[name.first]" value="{{ participant.name.first}}" autofocus required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant[name.last]">Last Name</label>
+                        <input type="text" class="form-control" name="participant[name.last]" value="{{ participant.name.last}}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant[dept_id]">ID Number</label>
+                        <input type="text" class="form-control" name="participant[dept_id]" value="{{ participant.dept_id}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant[dob]">Date of Birth</label>
+                        <input type="date" class="form-control" name="participant[dob]" value="{{ participant.htmlDOB}}" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Sex </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline" name="participant[sex]" value="m" {{ "checked" if (participant.sex === "m") }}>
+                                    <span class="space-out">male</span>
+                                    <input type="radio" class="radio inline" name="participant[sex]" value="f" {{ "checked" if (participant.sex === "f") }}>
+                                    <span class="space-out">female</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Group </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline" name="participant[group]" value="pd" {{ "checked" if (participant.group === "pd") }} disabled>
+                                    <span class="space-out">Police Department Employee</span>
+                                    <input type="radio" class="radio inline" name="participant[group]" value="city" {{ "checked" if (participant.group === "city") }} disabled>
+                                    <span class="space-out">Other City Department Employee</span>
+                                    <input type="radio" class="radio inline" name="participant[group]" value="applicant" {{ "checked" if (participant.group === "applicant") }} disabled>
+                                    <span class="space-out">Applicant</span>
+                                    <input type="radio" class="radio inline" name="participant[group]" value="other" {{ "checked" if (participant.group === "other") }} disabled>
+                                    <span class="space-out">Other</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <hr>
+                <form class="pull-right" action="/participants/{{ participant._id }}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete participant
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

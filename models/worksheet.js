@@ -27,7 +27,9 @@ var worksheetSchema = new mongoose.Schema({
         leg: { type: Number, min: 0 },
         cardio: {
             type: { type: String, enum: ["walk", "run"] },
-            time: { type: Number, min: 0 }, // in seconds
+            min: { type: Number, min: 0 }, // minutes
+            sec: { type: Number, min: 0 }, // seconds
+            time: String,
             heart_rate: { type: Number, min: 0 }
         }
     }]

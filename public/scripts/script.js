@@ -1,64 +1,98 @@
 /*jslint devel: true*/
 /*globals $: false*/
 
-var newTableRowForm =
+var workShowEditRow =
     "<tr>" +
-    "<form>" +
-    "    <td class='name-col'><input class='form-control' type='text'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td><input class='form-control' type='text'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td><input class='form-control' type='number'></td>" +
-    "    <td class='edit-delete-col'>" +
-    "        <button type='submit' class='btn btn-success btn-xs'>" +
-    "            <i class='fa fa-floppy-o fa-fw' aria-hidden='true'></i>" +
-    "        </button>&nbsp;&nbsp;&nbsp;&nbsp;" +
-    "        <button type='submit' class='btn btn-warning btn-xs'>" +
-    "            <i class='fa fa-ban fa-fw' aria-hidden='true'></i>" +
-    "        </button>" +
-    "    </td>" +
+    "<form action='/worksheets/{{ worksheet._id }}' method='POST'>" +
+        "<td>" +
+            "<input class='form-control' list='participants' name='assessment[dept_id]' type='text' autocomplete='off' required autofocus>" +
+        "</td>" +
+        "<td class='col-width12'><input class='form-control' name='assessment[eval_date]' type='date' required></td>" +
+        "<td><input class='form-control' name='assessment[weight]' type='number' step=1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[heart_rate]' type='text' autocomplete='off' required></td>" +
+        "<td><input class='form-control' name='assessment[blood_pressure]' type='text' autocomplete='off' required></td>" +
+        "<td><input class='form-control' name='assessment[body_fat]' type='number' step=0.1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[flex]' type='number' step=0.1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[situp]' type='number' step=1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[bench]' type='number' step=1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[leg]' type='number' step=1 min=0 required></td>" +
+        "<td class='col-width09'>" +
+            "<select class='form-control' name='assessment[cardio_type]' >" +
+                "<option value='walk'>walk</option>" +
+                "<option value='run'>run</option>" +
+            "</select>" +
+        "</td>" +
+        "<td><input class='form-control' name='assessment[cardio_min]' type='number' step=1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[cardio_sec]' type='number' step=1 min=0 required></td>" +
+        "<td><input class='form-control' name='assessment[cardio_heartrate]' type='number' step=1 min=0 ></td>" +
+        "<td>" +
+            "<input class='btn btn-success btn-sm btn-block' type='submit' value='save'>" +
+        "</td>" +
     "</form>" +
     "</tr>";
 
 $(document).ready(function () {
     'use strict';
 
-    $("#indexTable").tablesorter({
+    // Table sort
+    $("#participantIndexTable").tablesorter({
+        sortList: [[0, 0]]
+    });
+    
+    $("#worksheetIndexTable").tablesorter({
         sortList: [[2, 1]]
     });
 
-    $("#showTable").tablesorter({
+    $("#worksheetShowTable").tablesorter({
         sortList: [[0, 0]]
     });
-
-    $("button.edit").on("click", function () {
-        console.log("You clicked an edit button!");
+    // END - Table sort
+    
+    // Items located on participants/new.njk
+    $(".partnew-pd").click(function (eventObject) {
+        $("#partnew-id").prop('required', true);
+        $("#partnew-id").prop('disabled', false);
+        $("#partnew-id").val('');
     });
-
-    $("button.delete").on("click", function () {
-        console.log("delete button!");
+    
+    $(".partnew-nonpd").click(function (eventObject) {
+        $("#partnew-id").prop('required', false);
+        $("#partnew-id").prop('disabled', true);
+        $("#partnew-id").val('auto-generated');
     });
-
-    $("button.add-participant").on("click", function () {
-        $.ajax({
-            url: "/json/participants",
-            //data: {}, // query criteria, i.e. db.participants.find(data)
-            type: "GET",
-            dataType: "json"
-        }).done(function (response) {
-            $(newTableRowForm).appendTo("#showTableBody"); // TODO
-        }).fail(function (xhr, status, err) {
-            alert("Sorry, there was a problem retrieving names from the participants collection!");
-            console.log("Error: " + err);
-            console.log("Status: " + status);
-            console.dir(xhr);
-        }).always(function (xhr, status) {
-            // intentionally left blank
-        });
+    
+    $('#partnew-form').on('submit', function (eventObject) {
+        var valid = false;
+        
+        if ($("#partnew-id").prop('disabled')) {
+            // auto generate dept_id based on the current time
+            var now = new Date(),
+                yy = now.getYear() - 100,
+                MM = now.getMonth() < 9 ? ("0" + (now.getMonth() + 1)) : now.getMonth() + 1,
+                dd = now.getDate() < 10 ? ("0" + now.getDate()) : now.getDate(),
+                hh = now.getHours() < 10 ? ("0" + now.getHours()) : now.getHours(),
+                mm = now.getMinutes() < 10 ? ("0" + now.getMinutes()) : now.getMinutes(),
+                ss = now.getSeconds() < 10 ? ("0" + now.getSeconds()) : now.getSeconds(),
+                id = yy + MM + dd + hh + mm + ss;
+            $("#partnew-id").prop('disabled', false);
+            $("#partnew-id").val(id.toString());
+            valid = true;
+        } else {
+            // check for unique PD id number
+            valid = true;
+        }
+        
+        if (!valid) {
+            eventObject.preventDefault();
+            alert("ERROR: Duplicate ID number was found.");
+        }
+        
+        return valid;
     });
-
+    // END - Items located on participants/new.njk
+    
+    // Edit button in worksheets/show.njk
+    $('.workshow-edit').click(function (eventObject) {
+        $(this).parent().parent().replaceWith(workShowEditRow);
+    });
 });
