@@ -56,16 +56,17 @@ router.post('/', function (req, res) {
         Worksheet.create(newWorksheet, function (err, createdWorksheet) {
             if (err) {
                 console.log(err);
+            } else {
+                res.redirect('/worksheets');
             }
-            res.redirect('/worksheets');
         });
     });
 });
 
 // show a worksheet and its assessments
-router.get('/:id', function (req, res) {
-    var id = req.params.id;
-    Worksheet.findById(id, function (err, foundWorksheet) {
+router.get('/:worksheet_id', function (req, res) {
+    var worksheet_id = req.params.worksheet_id;
+    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (err) {
             console.log(err);
         } else {
@@ -83,8 +84,8 @@ router.get('/:id', function (req, res) {
 });
 
 // create and append a new assessment to a worksheet
-router.post('/:id', function (req, res) {
-    var id = req.params.id,
+router.post('/:worksheet_id', function (req, res) {
+    var worksheet_id = req.params.worksheet_id,
         newAssessment = req.body.assessment,
         min = parseInt(newAssessment.cardio_min, 10),
         sec = parseInt(newAssessment.cardio_sec, 10),
@@ -100,7 +101,7 @@ router.post('/:id', function (req, res) {
     newAssessment.inactive_on = null;
     newAssessment.created = new Date();
     newAssessment.eval_date = dateHelper.htmlToDb(newAssessment.eval_date);
-    Worksheet.findById(id, function (err, foundWorksheet) {
+    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (err) {
             console.log(err);
         }
@@ -114,15 +115,35 @@ router.post('/:id', function (req, res) {
                     console.log(err);
                     res.send(err);
                 } else {
-                    res.redirect("/worksheets/" + id);
+                    res.redirect("/worksheets/" + worksheet_id);
                 }
             });
         });
     });
 });
 
+// calculate worksheet and display results
+router.get('/:worksheet_id/calc', function (req, res) {
+    var worksheet_id = req.params.worksheet_id;
+    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
+        if (!foundWorksheet) {
+            console.log("no worksheet was found!!!");
+        }
+        if (err) {
+            console.log(err);
+        } else {
+            foundWorksheet.prettyDate = function (date) {
+                return new Date(date).toLocaleDateString();
+            };
+            res.render('worksheets/calc.njk', {
+                worksheet: foundWorksheet
+            });
+        }
+    });
+});
+
 // remove an assessment from a worksheet
-router.delete('/:worksheet_id/:assessment_id', function (req, res) {
+router['delete']('/:worksheet_id/:assessment_id', function (req, res) {
     var worksheetID = req.params.worksheet_id,
         assessmentID = req.params.assessment_id;
     Worksheet.update({
@@ -141,8 +162,8 @@ router.delete('/:worksheet_id/:assessment_id', function (req, res) {
     });
 });
 
-// destroy participant
-router.delete('/:id', function (req, res) {
+// destroy a worksheet
+router['delete']('/:id', function (req, res) {
     Worksheet.findByIdAndRemove(req.params.id, function (err) {
         res.redirect("/worksheets");
     });

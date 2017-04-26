@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    page-break-inside: auto;
+}
+
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+thead {
+    display: table-header-group;
+}
+
+th,
+td {
+    font-size: 90%;
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+th {
+    background-color: #545454;
+    color: #E9E9E9;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: #D2D2FF;
+}
+
+tr.fail td {
+    background-color: #DA4747;
+}
+
+.dob,
+.eval-date,
+.cardio-min,
+.cardio-sec {
+    display: none;
+}

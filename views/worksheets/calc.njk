@@ -1,0 +1,125 @@
+<html>
+
+<head>
+    <title>{{ worksheet.title }}</title>
+    <link rel="stylesheet" href="/stylesheets/calc-style.css">
+</head>
+
+<body>
+    <h3>{{ worksheet.title }}</h3>
+    <h4>{{ worksheet.description }}</h4>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">NAME</th>
+                <th rowspan="2">AVERAGE</th>
+                <th colspan="2">RESTING</th>
+                <th colspan="2">TEST</th>
+                <th colspan="2">BODY COMP</th>
+                <th colspan="2">BODY FLEX</th>
+                <th colspan="2">SIT UPS</th>
+                <th colspan="2">BENCH PRESS</th>
+                <th colspan="2">LEG PRESS</th>
+                <th colspan="4">RUN OR WALK</th>
+                <tr>
+                    <th>Last</th>
+                    <th>First</th>
+                    <th>Heart Rate</th>
+                    <th>Blood Pressure</th>
+                    <th>Weight</th>
+                    <th>Age</th>
+                    <th>#</th>
+                    <th>%</th>
+                    <th>#</th>
+                    <th>%</th>
+                    <th>#</th>
+                    <th>%</th>
+                    <th>#</th>
+                    <th>%</th>
+                    <th>#</th>
+                    <th>%</th>
+                    <th>Option</th>
+                    <th>Time</th>
+                    <th>HR</th>
+                    <th>%</th>
+                </tr>
+        </thead>
+        <tbody>
+            {% for assessment in worksheet.assessments %}
+            <tr>
+                <td class="last">{{ assessment.participant.name.last }}</td>
+                <td class="first">{{ assessment.participant.name.first }}</td>
+                <td class="ave"></td>
+                <td class="hr">{{ assessment.heart_rate }}</td>
+                <td class="bp">{{ assessment.blood_pressure }}</td>
+                <td class="weight">{{ assessment.weight }}</td>
+                <td class="age">?</td>
+                <td class="body-fat">{{ assessment.body_fat }}</td>
+                <td class="body-fat-result">?</td>
+                <td class="flex">{{ assessment.flex }}</td>
+                <td class="flex-result">?</td>
+                <td class="situp">{{ assessment.situp }}</td>
+                <td class="situp-result">?</td>
+                <td class="bench">{{ assessment.bench }}</td>
+                <td class="bench-result">?</td>
+                <td class="leg">{{ assessment.leg }}</td>
+                <td class="leg-result">?</td>
+                <td class="cardio-type">{{ assessment.cardio.type }}</td>
+                <td class="cardio-time">{{ assessment.cardio.time }}</td>
+                <td class="cardio-hr">
+                    {% if assessment.cardio.heart_rate %}
+                        {{ assessment.cardio.heart_rate }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td class="cardio-result">?</td>
+                <!-- items not visible on page -->
+                <td class="dob">{{ assessment.participant.dob }}</td>
+                <td class="eval-date">{{ assessment.eval_date }}</td>
+                <td class="cardio-min">{{ assessment.cardio.min }}</td>
+                <td class="cardio-sec">{{ assessment.cardio.sec }}</td>
+            </tr>
+            {% else %}
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Overall Report Averages</h3>
+    <ul>
+        <li>Body Composition - 92.4%</li>
+        <li>Flexibility - 96.7%</li>
+        <li>Sit Ups - 98.0%</li>
+        <li>Bench Press - 90.8%</li>
+        <li>Leg Press - 97.9%</li>
+        <li>1.5-mile Run - 95.5%</li>
+        <li>1-mile Walk - 91.4%</li>
+        <li>Overall Score - 94.6%</li>
+        <li>Total Participants - 94</li>
+    </ul>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/scripts/calcTables.js"></script>
+    <script src="/scripts/calcScript.js"></script>
+</body>
+</html>
