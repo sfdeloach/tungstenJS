@@ -1,6 +1,7 @@
 /*jslint devel: true*/
 /*globals $: false*/
 
+// Edit button in worksheets/show.njk
 var workShowEditRow =
     "<tr>" +
     "<form action='/worksheets/{{ worksheet._id }}' method='POST'>" +
@@ -26,7 +27,7 @@ var workShowEditRow =
         "<td><input class='form-control' name='assessment[cardio_sec]' type='number' step=1 min=0 required></td>" +
         "<td><input class='form-control' name='assessment[cardio_heartrate]' type='number' step=1 min=0 ></td>" +
         "<td>" +
-            "<input class='btn btn-success btn-sm btn-block' type='submit' value='save'>" +
+            "<input id='workshow-save' class='btn btn-success btn-sm btn-block' type='submit' value='save'>" +
         "</td>" +
     "</form>" +
     "</tr>";
@@ -73,18 +74,18 @@ $(document).ready(function () {
                 hh = now.getHours() < 10 ? ("0" + now.getHours()) : now.getHours(),
                 mm = now.getMinutes() < 10 ? ("0" + now.getMinutes()) : now.getMinutes(),
                 ss = now.getSeconds() < 10 ? ("0" + now.getSeconds()) : now.getSeconds(),
-                id = yy + MM + dd + hh + mm + ss;
+                id = yy.toString() + MM + dd + hh + mm + ss;
             $("#partnew-id").prop('disabled', false);
-            $("#partnew-id").val(id.toString());
+            $("#partnew-id").val(id);
             valid = true;
         } else {
-            // check for unique PD id number
+            // TODO: check for unique PD id number
             valid = true;
         }
         
         if (!valid) {
             eventObject.preventDefault();
-            alert("ERROR: Duplicate ID number was found.");
+            alert("ERROR: ID numbers must be unique!");
         }
         
         return valid;
@@ -94,5 +95,13 @@ $(document).ready(function () {
     // Edit button in worksheets/show.njk
     $('.workshow-edit').click(function (eventObject) {
         $(this).parent().parent().replaceWith(workShowEditRow);
+        $(".workshow-edit").prop('disabled', true);
+        // TODO: autopopulate data in the fields
+    });
+    
+    $(document).on('click', '#workshow-save', function(eventObject) {
+        // TODO: PUT request to save edit to db
+        location.reload();
+        $(".workshow-edit").prop('disabled', false); // is this necessary if the page refreshes?
     });
 });

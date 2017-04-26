@@ -86,12 +86,14 @@ router.get('/:id', function (req, res) {
 router.post('/:id', function (req, res) {
     var id = req.params.id,
         newAssessment = req.body.assessment,
-        secondsToString = ((newAssessment.cardio_sec < 10) ? ("0" + newAssessment.cardio_sec) : newAssessment.cardio_sec),
+        min = parseInt(newAssessment.cardio_min, 10),
+        sec = parseInt(newAssessment.cardio_sec, 10),
+        secToString = ((sec < 10) ? ("0" + sec) : sec),
         cardio = {
             type: newAssessment.cardio_type,
-            min: newAssessment.cardio_min,
-            sec: newAssessment.cardio_sec,
-            time: newAssessment.cardio_min + ":" + secondsToString,
+            min: min,
+            sec: sec,
+            time: min + ":" + secToString,
             heart_rate: newAssessment.cardio_heartrate
         };
     newAssessment.cardio = cardio;

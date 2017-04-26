@@ -11,6 +11,8 @@ var express = require('express'),
     methodOverride = require('method-override'),
     bodyParser = require('body-parser'),
     assert = require('assert'),
+    favicon = require('serve-favicon'),
+    path = require('path'),
     Participant = require('./models/participant'),
     User = require('./models/user'),
     Worksheet = require('./models/worksheet');
@@ -44,6 +46,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(methodOverride("_method"));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // Wellness app routing
 var indexRoutes = require('./routes/index'),
