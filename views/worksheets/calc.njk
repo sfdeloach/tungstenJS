@@ -54,8 +54,8 @@
                 <td class="bp">{{ assessment.blood_pressure }}</td>
                 <td class="weight">{{ assessment.weight }}</td>
                 <td class="age">?</td>
-                <td class="body-fat">{{ assessment.body_fat }}</td>
-                <td class="body-fat-result">?</td>
+                <td class="body">{{ assessment.body_fat }}</td>
+                <td class="body-result">?</td>
                 <td class="flex">{{ assessment.flex }}</td>
                 <td class="flex-result">?</td>
                 <td class="situp">{{ assessment.situp }}</td>
@@ -75,6 +75,7 @@
                 </td>
                 <td class="cardio-result">?</td>
                 <!-- items not visible on page -->
+                <td class="sex">{{ assessment.participant.sex }}</td>
                 <td class="dob">{{ assessment.participant.dob }}</td>
                 <td class="eval-date">{{ assessment.eval_date }}</td>
                 <td class="cardio-min">{{ assessment.cardio.min }}</td>

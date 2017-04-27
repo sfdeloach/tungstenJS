@@ -1,8 +1,49 @@
 /*jslint devel: true*/
 /*globals $: false*/
 
-var table = {
-    benc_f_2: [
+var bodyTables = {
+    lookup: function (sex, age, body) {
+        'use strict';
+        var table = "body" + sex.toUpperCase() + Math.floor(age / 10),
+            i, x0, x1, y0, y1;
+        
+        console.log(this[table].length);
+        
+        for (i = 0; i < this[table].length; i += 1) {
+            x0 += 1;
+        }
+        
+        return ":-)";
+    },
+    bodyM3: [
+        { y: 0.991, x: 0.0},
+        { y: 0.99, x: 5.2},
+        { y: 0.95, x: 9.1},
+        { y: 0.90, x: 11.3},
+        { y: 0.85, x: 12.7},
+        { y: 0.80, x: 13.9},
+        { y: 0.75, x: 14.9},
+        { y: 0.70, x: 15.9},
+        { y: 0.65, x: 16.6},
+        { y: 0.60, x: 17.5},
+        { y: 0.55, x: 18.2},
+        { y: 0.50, x: 19.0},
+        { y: 0.45, x: 19.7},
+        { y: 0.40, x: 20.5},
+        { y: 0.35, x: 21.4},
+        { y: 0.30, x: 22.3},
+        { y: 0.25, x: 23.2},
+        { y: 0.20, x: 24.2},
+        { y: 0.15, x: 25.5},
+        { y: 0.10, x: 27.3},
+        { y: 0.05, x: 29.9},
+        { y: 0.01, x: 35.6},
+        { y: 0.00999, x: 100.0}
+    ]
+};
+
+var bencTables = {
+    benc_f2: [
         { y: 0.991, x: 100.00 },
         { y: 0.99, x: 1.02 },
         { y: 0.95, x: 1.01 },

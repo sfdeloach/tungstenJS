@@ -1,23 +1,22 @@
 /*jslint devel: true*/
 /*globals $: false*/
+/*globals bodyTables: false*/
 
 $(document).ready(function () {
     'use strict';
-    var evalDate = $('.eval-date'),
-        evalDateTime,
+    var sex = $('.sex'),
         dob = $('.dob'),
-        dobTime,
+        evalDate = $('.eval-date'),
         age = $('.age'),
-        ageTime,
+        //
+        body = $('.body'),
+        bodyResult = $('.body-result'),
+        //
         sumParticipants = evalDate.length,
         i;
     
     for (i = 0; i < sumParticipants; i += 1) {
-        evalDateTime = new Date(evalDate[i].innerHTML).getTime();
-        dobTime = new Date(dob[i].innerHTML).getTime();
-        ageTime = Math.floor((evalDateTime - dobTime) / (1000 * 60 * 60 * 24 * 365.25));
-        age[i].innerHTML = ageTime;
+        age[i].innerHTML = Math.floor((new Date(evalDate[i].innerHTML).getTime() - new Date(dob[i].innerHTML).getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+        bodyResult[i].innerHTML = bodyTables.lookup(sex[i].innerHTML, age[i].innerHTML, body[i].innerHTML);
     }
-    
-    console.log(table.benc_f_2);
 });
