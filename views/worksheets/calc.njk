@@ -46,7 +46,7 @@
         </thead>
         <tbody>
             {% for assessment in worksheet.assessments %}
-            <tr>
+            <tr class="result-row">
                 <td class="last">{{ assessment.participant.name.last }}</td>
                 <td class="first">{{ assessment.participant.name.first }}</td>
                 <td class="ave">?</td>
@@ -109,15 +109,15 @@
     <hr>
     <h3>Overall Report Averages</h3>
     <ul>
-        <li>Body Composition - 92.4%</li>
-        <li>Flexibility - 96.7%</li>
-        <li>Sit Ups - 98.0%</li>
-        <li>Bench Press - 90.8%</li>
-        <li>Leg Press - 97.9%</li>
-        <li>1.5-mile Run - 95.5%</li>
-        <li>1-mile Walk - 91.4%</li>
-        <li>Overall Score - 94.6%</li>
-        <li>Total Participants - 94</li>
+        <li>Body Composition - <span id="body-ave">???</span></li>
+        <li>Flexibility - <span id="flex-ave">???</span></li>
+        <li>Sit Ups - <span id="sit-ave">???</span></li>
+        <li>Bench Press - <span id="bench-ave">???</span></li>
+        <li>Leg Press - <span id="leg-ave">???</span></li>
+        <li>1.5-mile Run - <span id="run-ave">???</span></li>
+        <li>1-mile Walk - <span id="walk-ave">???</span></li>
+        <li>Overall Score - <span id="overall-ave">???</span></li>
+        <li>Total Participants - <span id="total-part">???</span></li>
     </ul>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="/scripts/calcTables.js"></script>

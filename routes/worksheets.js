@@ -4,7 +4,7 @@
 
 var express = require("express"),
     router = express.Router(),
-    dateHelper = require('../helpers/kram-datetime'),
+    dateHelper = require('../helpers/myDatetime'),
     Participant = require('../models/participant'),
     User = require('../models/user'),
     Worksheet = require('../models/worksheet');
@@ -128,10 +128,16 @@ router.get('/:worksheet_id/calc', function (req, res) {
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (!foundWorksheet) {
             console.log("no worksheet was found!!!");
-        }
-        if (err) {
+            res.send('Sorry, the requested worksheet results is not available...<a href="/worksheets">Return to worksheets</a>');
+        } else if (err) {
             console.log(err);
+            res.send(err);
         } else {
+            // sort assessments alphabetically by last name
+            foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
+                return a.participant.name.last.localeCompare(b.participant.name.last);
+            });
+            // add function to prettify date for use inside the template
             foundWorksheet.prettyDate = function (date) {
                 return new Date(date).toLocaleDateString();
             };
@@ -140,6 +146,18 @@ router.get('/:worksheet_id/calc', function (req, res) {
             });
         }
     });
+});
+
+// update an assessment <--TODO
+router.put('/:worksheet_id', function (req, res) {
+    var updateData = req.body,
+        worksheet_id = req.params.worksheet_id;
+    console.log("update route just hit!");
+    console.log("sending:");
+    console.log(updateData);
+    console.log("to:");
+    console.log(worksheet_id);
+    res.send();
 });
 
 // remove an assessment from a worksheet

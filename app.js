@@ -1,5 +1,6 @@
 /*jslint node: true */
 /*jslint nomen: true */
+
 "use strict";
 
 // Setup dependencies
@@ -18,7 +19,7 @@ var express = require('express'),
     Worksheet = require('./models/worksheet');
 
 var app = express();
-app.use(express.static(__dirname + '/public'));
+app.use(express['static'](__dirname + '/public'));
 
 // Prepare database
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/tungsten';

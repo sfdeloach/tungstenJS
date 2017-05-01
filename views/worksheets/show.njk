@@ -112,7 +112,7 @@
                         {% for assessment in worksheet.assessments %}
                         <tr>
                             <td class="col-width16">
-                                <a href="/participants/{{ assessment.participant._id }}/edit">{{ assessment.participant.name.last }}, {{ assessment.participant.name.first}}</a>
+                                <a id="{{ assessment.participant.dept_id }}" href="/participants/{{ assessment.participant._id }}/edit">{{ assessment.participant.name.last }}, {{ assessment.participant.name.first}}</a>
                             </td>
                             <td>{{ worksheet.prettyDate(assessment.eval_date) }}</td>
                             <td>{{ assessment.weight }}</td>

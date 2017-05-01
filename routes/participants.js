@@ -4,7 +4,7 @@
 
 var express = require("express"),
     router = express.Router(),
-    dateHelper = require('../helpers/kram-datetime'),
+    dateHelper = require('../helpers/myDatetime'),
     Participant = require('../models/participant'),
     User = require('../models/user'),
     Worksheet = require('../models/worksheet');
@@ -93,7 +93,7 @@ router.put('/:id', function (req, res) {
 });
 
 // destroy participant
-router.delete('/:id', function (req, res) {
+router['delete']('/:id', function (req, res) {
     Participant.findByIdAndRemove(req.params.id, function (err) {
         res.redirect("/participants");
     });

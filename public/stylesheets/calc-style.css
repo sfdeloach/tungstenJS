@@ -32,7 +32,7 @@ th {
     color: #E9E9E9;
 }
 
-tbody tr:nth-child(even) td {
+tr.shade td {
     background-color: #D2D2FF;
 }
 
