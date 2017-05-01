@@ -39,7 +39,7 @@ $(document).ready(function () {
         walkParticipants = 0,
         runPartiticipants = 0,
         i;
-
+    
     $.each($('.sex'), function (index, value) {
         sex.push(value.innerHTML);
     });
@@ -153,7 +153,9 @@ $(document).ready(function () {
             hasFailed = false;
         }
         
-        ave[i].innerHTML = ((parseFloat(benchResult[i].innerHTML) + parseFloat(bodyResult[i].innerHTML) + parseFloat(flexResult[i].innerHTML) + parseFloat(legResult[i].innerHTML) + parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6).toFixed(1);
+        ave[i].innerHTML = ((parseFloat(benchResult[i].innerHTML) + parseFloat(bodyResult[i].innerHTML) +
+                             parseFloat(flexResult[i].innerHTML) + parseFloat(legResult[i].innerHTML) +
+                             parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6).toFixed(1);
         overallAve += parseFloat(ave[i].innerHTML);
     }
     

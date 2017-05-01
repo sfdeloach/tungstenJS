@@ -46,11 +46,11 @@
                             <th>Situp</th>
                             <th>Bench</th>
                             <th>Leg</th>
-                            <th class="col-width09">Cardio</th>
+                            <th>Cardio</th>
                             <th>Min</th>
                             <th>Sec</th>
                             <th>Heart</th>
-                            <th>&nbsp;</th>
+                            <th class="col-width05">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +73,7 @@
                             <td><input class='form-control' name='assessment[situp]' type='number' step=1 min=0 required></td>
                             <td><input class='form-control' name='assessment[bench]' type='number' step=1 min=0 required></td>
                             <td><input class='form-control' name='assessment[leg]' type='number' step=1 min=0 required></td>
-                            <td class="col-width09">
+                            <td>
                                 <select class='form-control' name='assessment[cardio_type]' >
                                     <option value="walk">walk</option>
                                     <option value="run">run</option>
@@ -82,7 +82,7 @@
                             <td><input class='form-control' name='assessment[cardio_min]' type='number' step=1 min=0 required></td>
                             <td><input class='form-control' name='assessment[cardio_sec]' type='number' step=1 min=0 required></td>
                             <td><input class='form-control' name='assessment[cardio_heartrate]' type='number' step=1 min=0 ></td>
-                            <td>
+                            <td class="col-width05">
                                 <input class="btn btn-success btn-sm btn-block" type="submit" value="save">
                             </td>
                         </form>
@@ -92,7 +92,7 @@
                 <table id="worksheetShowTable" class="tablesorter table table-striped header-fixed">
                     <thead>
                         <tr>
-                            <th class="col-width16">Name</th>
+                            <th class="col-width12">Name</th>
                             <th>Date</th>
                             <th>Weight</th>
                             <th>Heart</th>
@@ -102,16 +102,16 @@
                             <th>Situp</th>
                             <th>Bench</th>
                             <th>Leg</th>
-                            <th class="col-width09">Cardio</th>
-                            <th class="col-width09">Time</th>
+                            <th>Cardio</th>
+                            <th>Time</th>
                             <th>Heart</th>
-                            <th>Edit/Delete</th>
+                            <th class="col-width12">Edit/Delete</th>
                         </tr>
                     </thead>
                     <tbody id="showTableBody">
                         {% for assessment in worksheet.assessments %}
                         <tr>
-                            <td class="col-width16">
+                            <td class="col-width12">
                                 <a id="{{ assessment.participant.dept_id }}" href="/participants/{{ assessment.participant._id }}/edit">{{ assessment.participant.name.last }}, {{ assessment.participant.name.first}}</a>
                             </td>
                             <td>{{ worksheet.prettyDate(assessment.eval_date) }}</td>
@@ -123,10 +123,10 @@
                             <td>{{ assessment.situp }}</td>
                             <td>{{ assessment.bench }}</td>
                             <td>{{ assessment.leg }}</td>
-                            <td class="col-width09">{{ assessment.cardio.type }}</td>
-                            <td class="col-width09">{{ assessment.cardio.time }}</td>
+                            <td>{{ assessment.cardio.type }}</td>
+                            <td>{{ assessment.cardio.time }}</td>
                             <td>{{ assessment.cardio.heart_rate }}</td>
-                            <td>
+                            <td class="col-width12">
                                 <button class="btn btn-primary btn-xs workshow-edit" type="button">
                                     <i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                                 </button>
@@ -136,6 +136,7 @@
                                     </button>
                                 </form>
                             </td>
+                            <td class="hidden assessment-id">{{ assessment._id }}</td>
                         </tr>
                         {% else %}
                             <td class="col-width12">no assessments to display</td>

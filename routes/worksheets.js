@@ -89,13 +89,12 @@ router.post('/:worksheet_id', function (req, res) {
         newAssessment = req.body.assessment,
         min = parseInt(newAssessment.cardio_min, 10),
         sec = parseInt(newAssessment.cardio_sec, 10),
-        secToString = ((sec < 10) ? ("0" + sec) : sec),
         cardio = {
             type: newAssessment.cardio_type,
             min: min,
             sec: sec,
-            time: min + ":" + secToString,
-            heart_rate: newAssessment.cardio_heartrate
+            time: min + ":" + ((sec < 10) ? ("0" + sec) : sec),
+            heart_rate: (newAssessment.cardio_type === 'walk') ? newAssessment.cardio_heartrate : null
         };
     newAssessment.cardio = cardio;
     newAssessment.inactive_on = null;
@@ -122,6 +121,34 @@ router.post('/:worksheet_id', function (req, res) {
     });
 });
 
+// update an assessment <--TODO
+router.put('/:worksheet_id', function (req, res) {
+    var updateData = req.body,
+        worksheet_id = req.params.worksheet_id;
+    updateData.eval_date += "T00:00:00.000Z";
+    updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date);
+    updateData.weight = parseInt(updateData.weight, 10);
+    updateData.body_fat = parseInt(updateData.body_fat, 10);
+    updateData.flex = parseFloat(updateData.flex, 10);
+    updateData.situp = parseInt(updateData.situp, 10);
+    updateData.bench = parseInt(updateData.bench, 10);
+    updateData.leg = parseInt(updateData.leg, 10);
+    updateData.cardio.min = parseInt(updateData.cardio.min, 10);
+    updateData.cardio.sec = parseInt(updateData.cardio.sec, 10);
+    updateData.cardio.time = updateData.cardio.min + ":" +
+        ((updateData.cardio.sec < 10) ? ("0" + updateData.cardio.sec) : updateData.cardio.sec);
+    updateData.cardio.heart_rate = (updateData.cardio.type === 'walk') ? parseInt(updateData.cardio.heart_rate, 10) : null;
+    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(foundWorksheet);
+            // TODO replace assessment data with 'updateData'
+        }
+    });
+    res.send(updateData);
+});
+
 // calculate worksheet and display results
 router.get('/:worksheet_id/calc', function (req, res) {
     var worksheet_id = req.params.worksheet_id;
@@ -146,18 +173,6 @@ router.get('/:worksheet_id/calc', function (req, res) {
             });
         }
     });
-});
-
-// update an assessment <--TODO
-router.put('/:worksheet_id', function (req, res) {
-    var updateData = req.body,
-        worksheet_id = req.params.worksheet_id;
-    console.log("update route just hit!");
-    console.log("sending:");
-    console.log(updateData);
-    console.log("to:");
-    console.log(worksheet_id);
-    res.send();
 });
 
 // remove an assessment from a worksheet

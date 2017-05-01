@@ -39,7 +39,7 @@ function editParticipant(row) {
     worksheetShowEditRow =
         "<tr>" +
         "<td>" +
-        "<input class='form-control' list='participants' name='assessment[dept_id]' type='text' autocomplete='off' required autofocus value='" + row.deptID + "'>" +
+        "<input class='form-control' list='participants' name='assessment[dept_id]' type='text' disabled value='" + row.deptID + "'>" +
         "</td>" +
         "<td class='col-width12'><input class='form-control' name='assessment[eval_date]' type='date' required value='" + date + "'></td>" +
         "<td><input class='form-control' name='assessment[weight]' type='number' step=1 min=0 required value='" + row.weight + "'></td>" +
@@ -50,18 +50,19 @@ function editParticipant(row) {
         "<td><input class='form-control' name='assessment[situp]' type='number' step=1 min=0 required value='" + row.situp + "'></td>" +
         "<td><input class='form-control' name='assessment[bench]' type='number' step=1 min=0 required value='" + row.bench + "'></td>" +
         "<td><input class='form-control' name='assessment[leg]' type='number' step=1 min=0 required value='" + row.leg + "'></td>" +
-        "<td class='col-width09'>" +
+        "<td>" +
         "<select class='form-control' name='assessment[cardio_type]'>" +
         "<option value='walk'>walk</option>" +
         "<option value='run'" + cardioOption + ">run</option>" +
         "</select>" +
         "</td>" +
-        "<td><input class='form-control' name='assessment[cardio_min]' type='number' step=1 min=0 required value='" + min + "'></td>" +
-        "<td><input class='form-control' name='assessment[cardio_sec]' type='number' step=1 min=0 required value='" + sec + "'></td>" +
+        "<td class='col-width03'><input class='form-control' name='assessment[cardio_min]' type='number' step=1 min=0 required value='" + min + "'></td>" +
+        "<td class='col-width03'><input class='form-control' name='assessment[cardio_sec]' type='number' step=1 min=0 required value='" + sec + "'></td>" +
         "<td><input class='form-control' name='assessment[cardio_heartrate]' type='number' step=1 min=0 value='" + row.cardioHR + "'></td>" +
         "<td>" +
         "<button id='workshow-save' class='btn btn-success btn-sm btn-block' type='button'>update</button>" +
         "</td>" +
+        "<td class='hidden'>" + row.assessmentID + "</td>" +
         "</tr>";
 
     return worksheetShowEditRow;
@@ -139,7 +140,7 @@ $(document).ready(function () {
     $('.workshow-edit').click(function (eventObject) {
         var col = $(this).parent().siblings(),
             row = {};
-
+        
         row.deptID = col[0].childNodes[1].id;
         row.date = col[1].innerHTML;
         row.weight = col[2].innerHTML;
@@ -153,42 +154,44 @@ $(document).ready(function () {
         row.cardio = col[10].innerHTML;
         row.time = col[11].innerHTML;
         row.cardioHR = col[12].innerHTML;
+        row.assessmentID = col[13].innerHTML;
 
         $(this).parent().parent().replaceWith(editParticipant(row));
         $(".workshow-edit").prop('disabled', true);
     });
 
     $(document).on('click', '#workshow-save', function (eventObject) {
+        $(this).html('<i class="fa fa-spinner fa-spin fa-fw"></i>');
+        
         var col = $(this).parent().siblings(),
-            updatedRow = {},
+            assessment = {},
             pathname = window.location.pathname;
 
-        updatedRow.deptID = col[0].childNodes[0].value;
-        updatedRow.date = col[1].childNodes[0].value;
-        updatedRow.weight = col[2].childNodes[0].value;
-        updatedRow.hr = col[3].childNodes[0].value;
-        updatedRow.pressure = col[4].childNodes[0].value;
-        updatedRow.body = col[5].childNodes[0].value;
-        updatedRow.flex = col[6].childNodes[0].value;
-        updatedRow.situp = col[7].childNodes[0].value;
-        updatedRow.bench = col[8].childNodes[0].value;
-        updatedRow.leg = col[9].childNodes[0].value;
-        updatedRow.cardio = col[10].childNodes[0].value;
-        updatedRow.min = col[11].childNodes[0].value;
-        updatedRow.sec = col[12].childNodes[0].value;
-        updatedRow.cardioHR = col[13].childNodes[0].value;
-
+        assessment.eval_date = col[1].childNodes[0].value;
+        assessment.weight = col[2].childNodes[0].value;
+        assessment.heart_rate = col[3].childNodes[0].value;
+        assessment.blood_pressure = col[4].childNodes[0].value;
+        assessment.body_fat = col[5].childNodes[0].value;
+        assessment.flex = col[6].childNodes[0].value;
+        assessment.situp = col[7].childNodes[0].value;
+        assessment.bench = col[8].childNodes[0].value;
+        assessment.leg = col[9].childNodes[0].value;
+        assessment._id = col[14].innerHTML;
+        assessment.cardio = {};
+        assessment.cardio.type = col[10].childNodes[0].value;
+        assessment.cardio.min = col[11].childNodes[0].value;
+        assessment.cardio.sec = col[12].childNodes[0].value;
+        assessment.cardio.heart_rate = col[13].childNodes[0].value;
+        
         $.ajax({ url: pathname + "?_method=PUT",
-                // The data to send (will be converted to a query string)
-                data: updatedRow,
-                // Whether this is a POST or GET request
+                data: assessment,
                 type: "POST"
             })
-            .done(function () {
+            .done(function (json) {
+                // 'json' is data (if any) provided back to the browser from the server
+                console.log("The server said: " + json);
                 location.reload(); // TODO: sloppy??? cleaner to update the dom instead of a complete refresh???
             })
-            // Code to run if the request fails; the raw request and
-            // status codes are passed to the function
             .fail(function (xhr, status, errorThrown) {
                 alert("Sorry, there was a problem!");
                 console.log("Error: " + errorThrown);

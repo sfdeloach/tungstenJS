@@ -4,8 +4,9 @@ var tables = {
     walk: function (sex, age, min, sec, hr, weight) {
         'use strict';
         var time = parseFloat(min) + parseFloat(sec) / 60,
-            sVal = (sex === 'M') ? 1 : 0,
-            vO2 = 132.853 - (0.0769 * parseFloat(weight)) - (0.3877 * parseFloat(age)) + (6.315 * sVal) - (3.2649 * parseFloat(time)) - (0.1565 * parseFloat(hr));
+            sVal = (sex === 'f') ? 0 : 1,
+            vO2 = 132.853 - (0.0769 * parseFloat(weight)) - (0.3877 * parseFloat(age)) +
+                (6.315 * sVal) - (3.2649 * parseFloat(time)) - (0.1565 * parseFloat(hr));
 
         return this.lookup("walk", sex, age, vO2);
     },

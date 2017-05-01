@@ -42,7 +42,7 @@ body {
 /*default column width*/
 .table>tbody>tr>td,
 .table>thead>tr>th {
-    width: 6%;
+    width: 6.333%;
     float: left;
     text-align: center;
 }
@@ -129,6 +129,20 @@ body {
     width: 5%;
     float: left;
     text-align: right;
+}
+
+.table>tbody>tr>td.col-width05,
+.table>thead>tr>th.col-width05 {
+    width: 5%;
+    float: left;
+    text-align: center;
+}
+
+.table>tbody>tr>td.col-width03,
+.table>thead>tr>th.col-width03 {
+    width: 5%;
+    float: left;
+    text-align: center;
 }
 
 .empty-row {
