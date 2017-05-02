@@ -2,6 +2,61 @@
 /*globals $: false*/
 /*globals tables: false*/
 
+// Closure for round10() function
+(function () {
+    'use strict';
+    /**
+    * Decimal adjustment of a number.
+    *
+    * @param {String}  type  The type of adjustment.
+    * @param {Number}  value The number.
+    * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
+    * @returns {Number} The adjusted value.
+    */
+    function decimalAdjust(type, value, exp) {
+        // If the exp is undefined or zero...
+        if (typeof exp === 'undefined' || +exp === 0) {
+            return Math[type](value);
+        }
+        value = +value;
+        exp = +exp;
+        // If the value is not a number or the exp is not an integer...
+        if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+            return NaN;
+        }
+        // If the value is negative...
+        if (value < 0) {
+            return -decimalAdjust(type, -value, exp);
+        }
+        // Shift
+        value = value.toString().split('e');
+        value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+        // Shift back
+        value = value.toString().split('e');
+        return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+    }
+
+    // Decimal round
+    if (!Math.round10) {
+        Math.round10 = function (value, exp) {
+            return decimalAdjust('round', value, exp);
+        };
+    }
+    
+    // Decimal floor
+    if (!Math.floor10) {
+        Math.floor10 = function (value, exp) {
+            return decimalAdjust('floor', value, exp);
+        };
+    }
+    // Decimal ceil
+    if (!Math.ceil10) {
+        Math.ceil10 = function (value, exp) {
+            return decimalAdjust('ceil', value, exp);
+        };
+    }
+}());
+
 $(document).ready(function () {
     'use strict';
     var resultRow = $('.result-row'),
@@ -153,9 +208,11 @@ $(document).ready(function () {
             hasFailed = false;
         }
         
-        ave[i].innerHTML = ((parseFloat(benchResult[i].innerHTML) + parseFloat(bodyResult[i].innerHTML) +
+        // TODO!!!  Implement round10 for all calculating functions!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+        
+        ave[i].innerHTML = Math.round10((parseFloat(benchResult[i].innerHTML) + parseFloat(bodyResult[i].innerHTML) +
                              parseFloat(flexResult[i].innerHTML) + parseFloat(legResult[i].innerHTML) +
-                             parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6).toFixed(1);
+                             parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6, -1).toFixed(1);
         overallAve += parseFloat(ave[i].innerHTML);
     }
     
@@ -177,6 +234,6 @@ $(document).ready(function () {
         $('#walk-ave').text((walkAve / walkParticipants).toFixed(1) + '%');
     }
     
-    $('#overall-ave').text((overallAve / totalParticipants).toFixed(1) + '%');
+    $('#overall-ave').text(Math.round10(overallAve / totalParticipants, -1).toFixed(1) + '%');
     $('#total-part').text(totalParticipants);
 });

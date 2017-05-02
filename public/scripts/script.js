@@ -176,7 +176,7 @@ $(document).ready(function () {
         assessment.situp = col[7].childNodes[0].value;
         assessment.bench = col[8].childNodes[0].value;
         assessment.leg = col[9].childNodes[0].value;
-        assessment._id = col[14].innerHTML;
+        assessment.id = col[14].innerHTML;
         assessment.cardio = {};
         assessment.cardio.type = col[10].childNodes[0].value;
         assessment.cardio.min = col[11].childNodes[0].value;
@@ -189,7 +189,8 @@ $(document).ready(function () {
             })
             .done(function (json) {
                 // 'json' is data (if any) provided back to the browser from the server
-                console.log("The server said: " + json);
+                console.log("The server said: ");
+                console.log(JSON.stringify(json));
                 location.reload(); // TODO: sloppy??? cleaner to update the dom instead of a complete refresh???
             })
             .fail(function (xhr, status, errorThrown) {

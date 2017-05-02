@@ -121,14 +121,15 @@ router.post('/:worksheet_id', function (req, res) {
     });
 });
 
-// update an assessment <--TODO
+// update an assessment (this route is hit via ajax call)
 router.put('/:worksheet_id', function (req, res) {
     var updateData = req.body,
         worksheet_id = req.params.worksheet_id;
+    
     updateData.eval_date += "T00:00:00.000Z";
     updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date);
     updateData.weight = parseInt(updateData.weight, 10);
-    updateData.body_fat = parseInt(updateData.body_fat, 10);
+    updateData.body_fat = parseFloat(updateData.body_fat, 10);
     updateData.flex = parseFloat(updateData.flex, 10);
     updateData.situp = parseInt(updateData.situp, 10);
     updateData.bench = parseInt(updateData.bench, 10);
@@ -138,15 +139,34 @@ router.put('/:worksheet_id', function (req, res) {
     updateData.cardio.time = updateData.cardio.min + ":" +
         ((updateData.cardio.sec < 10) ? ("0" + updateData.cardio.sec) : updateData.cardio.sec);
     updateData.cardio.heart_rate = (updateData.cardio.type === 'walk') ? parseInt(updateData.cardio.heart_rate, 10) : null;
-    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
+    
+    Worksheet.update({
+        'assessments._id': updateData.id
+    }, {
+        '$set': {
+            'assessments.$.eval_date': updateData.eval_date,
+            'assessments.$.heart_rate': updateData.heart_rate,
+            'assessments.$.blood_pressure': updateData.blood_pressure,
+            'assessments.$.weight': updateData.weight,
+            'assessments.$.body_fat': updateData.body_fat,
+            'assessments.$.flex': updateData.flex,
+            'assessments.$.situp': updateData.situp,
+            'assessments.$.bench': updateData.bench,
+            'assessments.$.leg': updateData.leg,
+            'assessments.$.cardio.type': updateData.cardio.type,
+            'assessments.$.cardio.min': updateData.cardio.min,
+            'assessments.$.cardio.time': updateData.cardio.time,
+            'assessments.$.cardio.heart_rate': updateData.cardio.heart_rate
+        }
+    }, function (err, updateInfo) {
         if (err) {
+            console.log("An error occurred!");
             console.log(err);
         } else {
-            console.log(foundWorksheet);
-            // TODO replace assessment data with 'updateData'
+            console.log(updateData);
+            res.send(updateData);
         }
     });
-    res.send(updateData);
 });
 
 // calculate worksheet and display results
