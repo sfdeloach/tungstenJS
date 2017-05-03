@@ -126,6 +126,9 @@ router.put('/:worksheet_id', function (req, res) {
     var updateData = req.body,
         worksheet_id = req.params.worksheet_id;
     
+    console.log(" worksheet id: " + worksheet_id);
+    console.log("assessment id: " + updateData.assessment_id);
+    
     updateData.eval_date += "T00:00:00.000Z";
     updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date);
     updateData.weight = parseInt(updateData.weight, 10);
@@ -141,7 +144,7 @@ router.put('/:worksheet_id', function (req, res) {
     updateData.cardio.heart_rate = (updateData.cardio.type === 'walk') ? parseInt(updateData.cardio.heart_rate, 10) : null;
     
     Worksheet.update({
-        'assessments._id': updateData.id
+        'assessments._id': updateData.assessment_id
     }, {
         '$set': {
             'assessments.$.eval_date': updateData.eval_date,
@@ -163,7 +166,6 @@ router.put('/:worksheet_id', function (req, res) {
             console.log("An error occurred!");
             console.log(err);
         } else {
-            console.log(updateData);
             res.send(updateData);
         }
     });

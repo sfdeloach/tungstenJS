@@ -7,6 +7,7 @@ A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.al
 * It is implied the admin route will have access to all routes
 * All users are pre-loaded with their email addresses
 * Registration/password reset sends an email to their address with a temp password
+* Google email account setup, looking to use Nodemailer to send automated messages to users
 * A link to the main app page /wellness will be available in the menu bar on all routes
 * Lock a worksheet after three months
 * Calc (calculations from the participant's assessment)
@@ -14,7 +15,7 @@ A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.al
 * Depending on auth level, a soft delete of data may be the only option available
 
 ### Main App Page
-a black & white photo full in the background large orange and blue circle divided in half with these two options
+* black & white photo full in the background large orange and blue circle divided in half with these two options
 * Participants
 * Worksheets
 
@@ -43,5 +44,5 @@ a black & white photo full in the background large orange and blue circle divide
 ### var num = 2; // jQuery & Nunjucks
 * figure out the logic
 
-### var num = 3; // Foundation
+### var num = 3; // Bootstrap
 * make it pretty

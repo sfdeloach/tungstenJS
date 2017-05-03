@@ -1,6 +1,47 @@
 /*jslint devel: true*/
 /*globals $: false*/
 
+// Update button in worksheets/show.njk
+function showParticipant(row) {
+    'use strict';
+    
+    if (!row.cardio.heart_rate) {
+        row.cardio.heart_rate = ' ';
+    }
+    
+    var worksheetShowUpdateRow =
+        '<tr>' +
+        '<td class="col-width12">' +
+        '<a id="' + row.dept_id + '" href="' + row.href + '">' + row.name + '</a>' + // TODO participant ID
+        '</td>' +
+        '<td>' + new Date(row.eval_date).toLocaleDateString() + '</td>' +
+        '<td>' + row.weight + '</td>' +
+        '<td>' + row.heart_rate + '</td>' +
+        '<td>' + row.blood_pressure + '</td>' +
+        '<td>' + row.body_fat + '</td>' +
+        '<td>' + row.flex + '</td>' +
+        '<td>' + row.situp + '</td>' +
+        '<td>' + row.bench + '</td>' +
+        '<td>' + row.leg + '</td>' +
+        '<td>' + row.cardio.type + '</td>' +
+        '<td>' + row.cardio.time + '</td>' +
+        '<td>' + row.cardio.heart_rate + '</td>' +
+        '<td class="col-width12">' +
+        '<button class="btn btn-primary btn-xs workshow-edit" type="button">' +
+        '<i class="fa fa-edit fa-fw" aria-hidden="true"></i>' +
+        '</button>' +
+        '<form class="delete-form" action="/worksheets/' + row.worksheet_id + '/' + row.assessment_id + '?_method=DELETE" method="POST">' +
+        '<button class="btn btn-danger btn-xs delete" type="submit">' +
+        '<i class="fa fa-trash fa-fw" aria-hidden="true"></i>' +
+        '</button>' +
+        '</form>' +
+        '</td>' +
+        '<td class="hidden assessment-id">' + row.assessment_id + '</td>' +
+        '</tr';
+        
+    return worksheetShowUpdateRow;
+}
+
 // Edit button in worksheets/show.njk
 function editParticipant(row) {
     'use strict';
@@ -63,6 +104,8 @@ function editParticipant(row) {
         "<button id='workshow-save' class='btn btn-success btn-sm btn-block' type='button'>update</button>" +
         "</td>" +
         "<td class='hidden'>" + row.assessmentID + "</td>" +
+        "<td class='hidden'>" + row.name + "</td>" +
+        "<td class='hidden'>" + row.href + "</td>" +
         "</tr>";
 
     return worksheetShowEditRow;
@@ -136,12 +179,18 @@ $(document).ready(function () {
     });
     // END - Items located on participants/new.njk
 
-    // Edit button in worksheets/show.njk
-    $('.workshow-edit').click(function (eventObject) {
+    // Edit button in worksheets/show.njk, setup for event propagation
+    // so it will work on edit buttons not yet created in the DOM
+    $('#showTableBody').on('click', '.workshow-edit', function (eventObject) {
+        // console.log("Edit button pressed: ");
+        // console.log(eventObject);
+        
         var col = $(this).parent().siblings(),
             row = {};
         
-        row.deptID = col[0].childNodes[1].id;
+        row.name = col[0].children[0].innerHTML;
+        row.deptID = col[0].children[0].id;
+        row.href = col[0].children[0].href;
         row.date = col[1].innerHTML;
         row.weight = col[2].innerHTML;
         row.hr = col[3].innerHTML;
@@ -155,18 +204,23 @@ $(document).ready(function () {
         row.time = col[11].innerHTML;
         row.cardioHR = col[12].innerHTML;
         row.assessmentID = col[13].innerHTML;
-
+        
         $(this).parent().parent().replaceWith(editParticipant(row));
         $(".workshow-edit").prop('disabled', true);
     });
 
-    $(document).on('click', '#workshow-save', function (eventObject) {
+    $('#showTableBody').on('click', '#workshow-save', function (eventObject) {
+        // console.log("Update button pressed: ");
+        // console.log(eventObject);
+        
         $(this).html('<i class="fa fa-spinner fa-spin fa-fw"></i>');
         
-        var col = $(this).parent().siblings(),
+        var that = $(this),
+            col = $(this).parent().siblings(),
             assessment = {},
             pathname = window.location.pathname;
-
+        
+        assessment.dept_id = col[0].childNodes[0].value;
         assessment.eval_date = col[1].childNodes[0].value;
         assessment.weight = col[2].childNodes[0].value;
         assessment.heart_rate = col[3].childNodes[0].value;
@@ -176,25 +230,28 @@ $(document).ready(function () {
         assessment.situp = col[7].childNodes[0].value;
         assessment.bench = col[8].childNodes[0].value;
         assessment.leg = col[9].childNodes[0].value;
-        assessment.id = col[14].innerHTML;
+        assessment.assessment_id = col[14].innerHTML;
         assessment.cardio = {};
         assessment.cardio.type = col[10].childNodes[0].value;
         assessment.cardio.min = col[11].childNodes[0].value;
         assessment.cardio.sec = col[12].childNodes[0].value;
         assessment.cardio.heart_rate = col[13].childNodes[0].value;
+        assessment.name = col[15].childNodes[0].data;
+        assessment.href = col[16].innerHTML;
+        assessment.worksheet_id = pathname.substr(12);
         
         $.ajax({ url: pathname + "?_method=PUT",
                 data: assessment,
                 type: "POST"
             })
-            .done(function (json) {
-                // 'json' is data (if any) provided back to the browser from the server
-                console.log("The server said: ");
-                console.log(JSON.stringify(json));
-                location.reload(); // TODO: sloppy??? cleaner to update the dom instead of a complete refresh???
+            .done(function (row) {
+                // 'row' is data provided back to the browser
+                that.parent().parent().replaceWith(showParticipant(row));
+                // enable edit buttons
+                $(".workshow-edit").prop('disabled', false);
             })
             .fail(function (xhr, status, errorThrown) {
-                alert("Sorry, there was a problem!");
+                alert("Sorry, there was a problem saving the update to the database.");
                 console.log("Error: " + errorThrown);
                 console.log("Status: " + status);
                 console.dir(xhr);

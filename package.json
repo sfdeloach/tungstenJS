@@ -18,7 +18,8 @@
     "heroku",
     "wellness",
     "passport",
-    "foundation"
+    "bootstrap",
+    "nodemailer"
   ],
   "author": "Steven DeLoach",
   "license": "MIT",
