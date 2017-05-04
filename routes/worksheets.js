@@ -86,17 +86,16 @@ router.get('/:worksheet_id', function (req, res) {
 // create and append a new assessment to a worksheet
 router.post('/:worksheet_id', function (req, res) {
     var worksheet_id = req.params.worksheet_id,
-        newAssessment = req.body.assessment,
-        min = parseInt(newAssessment.cardio_min, 10),
-        sec = parseInt(newAssessment.cardio_sec, 10),
-        cardio = {
-            type: newAssessment.cardio_type,
-            min: min,
-            sec: sec,
-            time: min + ":" + ((sec < 10) ? ("0" + sec) : sec),
-            heart_rate: (newAssessment.cardio_type === 'walk') ? newAssessment.cardio_heartrate : null
-        };
-    newAssessment.cardio = cardio;
+        newAssessment = req.body.assessment;
+    
+    newAssessment.cardio = {
+        type: newAssessment.cardio_type,
+        min: parseInt(newAssessment.cardio_min, 10),
+        sec: parseInt(newAssessment.cardio_sec, 10),
+        heart_rate: (newAssessment.cardio_type === 'walk') ? newAssessment.cardio_heartrate : null
+    };
+    newAssessment.cardio.time = newAssessment.cardio.min + ":" + ((newAssessment.cardio.sec < 10) ?
+            ("0" + newAssessment.cardio.sec) : newAssessment.cardio.sec);
     newAssessment.inactive_on = null;
     newAssessment.created = new Date();
     newAssessment.eval_date = dateHelper.htmlToDb(newAssessment.eval_date);
@@ -126,22 +125,11 @@ router.put('/:worksheet_id', function (req, res) {
     var updateData = req.body,
         worksheet_id = req.params.worksheet_id;
     
-    console.log(" worksheet id: " + worksheet_id);
-    console.log("assessment id: " + updateData.assessment_id);
-    
-    updateData.eval_date += "T00:00:00.000Z";
-    updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date);
-    updateData.weight = parseInt(updateData.weight, 10);
-    updateData.body_fat = parseFloat(updateData.body_fat, 10);
-    updateData.flex = parseFloat(updateData.flex, 10);
-    updateData.situp = parseInt(updateData.situp, 10);
-    updateData.bench = parseInt(updateData.bench, 10);
-    updateData.leg = parseInt(updateData.leg, 10);
-    updateData.cardio.min = parseInt(updateData.cardio.min, 10);
-    updateData.cardio.sec = parseInt(updateData.cardio.sec, 10);
-    updateData.cardio.time = updateData.cardio.min + ":" +
-        ((updateData.cardio.sec < 10) ? ("0" + updateData.cardio.sec) : updateData.cardio.sec);
-    updateData.cardio.heart_rate = (updateData.cardio.type === 'walk') ? parseInt(updateData.cardio.heart_rate, 10) : null;
+    updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date + "T00:00:00.000Z");
+    updateData.cardio.time = updateData.cardio.min + ":" + ((parseInt(updateData.cardio.sec, 10) < 10) ?
+                    ("0" + parseInt(updateData.cardio.sec, 10)) : parseInt(updateData.cardio.sec, 10));
+    updateData.cardio.heart_rate = (updateData.cardio.type === 'walk' && updateData.cardio.heart_rate.length > 0) ?
+                    parseInt(updateData.cardio.heart_rate, 10) : null;
     
     Worksheet.update({
         'assessments._id': updateData.assessment_id
@@ -150,20 +138,23 @@ router.put('/:worksheet_id', function (req, res) {
             'assessments.$.eval_date': updateData.eval_date,
             'assessments.$.heart_rate': updateData.heart_rate,
             'assessments.$.blood_pressure': updateData.blood_pressure,
-            'assessments.$.weight': updateData.weight,
-            'assessments.$.body_fat': updateData.body_fat,
-            'assessments.$.flex': updateData.flex,
-            'assessments.$.situp': updateData.situp,
-            'assessments.$.bench': updateData.bench,
-            'assessments.$.leg': updateData.leg,
+            'assessments.$.weight': parseInt(updateData.weight, 10),
+            'assessments.$.body_fat': parseFloat(updateData.body_fat, 10),
+            'assessments.$.flex': parseFloat(updateData.flex, 10),
+            'assessments.$.situp': parseInt(updateData.situp, 10),
+            'assessments.$.bench': parseInt(updateData.bench, 10),
+            'assessments.$.leg': parseInt(updateData.leg, 10),
             'assessments.$.cardio.type': updateData.cardio.type,
-            'assessments.$.cardio.min': updateData.cardio.min,
+            'assessments.$.cardio.min': parseInt(updateData.cardio.min, 10),
+            'assessments.$.cardio.sec': parseInt(updateData.cardio.sec, 10),
             'assessments.$.cardio.time': updateData.cardio.time,
             'assessments.$.cardio.heart_rate': updateData.cardio.heart_rate
         }
     }, function (err, updateInfo) {
         if (err) {
-            console.log("An error occurred!");
+            console.log("An error occurred during an AJAX assessment update!");
+            console.log("The update object that caused the error: ");
+            console.dir(updateData);
             console.log(err);
         } else {
             res.send(updateData);

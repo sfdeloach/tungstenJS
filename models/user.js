@@ -6,8 +6,7 @@ var mongoose = require('mongoose'),
 
 // no password key, hash and salt are added via passport
 var userSchema = new mongoose.Schema({
-    username: { type: String, lowercase: true },
-    email: { type: String, lowercase: true },
+    username: String,
     needs_reset: Boolean, // if true, user redirected to create a new password, otherwise normal login occurs
     auth_level: { type: String, enum: ["admin", "editor", "viewer"] }
 });

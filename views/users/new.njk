@@ -1,0 +1,60 @@
+{% extends "../template.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Create a new user</h2>
+            <div class="form-group">
+                <a href="/users" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to user index
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <form id="usernew-form" action="/users" method="POST">
+                    <div class="form-group">
+                        <label for="user[username]">Altamonte Springs Email Address</label>
+                        <input type="email" class="form-control" name="username" autofocus required>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Authority Level </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline" name="auth_level" value="admin"/>
+                                    <span class="space-out">admin</span>
+                                    <input type="radio" class="radio inline" name="auth_level" value="editor"/>
+                                    <span class="space-out">editor</span>
+                                    <input type="radio" class="radio inline" name="auth_level" value="viewer"/>
+                                    <span class="space-out">viewer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user[password]">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user[password]">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm" required>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Create User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

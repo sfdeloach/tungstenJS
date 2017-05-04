@@ -1,10 +1,17 @@
 body {
     background-image: url("/images/background.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
     font-family: 'Ubuntu', sans-serif;
+    padding-top: 150px;
 }
 
-.row {
-    margin-top: 25%;
+.container-narrow {
+    padding-right: 20%;
+    padding-left: 20%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .btn-xl {
@@ -14,6 +21,7 @@ body {
     border-radius: 12px;
 }
 
-div.col-md-6, div.col-sm-12 {
+div.col-md-6,
+div.col-sm-12 {
     padding: 10px;
 }
