@@ -7,7 +7,7 @@
 {% block body %}
     <div class="container">
         <div class="jumbotron">
-            <h2><i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Create a new user</h2>
+            <h2><i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Edit user</h2>
             <div class="form-group">
                 <a href="/users" class="btn btn-default">
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -17,10 +17,10 @@
         </div>
         <div class="row">
             <div class="column col-sm-12">
-                <form id="usernew-form" action="/users" method="POST">
+                <form action="/users/{{ user._id }}?_method=PUT" method="POST">
                     <div class="form-group">
                         <label for="username">Altamonte Springs Email Address</label>
-                        <input type="email" class="form-control" name="username" id="username" autofocus required>
+                        <input type="email" class="form-control" name="username" id="username" value="{{ user.username }}" disabled>
                     </div>
                     <div class="form-group">
                         <div class="form-inline">
@@ -29,30 +29,30 @@
                                     <span class="space-out">Authority Level </span>
                                 </label>
                                 <div class="pull-apart">
-                                    <input type="radio" class="radio inline" name="auth_level" value="admin"/>
+                                    <input type="radio" class="radio inline" name="auth_level" value="admin" {{ "checked" if user.auth_level === "admin" }}/>
                                     <span class="space-out">admin</span>
-                                    <input type="radio" class="radio inline" name="auth_level" value="editor" checked/>
+                                    <input type="radio" class="radio inline" name="auth_level" value="editor" {{ "checked" if user.auth_level === "editor" }}/>
                                     <span class="space-out">editor</span>
-                                    <input type="radio" class="radio inline" name="auth_level" value="viewer"/>
+                                    <input type="radio" class="radio inline" name="auth_level" value="viewer" {{ "checked" if user.auth_level === "viewer" }}/>
                                     <span class="space-out">viewer</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirm" id="confirm" required>
-                    </div>
                     <hr>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Create User
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Change authorization level
                         </button>
                     </div>
+                </form>
+                <div class="form-group">
+                        <a class="btn btn-warning" href="/users/{{ user._id}}/password-reset">Password reset</a>
+                </div>
+                <form class="pull-right" action="/users/{{ user._id }}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete user
+                    </button>
                 </form>
             </div>
         </div>

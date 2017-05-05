@@ -1,47 +1,6 @@
 /*jslint devel: true*/
 /*globals $: false*/
 
-// Update button in worksheets/show.njk
-function showParticipant(row) {
-    'use strict';
-    
-    if (!row.cardio.heart_rate) {
-        row.cardio.heart_rate = ' ';
-    }
-    
-    var worksheetShowUpdateRow =
-        '<tr>' +
-        '<td class="col-width12">' +
-        '<a id="' + row.dept_id + '" href="' + row.href + '">' + row.name + '</a>' + // TODO participant ID
-        '</td>' +
-        '<td>' + new Date(row.eval_date).toLocaleDateString() + '</td>' +
-        '<td>' + row.weight + '</td>' +
-        '<td>' + row.heart_rate + '</td>' +
-        '<td>' + row.blood_pressure + '</td>' +
-        '<td>' + row.body_fat + '</td>' +
-        '<td>' + row.flex + '</td>' +
-        '<td>' + row.situp + '</td>' +
-        '<td>' + row.bench + '</td>' +
-        '<td>' + row.leg + '</td>' +
-        '<td>' + row.cardio.type + '</td>' +
-        '<td>' + row.cardio.time + '</td>' +
-        '<td>' + row.cardio.heart_rate + '</td>' +
-        '<td class="col-width12">' +
-        '<button class="btn btn-primary btn-xs workshow-edit" type="button">' +
-        '<i class="fa fa-edit fa-fw" aria-hidden="true"></i>' +
-        '</button>' +
-        '<form class="delete-form" action="/worksheets/' + row.worksheet_id + '/' + row.assessment_id + '?_method=DELETE" method="POST">' +
-        '<button class="btn btn-danger btn-xs delete" type="submit">' +
-        '<i class="fa fa-trash fa-fw" aria-hidden="true"></i>' +
-        '</button>' +
-        '</form>' +
-        '</td>' +
-        '<td class="hidden assessment-id">' + row.assessment_id + '</td>' +
-        '</tr';
-        
-    return worksheetShowUpdateRow;
-}
-
 // Edit button in worksheets/show.njk
 function editParticipant(row) {
     'use strict';
@@ -109,6 +68,47 @@ function editParticipant(row) {
         "</tr>";
 
     return worksheetShowEditRow;
+}
+
+// Update button in worksheets/show.njk
+function showParticipant(row) {
+    'use strict';
+    
+    if (!row.cardio.heart_rate) {
+        row.cardio.heart_rate = ' ';
+    }
+    
+    var worksheetShowUpdateRow =
+        '<tr>' +
+        '<td class="col-width12">' +
+        '<a id="' + row.dept_id + '" href="' + row.href + '">' + row.name + '</a>' +
+        '</td>' +
+        '<td>' + new Date(row.eval_date).toLocaleDateString() + '</td>' +
+        '<td>' + row.weight + '</td>' +
+        '<td>' + row.heart_rate + '</td>' +
+        '<td>' + row.blood_pressure + '</td>' +
+        '<td>' + row.body_fat + '</td>' +
+        '<td>' + row.flex + '</td>' +
+        '<td>' + row.situp + '</td>' +
+        '<td>' + row.bench + '</td>' +
+        '<td>' + row.leg + '</td>' +
+        '<td>' + row.cardio.type + '</td>' +
+        '<td>' + row.cardio.time + '</td>' +
+        '<td>' + row.cardio.heart_rate + '</td>' +
+        '<td class="col-width12">' +
+        '<button class="btn btn-primary btn-xs workshow-edit" type="button">' +
+        '<i class="fa fa-edit fa-fw" aria-hidden="true"></i>' +
+        '</button>' +
+        '<form class="delete-form" action="/worksheets/' + row.worksheet_id + '/' + row.assessment_id + '?_method=DELETE" method="POST">' +
+        '<button class="btn btn-danger btn-xs delete" type="submit">' +
+        '<i class="fa fa-trash fa-fw" aria-hidden="true"></i>' +
+        '</button>' +
+        '</form>' +
+        '</td>' +
+        '<td class="hidden assessment-id">' + row.assessment_id + '</td>' +
+        '</tr';
+        
+    return worksheetShowUpdateRow;
 }
 
 $(document).ready(function () {
@@ -179,12 +179,49 @@ $(document).ready(function () {
     });
     // END - Items located on participants/new.njk
 
-    // Edit button in worksheets/show.njk, setup for event propagation
-    // so it will work on edit buttons not yet created in the DOM
-    $('#showTableBody').on('click', '.workshow-edit', function (eventObject) {
-        // console.log("Edit button pressed: ");
-        // console.log(eventObject);
+    // Items located on users/new.njk
+    $('#usernew-form').on('submit', function (eventObject) {
+        var email = $('#username').val(),
+            username = email.substr(0, email.indexOf('@')),
+            domain = email.substr(email.indexOf('@') + 1),
+            password = $('#password').val(),
+            confirm = $('#confirm').val();
         
+        // validate altamonte.org domain
+        if (domain !== 'altamonte.org') {
+            alert("Only an email with the domain of 'altamonte.org' is accepted!");
+            return false;
+        }
+        
+        // validate passwords matche
+        if (password !== confirm) {
+            alert("Passwords do not match!");
+            return false;
+        }
+        
+        // check to see if username is already taken
+        $.ajax({ url: '/json/users',
+                type: "GET"
+            })
+            .done(function (usersObject) {
+                var usersArray = Array.prototype.slice.call(usersObject);
+                usersArray.forEach(function (index) {
+                    if (index.username === email) {
+                        alert("Username already exists!");
+                        return false;
+                    }
+                });
+                return true;
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem retrieving data from the database.");
+                return false;
+            });
+    });
+    // END - Items located on users/new.njk
+    
+    // Edit button in worksheets/show.njk, setup for event propagation
+    $('#showTableBody').on('click', '.workshow-edit', function (eventObject) {
         var col = $(this).parent().siblings(),
             row = {};
         
@@ -209,6 +246,7 @@ $(document).ready(function () {
         $(".workshow-edit").prop('disabled', true);
     });
 
+    // Save button in worksheets/show.njk, setup for event propagation
     $('#showTableBody').on('click', '#workshow-save', function (eventObject) {
         // console.log("Update button pressed: ");
         // console.log(eventObject);
@@ -252,9 +290,6 @@ $(document).ready(function () {
             })
             .fail(function (xhr, status, errorThrown) {
                 alert("Sorry, there was a problem saving the update to the database.");
-                console.log("Error: " + errorThrown);
-                console.log("Status: " + status);
-                console.dir(xhr);
             });
     });
 });

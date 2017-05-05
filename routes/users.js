@@ -47,7 +47,6 @@ router.post('/', function (req, res) {
         needs_reset: false,
         auth_level: req.body.auth_level
     });
-    console.log(newUser);
     User.register(newUser, req.body.password, function (err, createdUser) {
         if (err) {
             console.log(err);
@@ -59,47 +58,47 @@ router.post('/', function (req, res) {
     });
 });
 
-//// edit participant
-//router.get('/:id/edit', function (req, res) {
-//    var id = req.params.id;
-//    Participant.findById(id, function (err, foundParticipant) {
-//        if (err) {
-//            console.log(err);
-//            res.redirect('/participants');
-//        } else {
-//            if (foundParticipant) {
-//                if (foundParticipant.dob) {
-//                    foundParticipant.htmlDOB = dateHelper.dbToHtml(foundParticipant.dob);
-//                }
-//                res.render('participants/edit.njk', {
-//                    participant: foundParticipant
-//                });
-//            } else {
-//                res.redirect('/participants');
-//            }
-//        }
-//    });
-//});
-//
-//// update participant
-//router.put('/:id', function (req, res) {
-//    var id = req.params.id,
-//        updatedParticipant = req.body.participant;
-//    updatedParticipant.dob = dateHelper.htmlToDb(updatedParticipant.dob);
-//    Participant.findByIdAndUpdate(id, updatedParticipant, function (err, updatedParticipant) {
-//        if (err) {
-//            res.redirect("/participants");
-//        } else {
-//            res.redirect("/participants");
-//        }
-//    });
-//});
-//
-//// destroy participant
-//router['delete']('/:id', function (req, res) {
-//    Participant.findByIdAndRemove(req.params.id, function (err) {
-//        res.redirect("/participants");
-//    });
-//});
+// edit participant
+router.get('/:id/edit', function (req, res) {
+    var id = req.params.id;
+    User.findById(id, function (err, foundUser) {
+        if (err) {
+            console.log(err);
+            res.redirect('/users');
+        } else {
+            if (foundUser) {
+                res.render('users/edit.njk', {
+                    user: foundUser
+                });
+            } else {
+                res.redirect('/users');
+            }
+        }
+    });
+});
+
+// password reset route
+router.get('/:id/password-reset', function (req, res) {
+    res.send("you have hit the password reset route");
+});
+
+// update user
+router.put('/:id', function (req, res) {
+    User.findByIdAndUpdate(req.params.id, { $set: { auth_level: req.body.auth_level }}, function (err, updatedUser) {
+        if (err) {
+            console.log(err);
+            res.redirect("/users");
+        } else {
+            res.redirect("/users");
+        }
+    });
+});
+
+// destroy user
+router['delete']('/:id', function (req, res) {
+    User.findByIdAndRemove(req.params.id, function (err) {
+        res.redirect("/users");
+    });
+});
 
 module.exports = router;

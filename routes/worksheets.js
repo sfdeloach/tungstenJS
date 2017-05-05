@@ -46,7 +46,7 @@ router.get('/new', function (req, res) {
 // create new worksheet
 router.post('/', function (req, res) {
     // TODO: use the logged in user here instead of finding the admin user
-    User.findOne({username: "admin"}, function (err, foundUser) {
+    User.findOne({ username: "admin@altamonte.org" }, function (err, foundUser) {
         var newWorksheet = req.body.worksheet;
         newWorksheet.created = new Date();
         newWorksheet.inactive_on = null;
