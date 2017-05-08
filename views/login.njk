@@ -6,8 +6,12 @@
 
 {% block body %}
     <div class="container-narrow">
+        <div class="page-header">
+            <h2><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Wellness App</h2>
+            <p>Welcome to the Altamonte Springs Wellness App, please sign in to continue.</p>
+        </div>
         <div class="row">
-            <form class="form">
+            <form class="form" action="/login" method="post">
                 <div class="form-group">
                     <label for="username">Email Address</label>
                     <input type="email" class="form-control" id="username" name="username" placeholder="email">
@@ -17,7 +21,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="password">
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
-                <a class="btn btn-default pull-right" href="/password-recovery" role="button">Forgot password?</a>
+                <a class="btn btn-default pull-right" href="/recovery" role="button">Forgot password?</a>
             </form>
         </div>
     </div>

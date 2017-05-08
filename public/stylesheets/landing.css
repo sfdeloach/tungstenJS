@@ -4,12 +4,12 @@ body {
     background-position: center;
     background-size: cover;
     font-family: 'Ubuntu', sans-serif;
-    padding-top: 150px;
+    padding-top: 200px;
 }
 
 .container-narrow {
-    padding-right: 20%;
-    padding-left: 20%;
+    padding-right: 33.33%;
+    padding-left: 33.33%;
     margin-right: auto;
     margin-left: auto;
 }

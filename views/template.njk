@@ -35,7 +35,12 @@
           <ul class="nav navbar-nav">
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
+            {% if user %}
+              <li><a href="/#">Logged in as {{ user.name }}</a></li>
+                <li><a href="/logout">Logout</a></li>
+            {% else %}
+                <li><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -46,10 +51,12 @@
 {% endblock %}
 
 {% block footer %}
+    <!--
     <div class="row empty-row">
         <div class="column col-sm-12">
         </div>
     </div>
+    -->
     <!-- SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="/scripts/bootstrap.min.js"></script>

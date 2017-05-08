@@ -7,10 +7,11 @@ var express = require("express"),
     dateHelper = require('../helpers/myDatetime'),
     Participant = require('../models/participant'),
     User = require('../models/user'),
-    Worksheet = require('../models/worksheet');
+    Worksheet = require('../models/worksheet'),
+    authorization = require('../helpers/authorization.js');
 
 // participant index
-router.get('/', function (req, res) {
+router.get('/', authorization.isEditor, function (req, res) {
     var totalParticipants = 0;
     Participant.count({}, function (err, count) {
         if (err) {
@@ -39,12 +40,12 @@ router.get('/', function (req, res) {
 });
 
 // new participant form
-router.get('/new', function (req, res) {
+router.get('/new', authorization.isEditor, function (req, res) {
     res.render('participants/new.njk');
 });
 
 // create new participant
-router.post('/', function (req, res) {
+router.post('/', authorization.isEditor, function (req, res) {
     var newParticipant = req.body.participant;
     newParticipant.dob = dateHelper.htmlToDb(newParticipant.dob);
     Participant.create(newParticipant, function (err, createdParticipant) {
@@ -57,7 +58,7 @@ router.post('/', function (req, res) {
 });
 
 // edit participant
-router.get('/:id/edit', function (req, res) {
+router.get('/:id/edit', authorization.isEditor, function (req, res) {
     var id = req.params.id;
     Participant.findById(id, function (err, foundParticipant) {
         if (err) {
@@ -79,7 +80,7 @@ router.get('/:id/edit', function (req, res) {
 });
 
 // update participant
-router.put('/:id', function (req, res) {
+router.put('/:id', authorization.isEditor, function (req, res) {
     var id = req.params.id,
         updatedParticipant = req.body.participant;
     updatedParticipant.dob = dateHelper.htmlToDb(updatedParticipant.dob);
@@ -93,7 +94,7 @@ router.put('/:id', function (req, res) {
 });
 
 // destroy participant
-router['delete']('/:id', function (req, res) {
+router['delete']('/:id', authorization.isEditor, function (req, res) {
     Participant.findByIdAndRemove(req.params.id, function (err) {
         res.redirect("/participants");
     });

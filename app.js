@@ -38,7 +38,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Configure middleware
+// Configure various packages
 nunjucks.configure('./views', {
     autoescape: true,
     express: app
@@ -49,7 +49,18 @@ app.use(bodyParser.urlencoded({
 app.use(methodOverride("_method"));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-// Wellness app routing
+// allow req.user and flash messages to be visible in all routes
+app.use(function (req, res, next) {
+    if (req.user) {
+        req.user.name = req.user.username.slice(0, req.user.username.indexOf('@'));
+    }
+    res.locals.user = req.user;
+    // res.locals.error = req.flash("error");
+    // res.locals.success = req.flash("success");
+    next();
+});
+
+// Routes
 var indexRoutes = require('./routes/index'),
     jsonRoutes = require('./routes/json'),
     participantRoutes = require('./routes/participants'),

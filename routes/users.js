@@ -5,10 +5,11 @@
 var express = require("express"),
     router = express.Router(),
     passport = require('passport'),
-    User = require('../models/user');
+    User = require('../models/user'),
+    authorization = require('../helpers/authorization.js');
 
 // participant index
-router.get('/', function (req, res) {
+router.get('/', authorization.isAdmin, function (req, res) {
     var totalUsers = 0;
     User.count({}, function (err, count) {
         if (err) {
@@ -36,12 +37,12 @@ router.get('/', function (req, res) {
 });
 
 // new user form
-router.get('/new', function (req, res) {
+router.get('/new', authorization.isAdmin, function (req, res) {
     res.render('users/new.njk');
 });
 
 // create new participant
-router.post('/', function (req, res) {
+router.post('/', authorization.isAdmin, function (req, res) {
     var newUser = new User({
         username: req.body.username,
         needs_reset: false,
@@ -59,7 +60,7 @@ router.post('/', function (req, res) {
 });
 
 // edit participant
-router.get('/:id/edit', function (req, res) {
+router.get('/:id/edit', authorization.isAdmin, function (req, res) {
     var id = req.params.id;
     User.findById(id, function (err, foundUser) {
         if (err) {
@@ -68,7 +69,7 @@ router.get('/:id/edit', function (req, res) {
         } else {
             if (foundUser) {
                 res.render('users/edit.njk', {
-                    user: foundUser
+                    foundUser: foundUser
                 });
             } else {
                 res.redirect('/users');
@@ -77,14 +78,12 @@ router.get('/:id/edit', function (req, res) {
     });
 });
 
-// password reset route
-router.get('/:id/password-reset', function (req, res) {
-    res.send("you have hit the password reset route");
-});
-
 // update user
-router.put('/:id', function (req, res) {
-    User.findByIdAndUpdate(req.params.id, { $set: { auth_level: req.body.auth_level }}, function (err, updatedUser) {
+router.put('/:id', authorization.isAdmin, function (req, res) {
+    User.findByIdAndUpdate(req.params.id, {
+        $set: { auth_level: req.body.auth_level,
+                needs_reset: req.body.needs_reset }
+    }, function (err, updatedUser) {
         if (err) {
             console.log(err);
             res.redirect("/users");
@@ -95,7 +94,7 @@ router.put('/:id', function (req, res) {
 });
 
 // destroy user
-router['delete']('/:id', function (req, res) {
+router['delete']('/:id', authorization.isAdmin, function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err) {
         res.redirect("/users");
     });

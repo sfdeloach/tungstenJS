@@ -7,10 +7,11 @@ var express = require("express"),
     dateHelper = require('../helpers/myDatetime'),
     Participant = require('../models/participant'),
     User = require('../models/user'),
-    Worksheet = require('../models/worksheet');
+    Worksheet = require('../models/worksheet'),
+    authorization = require('../helpers/authorization.js');
 
 // worksheet index
-router.get('/', function (req, res) {
+router.get('/', authorization.isViewer, function (req, res) {
     var totalWorksheets = 0;
     Worksheet.count({}, function (err, count) {
         if (err) {
@@ -39,12 +40,12 @@ router.get('/', function (req, res) {
 });
 
 // new worksheet form
-router.get('/new', function (req, res) {
+router.get('/new', authorization.isEditor, function (req, res) {
     res.render('worksheets/new.njk');
 });
 
 // create new worksheet
-router.post('/', function (req, res) {
+router.post('/', authorization.isEditor, function (req, res) {
     // TODO: use the logged in user here instead of finding the admin user
     User.findOne({ username: "admin@altamonte.org" }, function (err, foundUser) {
         var newWorksheet = req.body.worksheet;
@@ -64,7 +65,7 @@ router.post('/', function (req, res) {
 });
 
 // show a worksheet and its assessments
-router.get('/:worksheet_id', function (req, res) {
+router.get('/:worksheet_id', authorization.isViewer, function (req, res) {
     var worksheet_id = req.params.worksheet_id;
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (err) {
@@ -84,7 +85,7 @@ router.get('/:worksheet_id', function (req, res) {
 });
 
 // create and append a new assessment to a worksheet
-router.post('/:worksheet_id', function (req, res) {
+router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
     var worksheet_id = req.params.worksheet_id,
         newAssessment = req.body.assessment;
     
@@ -121,7 +122,7 @@ router.post('/:worksheet_id', function (req, res) {
 });
 
 // update an assessment (this route is hit via ajax call)
-router.put('/:worksheet_id', function (req, res) {
+router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
     var updateData = req.body,
         worksheet_id = req.params.worksheet_id;
     
@@ -163,7 +164,7 @@ router.put('/:worksheet_id', function (req, res) {
 });
 
 // calculate worksheet and display results
-router.get('/:worksheet_id/calc', function (req, res) {
+router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
     var worksheet_id = req.params.worksheet_id;
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (!foundWorksheet) {
@@ -189,7 +190,7 @@ router.get('/:worksheet_id/calc', function (req, res) {
 });
 
 // remove an assessment from a worksheet
-router['delete']('/:worksheet_id/:assessment_id', function (req, res) {
+router['delete']('/:worksheet_id/:assessment_id', authorization.isEditor, function (req, res) {
     var worksheetID = req.params.worksheet_id,
         assessmentID = req.params.assessment_id;
     Worksheet.update({
@@ -209,7 +210,7 @@ router['delete']('/:worksheet_id/:assessment_id', function (req, res) {
 });
 
 // destroy a worksheet
-router['delete']('/:id', function (req, res) {
+router['delete']('/:id', authorization.isEditor, function (req, res) {
     Worksheet.findByIdAndRemove(req.params.id, function (err) {
         res.redirect("/worksheets");
     });

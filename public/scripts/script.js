@@ -179,6 +179,21 @@ $(document).ready(function () {
     });
     // END - Items located on participants/new.njk
 
+    // Items located on passwordReset.njk
+    $('#passwordreset-form').on('submit', function (eventObject) {
+        var password = $('#password').val(),
+            confirm = $('#confirm').val();
+        
+        // validate passwords matche
+        if (password !== confirm) {
+            alert("Passwords do not match!");
+            return false;
+        } else {
+            return true;
+        }
+    });
+    // END - Items located on passwordReset.njk
+    
     // Items located on users/new.njk
     $('#usernew-form').on('submit', function (eventObject) {
         var email = $('#username').val(),
