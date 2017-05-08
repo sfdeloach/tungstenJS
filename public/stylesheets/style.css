@@ -39,7 +39,9 @@ body {
     height: 60vh;
 }
 
+
 /*default column width*/
+
 .table>tbody>tr>td,
 .table>thead>tr>th {
     width: 6.333%;
@@ -167,5 +169,5 @@ body {
 }
 
 .form-inline>.controls-row>label.control-label {
-    margin-bottom: 6px;
+    margin-top: 8px;
 }

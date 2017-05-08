@@ -14,6 +14,7 @@ var express = require('express'),
     assert = require('assert'),
     favicon = require('serve-favicon'),
     path = require('path'),
+    flash = require('connect-flash'),
     Participant = require('./models/participant'),
     User = require('./models/user'),
     Worksheet = require('./models/worksheet');
@@ -48,6 +49,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride("_method"));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+app.use(flash());
 
 // allow req.user and flash messages to be visible in all routes
 app.use(function (req, res, next) {
@@ -55,8 +57,8 @@ app.use(function (req, res, next) {
         req.user.name = req.user.username.slice(0, req.user.username.indexOf('@'));
     }
     res.locals.user = req.user;
-    // res.locals.error = req.flash("error");
-    // res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

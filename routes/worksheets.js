@@ -15,11 +15,13 @@ router.get('/', authorization.isViewer, function (req, res) {
     var totalWorksheets = 0;
     Worksheet.count({}, function (err, count) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/');
         }
         Worksheet.find({}, function (err, foundWorksheets) {
             if (err) {
-                console.log(err);
+                req.flash("error", err.message);
+                res.redirect('/');
             } else if (count === 0) {
                 res.render('worksheets/index.njk', {
                     worksheets: foundWorksheets
@@ -56,8 +58,10 @@ router.post('/', authorization.isEditor, function (req, res) {
         newWorksheet.assessments = [];
         Worksheet.create(newWorksheet, function (err, createdWorksheet) {
             if (err) {
-                console.log(err);
+                req.flash("error", err.message);
+                res.redirect('/worksheets');
             } else {
+                req.flash("success", "A new worksheet was successfully created.");
                 res.redirect('/worksheets');
             }
         });
@@ -69,7 +73,8 @@ router.get('/:worksheet_id', authorization.isViewer, function (req, res) {
     var worksheet_id = req.params.worksheet_id;
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/worksheets');
         } else {
             foundWorksheet.prettyDate = function (date) {
                 return new Date(date).toLocaleDateString();
@@ -102,7 +107,8 @@ router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
     newAssessment.eval_date = dateHelper.htmlToDb(newAssessment.eval_date);
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/worksheets');
         }
         Participant.findOne({
             'dept_id': newAssessment.dept_id
@@ -111,9 +117,10 @@ router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
             foundWorksheet.assessments.push(newAssessment);
             foundWorksheet.save(function (err, updatedWorksheet) {
                 if (err) {
-                    console.log(err);
-                    res.send(err);
+                    req.flash("error", err.message);
+                    res.redirect('/worksheets');
                 } else {
+                    req.flash("success", "New assessment successfully saved to the worksheet.");
                     res.redirect("/worksheets/" + worksheet_id);
                 }
             });
@@ -121,7 +128,7 @@ router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
     });
 });
 
-// update an assessment (this route is hit via ajax call)
+// update an assessment (this route is accessed only via ajax call)
 router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
     var updateData = req.body,
         worksheet_id = req.params.worksheet_id;
@@ -171,8 +178,8 @@ router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
             console.log("no worksheet was found!!!");
             res.send('Sorry, the requested worksheet results is not available...<a href="/worksheets">Return to worksheets</a>');
         } else if (err) {
-            console.log(err);
-            res.send(err);
+            req.flash("error", err.message);
+            res.redirect("/worksheets");
         } else {
             // sort assessments alphabetically by last name
             foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
@@ -203,16 +210,17 @@ router['delete']('/:worksheet_id/:assessment_id', authorization.isEditor, functi
         }
     }, function (err, obj) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/worksheets');
         }
-        res.redirect("/worksheets/" + worksheetID);
+        res.redirect('/worksheets/' + worksheetID);
     });
 });
 
 // destroy a worksheet
 router['delete']('/:id', authorization.isEditor, function (req, res) {
     Worksheet.findByIdAndRemove(req.params.id, function (err) {
-        res.redirect("/worksheets");
+        res.redirect('/worksheets');
     });
 });
 

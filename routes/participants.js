@@ -15,11 +15,13 @@ router.get('/', authorization.isEditor, function (req, res) {
     var totalParticipants = 0;
     Participant.count({}, function (err, count) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/');
         }
         Participant.find({}, function (err, foundParticipants) {
             if (err) {
-                console.log(err);
+                req.flash("error", err.message);
+                res.redirect('/');
             } else if (count === 0) {
                 res.render('participants/index.njk', {
                     participants: foundParticipants
@@ -50,8 +52,10 @@ router.post('/', authorization.isEditor, function (req, res) {
     newParticipant.dob = dateHelper.htmlToDb(newParticipant.dob);
     Participant.create(newParticipant, function (err, createdParticipant) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/participants');
         } else {
+            req.flash("success", "A new participant was successfully created.");
             res.redirect('/participants');
         }
     });
@@ -62,7 +66,7 @@ router.get('/:id/edit', authorization.isEditor, function (req, res) {
     var id = req.params.id;
     Participant.findById(id, function (err, foundParticipant) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
             res.redirect('/participants');
         } else {
             if (foundParticipant) {
@@ -73,6 +77,7 @@ router.get('/:id/edit', authorization.isEditor, function (req, res) {
                     participant: foundParticipant
                 });
             } else {
+                req.flash("error", "Participant was not found.");
                 res.redirect('/participants');
             }
         }
@@ -86,9 +91,11 @@ router.put('/:id', authorization.isEditor, function (req, res) {
     updatedParticipant.dob = dateHelper.htmlToDb(updatedParticipant.dob);
     Participant.findByIdAndUpdate(id, updatedParticipant, function (err, updatedParticipant) {
         if (err) {
-            res.redirect("/participants");
+            req.flash("error", err.message);
+            res.redirect('/participants');
         } else {
-            res.redirect("/participants");
+            req.flash("success", "Participant was successfully updated.");
+            res.redirect('/participants');
         }
     });
 });
@@ -96,7 +103,13 @@ router.put('/:id', authorization.isEditor, function (req, res) {
 // destroy participant
 router['delete']('/:id', authorization.isEditor, function (req, res) {
     Participant.findByIdAndRemove(req.params.id, function (err) {
-        res.redirect("/participants");
+        if (err) {
+            req.flash("error", err.message);
+            res.redirect('/participants');
+        } else {
+            req.flash("success", "Participant was successfully deleted.");
+            res.redirect("/participants");
+        }
     });
 });
 

@@ -8,16 +8,18 @@ var express = require("express"),
     User = require('../models/user'),
     authorization = require('../helpers/authorization.js');
 
-// participant index
+// user index
 router.get('/', authorization.isAdmin, function (req, res) {
     var totalUsers = 0;
     User.count({}, function (err, count) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/');
         }
         User.find({}, function (err, foundUsers) {
             if (err) {
-                console.log(err);
+                req.flash("error", err.message);
+                res.redirect('/');
             } else if (count === 0) {
                 res.render('users/index.njk', {
                     users: foundUsers
@@ -41,30 +43,30 @@ router.get('/new', authorization.isAdmin, function (req, res) {
     res.render('users/new.njk');
 });
 
-// create new participant
+// create new user
 router.post('/', authorization.isAdmin, function (req, res) {
     var newUser = new User({
         username: req.body.username,
         needs_reset: false,
         auth_level: req.body.auth_level
     });
-    User.register(newUser, req.body.password, function (err, createdUser) {
+    User.register(newUser, req.body.password, function (err, newUser) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect('/users/new');
         } else {
-            passport.authenticate("local")(req, res, function () {
-                res.redirect('/users');
-            });
+            req.flash("success", "A new user was successfully created.");
+            res.redirect('/users');
         }
     });
 });
 
-// edit participant
+// edit user
 router.get('/:id/edit', authorization.isAdmin, function (req, res) {
     var id = req.params.id;
     User.findById(id, function (err, foundUser) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
             res.redirect('/users');
         } else {
             if (foundUser) {
@@ -72,6 +74,7 @@ router.get('/:id/edit', authorization.isAdmin, function (req, res) {
                     foundUser: foundUser
                 });
             } else {
+                req.flash("error", "The requested user was not located.");
                 res.redirect('/users');
             }
         }
@@ -85,9 +88,10 @@ router.put('/:id', authorization.isAdmin, function (req, res) {
                 needs_reset: req.body.needs_reset }
     }, function (err, updatedUser) {
         if (err) {
-            console.log(err);
-            res.redirect("/users");
+            req.flash("error", err.message);
+            res.redirect('/users');
         } else {
+            req.flash("success", "A user was successfully updated.");
             res.redirect("/users");
         }
     });
@@ -96,7 +100,13 @@ router.put('/:id', authorization.isAdmin, function (req, res) {
 // destroy user
 router['delete']('/:id', authorization.isAdmin, function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err) {
-        res.redirect("/users");
+        if (err) {
+            req.flash("error", err.message);
+            res.redirect('/users');
+        } else {
+            req.flash("success", "A user was successfully deleted.");
+            res.redirect("/users");
+        }
     });
 });
 

@@ -18,9 +18,10 @@ router.get('/login', function (req, res) {
 });
 
 // login logic goes here
-router.post('/login', passport.authenticate("local", {
+router.post('/login', passport.authenticate('local', {
     successRedirect: '/passwordResetCheck',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    failureFlash: true
 }));
 
 // check for password reset
@@ -41,12 +42,13 @@ router.get('/passwordReset', authorization.isViewer, function (req, res) {
 router.put('/passwordReset', authorization.isViewer, function (req, res) {
     User.findById(req.user._id, function (err, foundUser) {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
             res.redirect('/');
         } else {
             foundUser.setPassword(req.body.password, function () {
                 foundUser.needs_reset = false;
                 foundUser.save();
+                req.flash("success", "Your password has been successfully changed.");
                 res.redirect('/');
             });
         }
@@ -72,7 +74,7 @@ router.post('/recovery', function (req, res) {
 // logout route
 router.get('/logout', function (req, res) {
     req.logout();
-    // req.flash("success", "You have been logged out");
+    req.flash("success", "You have been logged out.");
     res.redirect('/login');
 });
 

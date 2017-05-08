@@ -214,24 +214,7 @@ $(document).ready(function () {
             return false;
         }
         
-        // check to see if username is already taken
-        $.ajax({ url: '/json/users',
-                type: "GET"
-            })
-            .done(function (usersObject) {
-                var usersArray = Array.prototype.slice.call(usersObject);
-                usersArray.forEach(function (index) {
-                    if (index.username === email) {
-                        alert("Username already exists!");
-                        return false;
-                    }
-                });
-                return true;
-            })
-            .fail(function (xhr, status, errorThrown) {
-                alert("Sorry, there was a problem retrieving data from the database.");
-                return false;
-            });
+        return true;
     });
     // END - Items located on users/new.njk
     
