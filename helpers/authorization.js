@@ -1,9 +1,5 @@
 /*jslint node: true*/
 
-//var Campground = require('../models/campground');
-//var Comment = require('../models/comment');
-
-// all middleware goes here
 var auth = {};
 
 auth.isAdmin = function (req, res, next) {

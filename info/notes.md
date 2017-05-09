@@ -5,19 +5,18 @@ A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.al
 ### Notes:
 * All routes will require an authenticated user (3 levels of auth)
 * It is implied the admin route will have access to all routes
-* All users are pre-loaded with their email addresses
-* Registration/password reset sends an email to their address with a temp password
-* Google email account setup, looking to use Nodemailer to send automated messages to users
-* A link to the main app page /wellness will be available in the menu bar on all routes
-* Lock a worksheet after three months
-* Calc (calculations from the participant's assessment)
+* New users are created by an admin user, a temporary email can be sent via the login page by clicking the 'Forgot password?' button
+* Password recovery sends an email to the user's address with a temp password, once logged on they are prompted to change it
+* Auto generated emails are send from 'altamonte.springs.channel.14@gmail.com'
+* A link to the main page will be available in the top left menu bar on all routes, unless blocked by authentication, then user is redirected to /login
 * Files containing PII have the *.seed extension in order to be ignored by git
-* Depending on auth level, a soft delete of data may be the only option available
 
 ### Main App Page
-* black & white photo full in the background large orange and blue circle divided in half with these two options
+* black & white photo full in the background large buttons visible based on user's level of access
 * Participants
 * Worksheets
+* Users
+* Database (read-only access to the complete contents of the database, password hash and salt are not visible)
 
 ## objectives - A journal of sorts
 
@@ -32,17 +31,18 @@ A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.al
 * completed seeds.js which does not require mongoose and populates and associates all four collections, there was an issue using the save() method where duplicate object ids were pushed to the array
 * configured passport, passwords are hashed and stored in database
 * abandoned seeds file due to a change in collection schema, assessments are now embedded in worksheets as an array, as such the assessment file has been deleted
-*
-* TODO: convert all csv data from old wellness to json, setup in a tables directory
-*       develop an interpolate function and logic that calculates results
+* converted all csv data from old wellness to json, setup in a public facing script
+* developed an interpolate function and logic that calculates results, all calculations are handled client-side
 
 ### var num = 1; // Express
-* setup routes
-* began setup of worksheet routes (index and show)
-* created a dump of the tungsten database, will track via git until routes are better developed
+* routes setup
+* users
+* worksheets
+* participants
+* database
 
 ### var num = 2; // jQuery & Nunjucks
-* figure out the logic
+* jQuery and Nunjucks used to create and manipulate pages
 
 ### var num = 3; // Bootstrap
-* make it pretty
+* abandoned foundation for bootstrap
