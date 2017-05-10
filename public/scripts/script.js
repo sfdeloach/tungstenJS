@@ -246,9 +246,6 @@ $(document).ready(function () {
 
     // Save button in worksheets/show.njk, setup for event propagation
     $('#showTableBody').on('click', '#workshow-save', function (eventObject) {
-        // console.log("Update button pressed: ");
-        // console.log(eventObject);
-        
         $(this).html('<i class="fa fa-spinner fa-spin fa-fw"></i>');
         
         var that = $(this),

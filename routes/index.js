@@ -77,8 +77,9 @@ router.post('/recovery', function (req, res) {
             req.flash("error", "Username does not exist.");
             res.redirect('/recovery');
         } else {
-            newPassword = rpass(); // create a random password string
-            console.log(newPassword); // TODO: remove this line after testing is complete
+            // create a random password string
+            newPassword = rpass();
+
             foundUser.setPassword(newPassword, function () {
                 foundUser.needs_reset = true;
                 foundUser.save();
@@ -92,11 +93,11 @@ router.post('/recovery', function (req, res) {
                     }
                 });
                 
-                // setup email data with unicode symbols
+                // setup email data
                 mailOptions = {
-                    from: 'Altamonte Springs Wellness App <altamonte.springs.channel.14@gmail.com>', // sender address
+                    from: 'Wellness App <altamonte.springs.channel.14@gmail.com>', // sender address
                     to: foundUser.username, // list of receivers
-                    subject: 'Password reset instructions', // Subject line
+                    subject: 'Password reset', // subject line
                     text: 'use the following temporary password to logon: ' + newPassword, // plain text body
                     html: emailGenerator(foundUser.username, newPassword) // html body
                 };

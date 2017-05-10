@@ -48,23 +48,27 @@ router.get('/new', authorization.isEditor, function (req, res) {
 
 // create new worksheet
 router.post('/', authorization.isEditor, function (req, res) {
-    // TODO: use the logged in user here instead of finding the admin user
-    User.findOne({ username: "admin@altamonte.org" }, function (err, foundUser) {
-        var newWorksheet = req.body.worksheet;
-        newWorksheet.created = new Date();
-        newWorksheet.inactive_on = null;
-        newWorksheet.is_locked = null;
-        newWorksheet.author = foundUser;
-        newWorksheet.assessments = [];
-        Worksheet.create(newWorksheet, function (err, createdWorksheet) {
-            if (err) {
-                req.flash("error", err.message);
-                res.redirect('/worksheets');
-            } else {
-                req.flash("success", "A new worksheet was successfully created.");
-                res.redirect('/worksheets');
-            }
-        });
+    User.findOne({ username: req.user.username }, function (err, foundUser) {
+        if (err) {
+            req.flash("error", err.message);
+            res.redirect('/worksheets');
+        } else {
+            var newWorksheet = req.body.worksheet;
+            newWorksheet.created = new Date();
+            newWorksheet.inactive_on = null;
+            newWorksheet.is_locked = null;
+            newWorksheet.author = foundUser;
+            newWorksheet.assessments = [];
+            Worksheet.create(newWorksheet, function (err, createdWorksheet) {
+                if (err) {
+                    req.flash("error", err.message);
+                    res.redirect('/worksheets');
+                } else {
+                    req.flash("success", "A new worksheet was successfully created.");
+                    res.redirect('/worksheets');
+                }
+            });
+        }
     });
 });
 
