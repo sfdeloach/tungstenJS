@@ -19,7 +19,7 @@
     "wellness",
     "passport",
     "bootstrap",
-    "nodemailer"
+    "sendmail"
   ],
   "author": "Steven DeLoach",
   "license": "MIT",
@@ -36,6 +36,7 @@
     "method-override": "^2.3.8",
     "mongoose": "^4.9.3",
     "nodemailer": "^4.0.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "nunjucks": "^3.0.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

@@ -185,7 +185,7 @@ router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
             req.flash("error", err.message);
             res.redirect("/worksheets");
         } else {
-            // sort assessments alphabetically by last name
+            // sort assessments alphabetically by last name - TODO: if name is null does this crash program?
             foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
                 return a.participant.name.last.localeCompare(b.participant.name.last);
             });

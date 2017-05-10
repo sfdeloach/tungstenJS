@@ -26,3 +26,10 @@ div.col-md-6,
 div.col-sm-12 {
     padding: 10px;
 }
+
+.wellness-footer {
+    margin-top: 30px;
+    margin-right: 10px;
+    font-size: 90%;
+    color: lightgray;
+}

@@ -8,7 +8,8 @@ var express = require('express'),
     authorization = require('../helpers/authorization.js'),
     rpass = require('../helpers/randomPassword.js'),
     nodemailer = require('nodemailer'),
-    emailGenerator = require('../helpers/recoveryEmail');
+    sgTransport = require('nodemailer-sendgrid-transport'),
+    emailWriter = require('../helpers/recoveryEmail');
 
 // index route
 router.get('/', authorization.isViewer, function (req, res) {
@@ -67,8 +68,8 @@ router.get('/recovery', function (req, res) {
 router.post('/recovery', function (req, res) {
     var username = req.body.username,
         newPassword,
-        transporter,
-        mailOptions;
+        client,
+        email;
     User.findOne({ username: username }, function (err, foundUser) {
         if (err) {
             req.flash("error", err.message);
@@ -79,44 +80,42 @@ router.post('/recovery', function (req, res) {
         } else {
             // create a random password string
             newPassword = rpass();
-
+            console.log(newPassword);
             foundUser.setPassword(newPassword, function () {
                 foundUser.needs_reset = true;
                 foundUser.save();
-
-                // create reusable transporter object using the default SMTP transport
-                transporter = nodemailer.createTransport({
-                    service: 'gmail',
+                
+                client = nodemailer.createTransport({
+                    service: 'SendGrid',
                     auth: {
-                        user: 'altamonte.springs.channel.14@gmail.com',
-                        pass: '7ujmnhy6^YHNMJU&'
+                        user: 'sfdeloach',
+                        pass: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' // TODO: setup environment variable
                     }
                 });
                 
-                // setup email data
-                mailOptions = {
-                    from: 'Wellness App <altamonte.springs.channel.14@gmail.com>', // sender address
-                    to: foundUser.username, // list of receivers
-                    subject: 'Password reset', // subject line
-                    text: 'use the following temporary password to logon: ' + newPassword, // plain text body
-                    html: emailGenerator(foundUser.username, newPassword) // html body
+                email = {
+                    from: 'Wellness App <wellness.no.reply@channel14-altamonte.info>',
+                    to: foundUser.username,
+                    bcc: 'sfdeloach@altamonte.org',
+                    subject: 'Password Reset',
+                    text: 'Your temporary password: ' + newPassword,
+                    html: emailWriter(foundUser.username, newPassword)
                 };
                 
-                // send mail with defined transport object
-                transporter.sendMail(mailOptions, function (err, info) {
+                client.sendMail(email, function (err, info) {
                     if (err) {
-                        req.flash("error", err.message);
+                        req.flash("error", "Unable to send recovery email at this time.");
                         res.redirect('/login');
                     } else {
-                        req.flash("success", "An email has been sent to '" + foundUser.username + "' with login instructions.");
+                        req.flash("success", "A temporary password has been sent to " + foundUser.username);
                         res.redirect('/login');
                     }
                 });
-                
             });
         }
     });
 });
+
 
 
 // logout route

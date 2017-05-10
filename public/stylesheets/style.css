@@ -171,3 +171,10 @@ body {
 .form-inline>.controls-row>label.control-label {
     margin-top: 8px;
 }
+
+.wellness-footer {
+    margin-top: 30px;
+    margin-right: 10px;
+    font-size: 90%;
+    color: lightgray;
+}
