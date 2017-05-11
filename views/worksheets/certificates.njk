@@ -10,8 +10,7 @@
         <div>
             {% for assessment in worksheet.assessments %}
             <div class="new-page">
-                <h4>{{ certificateData.description }}</h4>
-                <h4>{{ certificateData.issueDate }}</h4>
+                <h4>{{ certificateData.expireDate }}</h4>
                 <span class="last">{{ assessment.participant.name.last }}</span>
                 <span class="first">{{ assessment.participant.name.first }}</span>
                 <span class="ave">?</span>

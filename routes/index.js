@@ -95,7 +95,7 @@ router.post('/recovery', function (req, res) {
                 email = {
                     from: 'Wellness App <emailbot@channel14-altamonte.info>',
                     to: foundUser.username,
-                    bcc: 'sfdeloach@altamonte.org',
+                    bcc: 'altamonte.springs.channel.14@gmail.com',
                     subject: 'Password Reset',
                     text: 'Your temporary password: ' + newPassword,
                     html: emailWriter(foundUser.username, newPassword)
