@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+@media print {
+    .new-page {
+        page-break-after: always;
+    }
+}
+
+.hr,
+.bp,
+.weight,
+.age,
+.body,
+.body-result,
+.flex,
+.flex-result,
+.sit,
+.sit-result,
+.bench,
+.bench-result,
+.leg,
+.leg-result,
+.cardio-type,
+.cardio-time,
+.cardio-hr,
+.cardio-result,
+.assessment-id,
+.sex,
+.dob,
+.eval-date,
+.cardio-min,
+.cardio-sec {
+    display: none;
+}

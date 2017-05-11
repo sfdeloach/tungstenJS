@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <title>{{ worksheet.title }}</title>
+    <link rel="stylesheet" href="/stylesheets/certificate.css">
+</head>
+
+<body>
+    <div>
+        <div>
+            {% for assessment in worksheet.assessments %}
+            <div class="new-page">
+                <h4>{{ certificateData.description }}</h4>
+                <h4>{{ certificateData.issueDate }}</h4>
+                <span class="last">{{ assessment.participant.name.last }}</span>
+                <span class="first">{{ assessment.participant.name.first }}</span>
+                <span class="ave">?</span>
+                <!-- items not visible on page -->
+                <span class="hr">{{ assessment.heart_rate }}</span>
+                <span class="bp">{{ assessment.blood_pressure }}</span>
+                <span class="weight">{{ assessment.weight }}</span>
+                <span class="age">?</span>
+                <span class="body">{{ assessment.body_fat }}</span>
+                <span class="body-result">?</span>
+                <span class="flex">{{ assessment.flex }}</span>
+                <span class="flex-result">?</span>
+                <span class="sit">{{ assessment.situp }}</span>
+                <span class="sit-result">?</span>
+                <span class="bench">{{ assessment.bench }}</span>
+                <span class="bench-result">?</span>
+                <span class="leg">{{ assessment.leg }}</span>
+                <span class="leg-result">?</span>
+                <span class="cardio-type">{{ assessment.cardio.type }}</span>
+                <span class="cardio-time">{{ assessment.cardio.time }}</span>
+                <span class="cardio-hr">
+                    {% if assessment.cardio.heart_rate %}
+                        {{ assessment.cardio.heart_rate }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </span>
+                <span class="cardio-result">?</span>
+                <span class="assessment-id">{{ assessment._id }}</span>
+                <span class="sex">{{ assessment.participant.sex }}</span>
+                <span class="dob">{{ assessment.participant.dob }}</span>
+                <span class="eval-date">{{ assessment.eval_date }}</span>
+                <span class="cardio-min">{{ assessment.cardio.min }}</span>
+                <span class="cardio-sec">{{ assessment.cardio.sec }}</span>
+            </div>
+            {% else %}
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+                <span>-</span>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/scripts/calcTables.js"></script>
+    <script src="/scripts/certificateScript.js"></script>
+</body>
+</html>

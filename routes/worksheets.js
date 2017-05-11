@@ -177,10 +177,11 @@ router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
 // calculate worksheet and display results
 router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
     var worksheet_id = req.params.worksheet_id;
+    
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (!foundWorksheet) {
-            console.log("no worksheet was found!!!");
-            res.send('Sorry, the requested worksheet results is not available...<a href="/worksheets">Return to worksheets</a>');
+            req.flash("error", "The requested worksheet results is not available.");
+            res.redirect("/worksheets");
         } else if (err) {
             req.flash("error", err.message);
             res.redirect("/worksheets");
@@ -189,12 +190,52 @@ router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
             foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
                 return a.participant.name.last.localeCompare(b.participant.name.last);
             });
+            
             // add function to prettify date for use inside the template
             foundWorksheet.prettyDate = function (date) {
                 return new Date(date).toLocaleDateString();
             };
+            
             res.render('worksheets/calc.njk', {
                 worksheet: foundWorksheet
+            });
+        }
+    });
+});
+
+// certificate form
+router.get('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
+    res.render('worksheets/certificate_form.njk', {
+        worksheet_id: req.params.worksheet_id
+    });
+});
+
+// create certificates
+router.post('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
+    var worksheet_id = req.params.worksheet_id,
+        certData = req.body;
+    
+    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
+        if (!foundWorksheet) {
+            req.flash("error", "The requested worksheet results is not available.");
+            res.redirect("/worksheets");
+        } else if (err) {
+            req.flash("error", err.message);
+            res.redirect("/worksheets");
+        } else {
+            // sort assessments alphabetically by last name - TODO: if name is null does this crash program?
+            foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
+                return a.participant.name.last.localeCompare(b.participant.name.last);
+            });
+            
+            // add function to prettify date for use inside the template
+            foundWorksheet.prettyDate = function (date) {
+                return new Date(date).toLocaleDateString();
+            };
+            
+            res.render('worksheets/certificates.njk', {
+                worksheet: foundWorksheet,
+                certificateData: certData
             });
         }
     });

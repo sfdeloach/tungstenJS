@@ -80,7 +80,6 @@ router.post('/recovery', function (req, res) {
         } else {
             // create a random password string
             newPassword = rpass();
-            console.log(newPassword);
             foundUser.setPassword(newPassword, function () {
                 foundUser.needs_reset = true;
                 foundUser.save();
@@ -89,12 +88,12 @@ router.post('/recovery', function (req, res) {
                     service: 'SendGrid',
                     auth: {
                         user: 'sfdeloach',
-                        pass: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' // TODO: setup environment variable
+                        pass: process.env.SENDGRID_PASS
                     }
                 });
                 
                 email = {
-                    from: 'Wellness App <wellness.no.reply@channel14-altamonte.info>',
+                    from: 'Wellness App <emailbot@channel14-altamonte.info>',
                     to: foundUser.username,
                     bcc: 'sfdeloach@altamonte.org',
                     subject: 'Password Reset',
