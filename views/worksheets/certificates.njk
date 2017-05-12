@@ -10,10 +10,27 @@
         <div>
             {% for assessment in worksheet.assessments %}
             <div class="new-page">
-                <h4>{{ certificateData.expireDate }}</h4>
-                <span class="last">{{ assessment.participant.name.last }}</span>
-                <span class="first">{{ assessment.participant.name.first }}</span>
-                <span class="ave">?</span>
+                <div class="left-panel">
+                    <div class="wellness-works text-center">Wellness Works!</div>
+                    <div class="text-center big">Day Off Work Certificate</div>
+                    <img src="/images/cityLogo.png">
+                    <div class="text-center">This certificate entitles</div>
+                    <div class="text-center"><strong>{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</strong></div>
+                    <div class="text-center">to</div>
+                    <div class="text-center"><em>ONE WORKING DAY OFF WITH PAY!</em></div>
+                    <div class="text-center">Congratulations on achieving <strong><span class="ave">?</span></strong> on the City's WELLNESS test!</div>
+                    <div class="text-center">(Please use the U4 code)</div>
+                </div>
+                <div class="right-panel">
+                    <img class="wellness-circle" src="/images/wellnessCircle.png">
+                    <span class="signature">Signature:</span>
+                    <span>Date Used:</span>
+                </div>
+                <div class="bottom-panel">
+                    <div class="text-left"><strong>Non-Transferable</strong></div>
+                    <div class="text-center">ID No.</div>
+                    <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
+                </div>
                 <!-- items not visible on page -->
                 <span class="hr">{{ assessment.heart_rate }}</span>
                 <span class="bp">{{ assessment.blood_pressure }}</span>

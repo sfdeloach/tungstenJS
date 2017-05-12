@@ -1,11 +1,90 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0px;
 }
 
 @media print {
     .new-page {
         page-break-after: always;
     }
+}
+
+.text-center {
+    text-align: center;
+    padding: 5px;
+}
+
+div.left-panel div.wellness-works {
+    color: #06f;
+    -ms-transform: rotate(-7deg); /* IE 9 */
+    -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
+    transform: rotate(-7deg);
+    font-size: 300%;
+    font-style: italic;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    margin: 0px;
+}
+
+.left-panel {
+    float: left;
+    width: 40%;
+    height: 90%;
+}
+
+.right-panel {
+    float: right;
+    width: 60%;
+    height: 90%;
+}
+
+.bottom-panel {
+    height: 10%;
+}
+
+div.big {
+    font-size: 180%;
+    font-style: italic;
+    font-weight: 900;
+}
+
+img {
+    display: block;
+    margin: auto;
+    padding: 5px;
+}
+
+img.wellness-circle {
+    padding-top: 40px;
+}
+
+span.signature {
+    padding-left: 5%;
+    padding-right: 45%;
+}
+
+div.bottom-panel div.text-left {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    text-align: left;
+    width: 33%;
+}
+
+div.bottom-panel div.text-center {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    text-align: center;
+    width: 33%;
+}
+
+div.bottom-panel div.text-right {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    text-align: right;
+    width: 33%;
 }
 
 .hr,

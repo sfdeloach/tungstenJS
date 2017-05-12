@@ -204,16 +204,18 @@ router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
 });
 
 // certificate form
-router.get('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
+router.get('/:worksheet_id/certificates', /*authorization.isEditor,*/ function (req, res) {
     res.render('worksheets/certificate_form.njk', {
         worksheet_id: req.params.worksheet_id
     });
 });
 
 // create certificates
-router.post('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
+router.post('/:worksheet_id/certificates', /*authorization.isEditor,*/ function (req, res) {
     var worksheet_id = req.params.worksheet_id,
-        certData = req.body;
+        certData = req.body,
+        dateResult,
+        dateTime;
     
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (!foundWorksheet) {
@@ -228,9 +230,11 @@ router.post('/:worksheet_id/certificates', authorization.isEditor, function (req
                 return a.participant.name.last.localeCompare(b.participant.name.last);
             });
             
-            // add function to prettify date for use inside the template
+            // add function to prettify date for use inside the template, adjusted forward six hours due to UTC
             foundWorksheet.prettyDate = function (date) {
-                return new Date(date).toLocaleDateString();
+                dateTime = new Date(date).getTime() + (6 * 60 * 60 * 1000);
+                dateResult = new Date(dateTime);
+                return dateResult.toLocaleDateString();
             };
             
             res.render('worksheets/certificates.njk', {
