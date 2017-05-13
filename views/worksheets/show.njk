@@ -55,9 +55,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                        <form action="/worksheets/{{ worksheet._id }}" method="POST">
+                        <form id="newassessment-form" action="/worksheets/{{ worksheet._id }}" method="POST">
                             <td>
-                                <input class='form-control' list='participants' name='assessment[dept_id]' type='text' required autofocus>
+                                <input id="participant-name" class='form-control' list='participants' name='assessment[dept_id]' type='text' required autofocus>
                                 <datalist id="participants">
                                 {% for participant in participants %}
                                     <option value="{{ participant.dept_id }}">{{ participant.name.last }}, {{ participant.name.first }}</option>

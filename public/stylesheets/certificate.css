@@ -33,13 +33,24 @@ div.left-panel div.wellness-works {
 }
 
 .right-panel {
-    float: right;
+    float: left;
     width: 60%;
     height: 90%;
 }
 
 .bottom-panel {
+    float: left;
+    width: 100%;
     height: 10%;
+    position: relative;
+}
+
+.right-panel div {
+    margin-top: 10px;
+}
+
+.bottom-panel div {
+   margin-top: 50px;
 }
 
 div.big {
@@ -58,12 +69,8 @@ img.wellness-circle {
     padding-top: 40px;
 }
 
-span.signature {
-    padding-left: 5%;
-    padding-right: 45%;
-}
-
-div.bottom-panel div.text-left {
+div.bottom-panel div.text-left,
+div.right-panel div.text-left {
     margin: 0px;
     padding: 0px;
     display: inline-block;
@@ -71,7 +78,8 @@ div.bottom-panel div.text-left {
     width: 33%;
 }
 
-div.bottom-panel div.text-center {
+div.bottom-panel div.text-center,
+div.right-panel div.text-center {
     margin: 0px;
     padding: 0px;
     display: inline-block;
@@ -79,7 +87,8 @@ div.bottom-panel div.text-center {
     width: 33%;
 }
 
-div.bottom-panel div.text-right {
+div.bottom-panel div.text-right,
+div.right-panel div.text-right {
     margin: 0px;
     padding: 0px;
     display: inline-block;

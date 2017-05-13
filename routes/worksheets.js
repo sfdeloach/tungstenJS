@@ -73,7 +73,7 @@ router.post('/', authorization.isEditor, function (req, res) {
 });
 
 // show a worksheet and its assessments
-router.get('/:worksheet_id', authorization.isViewer, function (req, res) {
+router.get('/:worksheet_id', /*authorization.isViewer,*/ function (req, res) {
     var worksheet_id = req.params.worksheet_id;
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (err) {
@@ -94,7 +94,7 @@ router.get('/:worksheet_id', authorization.isViewer, function (req, res) {
 });
 
 // create and append a new assessment to a worksheet
-router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
+router.post('/:worksheet_id', /*authorization.isEditor,*/ function (req, res) {
     var worksheet_id = req.params.worksheet_id,
         newAssessment = req.body.assessment;
     
@@ -133,46 +133,46 @@ router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
 });
 
 // update an assessment (this route is accessed only via ajax call)
-router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
-    var updateData = req.body,
-        worksheet_id = req.params.worksheet_id;
-    
-    updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date + "T00:00:00.000Z");
-    updateData.cardio.time = updateData.cardio.min + ":" + ((parseInt(updateData.cardio.sec, 10) < 10) ?
-                    ("0" + parseInt(updateData.cardio.sec, 10)) : parseInt(updateData.cardio.sec, 10));
-    updateData.cardio.heart_rate = (updateData.cardio.type === 'walk' && updateData.cardio.heart_rate.length > 0) ?
-                    parseInt(updateData.cardio.heart_rate, 10) : null;
-    
-    Worksheet.update({
-        'assessments._id': updateData.assessment_id
-    }, {
-        '$set': {
-            'assessments.$.eval_date': updateData.eval_date,
-            'assessments.$.heart_rate': updateData.heart_rate,
-            'assessments.$.blood_pressure': updateData.blood_pressure,
-            'assessments.$.weight': parseInt(updateData.weight, 10),
-            'assessments.$.body_fat': parseFloat(updateData.body_fat, 10),
-            'assessments.$.flex': parseFloat(updateData.flex, 10),
-            'assessments.$.situp': parseInt(updateData.situp, 10),
-            'assessments.$.bench': parseInt(updateData.bench, 10),
-            'assessments.$.leg': parseInt(updateData.leg, 10),
-            'assessments.$.cardio.type': updateData.cardio.type,
-            'assessments.$.cardio.min': parseInt(updateData.cardio.min, 10),
-            'assessments.$.cardio.sec': parseInt(updateData.cardio.sec, 10),
-            'assessments.$.cardio.time': updateData.cardio.time,
-            'assessments.$.cardio.heart_rate': updateData.cardio.heart_rate
-        }
-    }, function (err, updateInfo) {
-        if (err) {
-            console.log("An error occurred during an AJAX assessment update!");
-            console.log("The update object that caused the error: ");
-            console.dir(updateData);
-            console.log(err);
-        } else {
-            res.send(updateData);
-        }
-    });
-});
+//router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
+//    var updateData = req.body,
+//        worksheet_id = req.params.worksheet_id;
+//    
+//    updateData.eval_date = dateHelper.htmlToDb(updateData.eval_date + "T00:00:00.000Z");
+//    updateData.cardio.time = updateData.cardio.min + ":" + ((parseInt(updateData.cardio.sec, 10) < 10) ?
+//                    ("0" + parseInt(updateData.cardio.sec, 10)) : parseInt(updateData.cardio.sec, 10));
+//    updateData.cardio.heart_rate = (updateData.cardio.type === 'walk' && updateData.cardio.heart_rate.length > 0) ?
+//                    parseInt(updateData.cardio.heart_rate, 10) : null;
+//    
+//    Worksheet.update({
+//        'assessments._id': updateData.assessment_id
+//    }, {
+//        '$set': {
+//            'assessments.$.eval_date': updateData.eval_date,
+//            'assessments.$.heart_rate': updateData.heart_rate,
+//            'assessments.$.blood_pressure': updateData.blood_pressure,
+//            'assessments.$.weight': parseInt(updateData.weight, 10),
+//            'assessments.$.body_fat': parseFloat(updateData.body_fat, 10),
+//            'assessments.$.flex': parseFloat(updateData.flex, 10),
+//            'assessments.$.situp': parseInt(updateData.situp, 10),
+//            'assessments.$.bench': parseInt(updateData.bench, 10),
+//            'assessments.$.leg': parseInt(updateData.leg, 10),
+//            'assessments.$.cardio.type': updateData.cardio.type,
+//            'assessments.$.cardio.min': parseInt(updateData.cardio.min, 10),
+//            'assessments.$.cardio.sec': parseInt(updateData.cardio.sec, 10),
+//            'assessments.$.cardio.time': updateData.cardio.time,
+//            'assessments.$.cardio.heart_rate': updateData.cardio.heart_rate
+//        }
+//    }, function (err, updateInfo) {
+//        if (err) {
+//            console.log("An error occurred during an AJAX assessment update!");
+//            console.log("The update object that caused the error: ");
+//            console.dir(updateData);
+//            console.log(err);
+//        } else {
+//            res.send(updateData);
+//        }
+//    });
+//});
 
 // calculate worksheet and display results
 router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
@@ -180,13 +180,12 @@ router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
     
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (!foundWorksheet) {
-            req.flash("error", "The requested worksheet results is not available.");
+            req.flash("error", "The requested worksheet results are not available.");
             res.redirect("/worksheets");
         } else if (err) {
             req.flash("error", err.message);
             res.redirect("/worksheets");
         } else {
-            // sort assessments alphabetically by last name - TODO: if name is null does this crash program?
             foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
                 return a.participant.name.last.localeCompare(b.participant.name.last);
             });
@@ -204,14 +203,14 @@ router.get('/:worksheet_id/calc', authorization.isViewer, function (req, res) {
 });
 
 // certificate form
-router.get('/:worksheet_id/certificates', /*authorization.isEditor,*/ function (req, res) {
+router.get('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
     res.render('worksheets/certificate_form.njk', {
         worksheet_id: req.params.worksheet_id
     });
 });
 
 // create certificates
-router.post('/:worksheet_id/certificates', /*authorization.isEditor,*/ function (req, res) {
+router.post('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
     var worksheet_id = req.params.worksheet_id,
         certData = req.body,
         dateResult,
@@ -225,7 +224,6 @@ router.post('/:worksheet_id/certificates', /*authorization.isEditor,*/ function 
             req.flash("error", err.message);
             res.redirect("/worksheets");
         } else {
-            // sort assessments alphabetically by last name - TODO: if name is null does this crash program?
             foundWorksheet.assessments = foundWorksheet.assessments.sort(function (a, b) {
                 return a.participant.name.last.localeCompare(b.participant.name.last);
             });
@@ -261,8 +259,10 @@ router['delete']('/:worksheet_id/:assessment_id', authorization.isEditor, functi
         if (err) {
             req.flash("error", err.message);
             res.redirect('/worksheets');
+        } else {
+            req.flash("success", "Assessment removed from the worksheet.");
+            res.redirect('/worksheets/' + worksheetID);
         }
-        res.redirect('/worksheets/' + worksheetID);
     });
 });
 

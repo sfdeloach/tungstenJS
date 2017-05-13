@@ -97,35 +97,30 @@ $(document).ready(function () {
         
         benchResult[i].innerHTML = tables.lookup("bench", sex[i], age[i].innerHTML, bench[i] / weight[i]);
         if (parseFloat(benchResult[i].innerHTML) < 50.0) {
-            console.log("bench failed");
             hasFailed = true;
         }
         benchAve += parseFloat(benchResult[i].innerHTML);
         
         bodyResult[i].innerHTML = tables.lookup("body", sex[i], age[i].innerHTML, body[i]);
         if (parseFloat(bodyResult[i].innerHTML) < 50.0) {
-            console.log("body failed");
             hasFailed = true;
         }
         bodyAve += parseFloat(bodyResult[i].innerHTML);
         
         flexResult[i].innerHTML = tables.lookup("flex", sex[i], age[i].innerHTML, flex[i]);
         if (parseFloat(flexResult[i].innerHTML) < 50.0) {
-            console.log("flex failed");
             hasFailed = true;
         }
         flexAve += parseFloat(flexResult[i].innerHTML);
         
         legResult[i].innerHTML = tables.lookup("leg", sex[i], age[i].innerHTML, leg[i] / weight[i]);
         if (parseFloat(legResult[i].innerHTML) < 50.0) {
-            console.log("leg failed");
             hasFailed = true;
         }
         legAve += parseFloat(legResult[i].innerHTML);
         
         sitResult[i].innerHTML = tables.lookup("sit", sex[i], age[i].innerHTML, sit[i]);
         if (parseFloat(sitResult[i].innerHTML) < 50.0) {
-            console.log("sit failed");
             hasFailed = true;
         }
         sitAve += parseFloat(sitResult[i].innerHTML);
@@ -140,12 +135,19 @@ $(document).ready(function () {
             runPartiticipants += 1;
         }
         if (parseFloat(cardioResult[i].innerHTML) < 50.0) {
-            console.log("cardio failed");
             hasFailed = true;
         }
         
         ave[i].innerHTML = Math.round10((parseFloat(benchResult[i].innerHTML) + parseFloat(bodyResult[i].innerHTML) +
                              parseFloat(flexResult[i].innerHTML) + parseFloat(legResult[i].innerHTML) +
-                             parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6, -1).toFixed(1) + "%";
+                             parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6, -1).toFixed(1);
+        
+        if (parseFloat(ave[i].innerHTML) < 75.0) {
+            ave[i].parentElement.parentElement.parentElement.parentElement.hidden = true;
+        } else if (parseFloat(ave[i].innerHTML) < 85.0) {
+            if (ave[i].parentElement.parentElement.parentElement.parentElement.className === "new-page b-certificate") {
+                ave[i].parentElement.parentElement.parentElement.parentElement.hidden = true;
+            }
+        }
     }
 });

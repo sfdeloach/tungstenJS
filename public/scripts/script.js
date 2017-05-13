@@ -273,7 +273,7 @@ $(document).ready(function () {
         assessment.href = col[16].innerHTML;
         assessment.worksheet_id = pathname.substr(12);
         
-        $.ajax({ url: pathname + "?_method=PUT",
+        $.ajax({ url: "/ajax" + pathname + "?_method=PUT",
                 data: assessment,
                 type: "POST"
             })
@@ -286,5 +286,30 @@ $(document).ready(function () {
             .fail(function (xhr, status, errorThrown) {
                 alert("Sorry, there was a problem saving the update to the database.");
             });
+    });
+    
+    // ID number validation for new assessments in worksheets/show.njk
+    $('#newassessment-form').on('submit', function (eventObject) {
+        var dept_id = { 'dept_id': $('#participant-name').val() },
+            result = false;
+        
+        $.ajax({ url: '/ajax/participants/check_id',
+                data: dept_id,
+                type: "POST",
+                async: false
+            })
+            .done(function (isValid) {
+                console.log(isValid);
+                if (isValid) {
+                    result = true;
+                } else {
+                    alert("Make sure you select a valid ID number from the list.")
+                }
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem accessing the database.");
+            });
+        
+        return result;
     });
 });
