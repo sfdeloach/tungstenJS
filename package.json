@@ -4,7 +4,12 @@
   "description": "City of Altamonte Springs wellness app based on a deprecated Cooper Aerobic Standard",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "engines": {
+        "node": "7.8.x",
+        "npm": "4.2.x"
   },
   "repository": {
     "type": "git",
