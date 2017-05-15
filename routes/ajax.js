@@ -10,16 +10,35 @@ var express = require("express"),
     Worksheet = require('../models/worksheet'),
     authorization = require('../helpers/authorization.js');
 
+// return a list of existing police dept id numbers, used at participants/new.njk when creating a new participant
+router.get('/participants/get_ids', authorization.isEditor, function (req, res) {
+    var key,
+        result = [];
+    Participant.find({ 'group': 'pd' }, { 'dept_id': 1, '_id': 0 }, function (err, foundParticipants) {
+        if (err) {
+            res.send('error');
+        } else {
+            foundParticipants.forEach(function (element) {
+                result.push(element.dept_id);
+            });
+            res.send(result);
+        }
+    });
+    
+});
+
 // verify a participant exists, used at worksheets/show.njk when attempting to save a new assessment
-router.post('/participants/check_id', authorization.isEditor, function (req, res) {
-    var dept_id = req.body.dept_id,
-        result = false;
+router.post('/participants/id_exists', authorization.isEditor, function (req, res) {
+    var dept_id = req.body.dept_id;
     
     Participant.findOne({ 'dept_id': dept_id }, function (err, foundParticipant) {
-        if (foundParticipant) {
-            result = true;
+        if (err) {
+            res.send('error');
+        } else if (foundParticipant) {
+            res.send(true);
+        } else {
+            res.send(false);
         }
-        res.send(result);
     });
 });
 

@@ -142,7 +142,7 @@ $(document).ready(function () {
     });
 
     $('#partnew-form').on('submit', function (eventObject) {
-        var valid = false,
+        var result = false,
             now,
             yy,
             MM,
@@ -164,18 +164,32 @@ $(document).ready(function () {
             id = yy.toString() + MM + dd + hh + mm + ss;
             $("#partnew-id").prop('disabled', false);
             $("#partnew-id").val(id);
-            valid = true;
+            result = true;
         } else {
-            // TODO: check for unique PD id number
-            valid = true;
+            // check for unique PD id number
+            $.ajax({ url: '/ajax/participants/get_ids',
+                    type: "GET",
+                    async: false
+                })
+                .done(function (ids) {
+                    console.log(ids);
+                    console.log(typeof ids);
+                    console.log($("#partnew-id").val());
+                    
+                    if (ids === 'error') {
+                        alert("Sorry, there was a problem connecting to the database, please check the connection.");
+                    } else if (ids.indexOf($("#partnew-id").val()) === -1) {
+                        result = true;
+                    } else {
+                        alert("Police ID numbers must be unique.");
+                    }
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    alert("Sorry, there was a problem accessing the database.");
+                });
         }
-
-        if (!valid) {
-            eventObject.preventDefault();
-            alert("ERROR: ID numbers must be unique!");
-        }
-
-        return valid;
+        
+        return result;
     });
     // END - Items located on participants/new.njk
 
@@ -293,7 +307,7 @@ $(document).ready(function () {
         var dept_id = { 'dept_id': $('#participant-name').val() },
             result = false;
         
-        $.ajax({ url: '/ajax/participants/check_id',
+        $.ajax({ url: '/ajax/participants/id_exists',
                 data: dept_id,
                 type: "POST",
                 async: false
@@ -303,7 +317,7 @@ $(document).ready(function () {
                 if (isValid) {
                     result = true;
                 } else {
-                    alert("Make sure you select a valid ID number from the list.")
+                    alert("You must provide a valid ID from the list. If you cannot find the name you are looking for, make sure you have created one in the Participant section.");
                 }
             })
             .fail(function (xhr, status, errorThrown) {
