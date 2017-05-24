@@ -23,27 +23,27 @@ router.get('/login', function (req, res) {
 
 // login logic goes here
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/passwordResetCheck',
+    successRedirect: '/password_reset_check',
     failureRedirect: '/login',
     failureFlash: true
 }));
 
 // check for password reset
-router.get('/passwordResetCheck', authorization.isViewer, function (req, res) {
+router.get('/password_reset_check', authorization.isViewer, function (req, res) {
     if (req.user.needs_reset) {
-        res.redirect('/passwordReset');
+        res.redirect('/password_reset');
     } else {
         res.redirect('/');
     }
 });
 
 // password reset
-router.get('/passwordReset', authorization.isViewer, function (req, res) {
-    res.render('passwordReset.njk');
+router.get('/password_reset', authorization.isViewer, function (req, res) {
+    res.render('password_reset.njk');
 });
 
 // password reset put request
-router.put('/passwordReset', authorization.isViewer, function (req, res) {
+router.put('/password_reset', authorization.isViewer, function (req, res) {
     User.findById(req.user._id, function (err, foundUser) {
         if (err) {
             req.flash("error", err.message);
@@ -87,7 +87,7 @@ router.post('/recovery', function (req, res) {
                 client = nodemailer.createTransport({
                     service: 'SendGrid',
                     auth: {
-                        user: 'sfdeloach',
+                        user: process.env.SENDGRID_USER,
                         pass: process.env.SENDGRID_PASS
                     }
                 });
