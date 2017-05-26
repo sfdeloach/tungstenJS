@@ -93,6 +93,31 @@ router.get('/:worksheet_id', authorization.isViewer, function (req, res) {
     });
 });
 
+// edit a worksheet's title and description
+router.get('/:worksheet_id/edit', authorization.isEditor, function (req, res) {
+    var worksheet_id = req.params.worksheet_id;
+    Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
+        res.render('worksheets/edit.njk', {
+            worksheet: foundWorksheet
+        });
+    });
+});
+
+// update worksheet's title and description
+router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
+    var worksheet_id = req.params.worksheet_id,
+        updatedWorksheet = req.body.worksheet;
+    Worksheet.findByIdAndUpdate(worksheet_id, updatedWorksheet, function (err, updatedWorksheet) {
+        if (err) {
+            req.flash("error", err.message);
+            res.redirect('/worksheets');
+        } else {
+            req.flash("success", "Worksheet was successfully updated.");
+            res.redirect('/worksheets');
+        }
+    });
+});
+
 // create and append a new assessment to a worksheet
 router.post('/:worksheet_id', authorization.isEditor, function (req, res) {
     var worksheet_id = req.params.worksheet_id,

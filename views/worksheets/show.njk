@@ -7,7 +7,7 @@
 {% block body %}
     <div class="container-fluid">
         <div class="jumbotron">
-            <h2><i class="fa fa-table fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;{{ worksheet.title }}</h2>
+            <h2><a href="/worksheets/{{ worksheet._id }}/edit"><i class="fa fa-table fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;{{ worksheet.title }}</a></h2>
             <h4>created by <strong>{{ worksheet.author.username }}</strong> on {{ worksheet.prettyDate(worksheet.created) }}</h4>
             <h6>Description:
                 {% if worksheet.description %}

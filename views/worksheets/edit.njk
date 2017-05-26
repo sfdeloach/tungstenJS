@@ -1,0 +1,36 @@
+{% extends "../template.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-edit fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Edit worksheet title and description</h2>
+            <div class="form-group">
+                <a href="/worksheets" class="btn btn-default">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    &nbsp;&nbsp;Return to worksheet index
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column col-sm-12">
+                <form action="/worksheets/{{ worksheet._id }}?_method=PUT" method="POST">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" class="form-control" name="worksheet[title]" value="{{ worksheet.title }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea rows="3" id="description" class="form-control" name="worksheet[description]">{{ worksheet.description }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
