@@ -24,6 +24,11 @@ app.use(express['static'](__dirname + '/public'));
 
 // Prepare database
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/tungsten';
+if (process.env.DATABASE_URL) {
+    console.log("Connecting to an environment variable defined database.");
+} else {
+    console.log("Connecting to a localhost database.");
+}
 mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
 

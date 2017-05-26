@@ -20,7 +20,37 @@
                 <form action="/worksheets/{{ worksheet_id }}/certificates" method="POST">
                     <div class="form-group">
                         <label for="expire-date">Expiration Date</label>
-                        <input type="date" id="expire-date" class="form-control" name="expireDate"></input>
+                        <input type="date" id="expire-date" class="form-control" name="certData[expireDate]"></input>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Select certificate type: </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline" name="certData[type]" value="police" checked/>
+                                    <span class="space-out"> police </span>
+                                    <input type="radio" class="radio inline" name="certData[type]" value="city"/>
+                                    <span class="space-out"> city </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="controls-row">
+                                <label class="control-label">
+                                    <span class="space-out">Select time of year: </span>
+                                </label>
+                                <div class="pull-apart">
+                                    <input type="radio" class="radio inline" name="certData[season]" value="fall" checked/>
+                                    <span class="space-out"> October/November </span>
+                                    <input type="radio" class="radio inline" name="certData[season]" value="spring"/>
+                                    <span class="space-out"> April/May </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-certificate" aria-hidden="true"></i>&nbsp;&nbsp;Create Certificates

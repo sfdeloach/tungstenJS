@@ -24,6 +24,7 @@
                 <li>Select the option 'Background graphics'</li>
                 <li>Select save</li>
             </ol>
+            <h3>FRIENDLY REMINDER: Print certificates single-sided!</h3>
         </div>
         {% for assessment in worksheet.assessments %}
         <div class="new-page a-certificate">
@@ -48,7 +49,7 @@
             <div class="bottom-panel">
                 <div>
                     <div class="text-left"><strong>Non-Transferable</strong></div>
-                    <div class="text-center">100{{ assessment.participant.dept_id }}A</div>
+                    <div class="text-center">100{{ assessment.participant.dept_id }}{% if certificateData.season === 'fall' %}A{% elif certificateData.season === 'spring' %}C{% endif %}</div>
                     <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
                 </div>
             </div>
@@ -106,7 +107,7 @@
             <div class="bottom-panel">
                 <div>
                     <div class="text-left"><strong>Non-Transferable</strong></div>
-                    <div class="text-center">100{{ assessment.participant.dept_id }}B</div>
+                    <div class="text-center">100{{ assessment.participant.dept_id }}{% if certificateData.season === 'fall' %}B{% elif certificateData.season === 'spring' %}D{% endif %}</div>
                     <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
                 </div>
             </div>

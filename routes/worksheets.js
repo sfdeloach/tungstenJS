@@ -195,9 +195,16 @@ router.get('/:worksheet_id/certificates', authorization.isEditor, function (req,
 // create certificates
 router.post('/:worksheet_id/certificates', authorization.isEditor, function (req, res) {
     var worksheet_id = req.params.worksheet_id,
-        certData = req.body,
+        certData = req.body.certData,
         dateResult,
         dateTime;
+    
+    // if the user does not provide an expiration date, the program will
+    if (!certData.expireDate && certData.season === "fall") {
+        certData.expireDate = "9/15/" + (new Date().getFullYear() + 1);
+    } else if (!certData.expireDate && certData.season === "spring") {
+        certData.expireDate = "9/15/" + new Date().getFullYear();
+    }
     
     Worksheet.findById(worksheet_id, function (err, foundWorksheet) {
         if (!foundWorksheet) {
@@ -218,10 +225,19 @@ router.post('/:worksheet_id/certificates', authorization.isEditor, function (req
                 return dateResult.toLocaleDateString();
             };
             
-            res.render('worksheets/certificates.njk', {
-                worksheet: foundWorksheet,
-                certificateData: certData
-            });
+            // TODO add conditional statement here, routing police certs to one view and other city to another view
+            if (certData.type === 'police') {
+                res.render('worksheets/police_certificates.njk', {
+                    worksheet: foundWorksheet,
+                    certificateData: certData
+                });
+            } else if (certData.type === 'city') {
+//                res.render('worksheets/city_certificates.njk', {
+//                    worksheet: foundWorksheet,
+//                    certificateData: certData
+//                });
+                res.send("this feature is not yet fully implemented!");
+            }
         }
     });
 });
