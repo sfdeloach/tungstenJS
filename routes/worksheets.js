@@ -110,10 +110,10 @@ router.put('/:worksheet_id', authorization.isEditor, function (req, res) {
     Worksheet.findByIdAndUpdate(worksheet_id, updatedWorksheet, function (err, updatedWorksheet) {
         if (err) {
             req.flash("error", err.message);
-            res.redirect('/worksheets');
+            res.redirect('/worksheets/' + worksheet_id);
         } else {
             req.flash("success", "Worksheet was successfully updated.");
-            res.redirect('/worksheets');
+            res.redirect('/worksheets/' + worksheet_id);
         }
     });
 });
