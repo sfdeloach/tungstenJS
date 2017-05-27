@@ -225,18 +225,17 @@ router.post('/:worksheet_id/certificates', authorization.isEditor, function (req
                 return dateResult.toLocaleDateString();
             };
             
-            // TODO add conditional statement here, routing police certs to one view and other city to another view
+            // route certs to either police or city views
             if (certData.type === 'police') {
-                res.render('worksheets/police_certificates.njk', {
+                res.render('worksheets/certificate_police.njk', {
                     worksheet: foundWorksheet,
                     certificateData: certData
                 });
             } else if (certData.type === 'city') {
-//                res.render('worksheets/city_certificates.njk', {
-//                    worksheet: foundWorksheet,
-//                    certificateData: certData
-//                });
-                res.send("this feature is not yet fully implemented!");
+                res.render('worksheets/certificate_city.njk', {
+                    worksheet: foundWorksheet,
+                    certificateData: certData
+                });
             }
         }
     });
