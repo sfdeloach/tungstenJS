@@ -1,9 +1,9 @@
 # tungstenJS
 
-* ver 1.0.0 - deployed on May 17, 2017
-* ver 1.0.1 - deployed on May 26, 2017
-* ver 1.0.2 - deployed on May 27, 2017
-* ver 1.0.3 - deployed on May 30, 2017
+* ver 1.0.0 - deployed on 05-17-2017 (initial release)
+* ver 1.0.1 - deployed on 05-26-2017
+* ver 1.0.2 - deployed on 05-27-2017 (city certificate feature add)
+* ver 1.0.3 - deployed on 05-30-2017 (certificate bug fix)
 
 A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org) featuring a MongoDB backend and authentication
 
