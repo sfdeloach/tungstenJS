@@ -142,12 +142,16 @@ $(document).ready(function () {
                              parseFloat(flexResult[i].innerHTML) + parseFloat(legResult[i].innerHTML) +
                              parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6, -1).toFixed(1);
         
-        if (parseFloat(ave[i].innerHTML) < 75.0) {
+        // By default, all police certificates are visible. Certificates are turned off if the average is too low.
+        if (parseFloat(ave[i].innerHTML) < 75.0 || hasFailed) {
             ave[i].parentElement.parentElement.parentElement.parentElement.hidden = true;
-        } else if (parseFloat(ave[i].innerHTML) < 85.0) {
+        } else if (parseFloat(ave[i].innerHTML) < 85.0 || hasFailed) {
             if (ave[i].parentElement.parentElement.parentElement.parentElement.className === "new-page b-certificate") {
                 ave[i].parentElement.parentElement.parentElement.parentElement.hidden = true;
             }
         }
+        
+        // reset the fail flag for the next participant
+        hasFailed = false;
     }
 });

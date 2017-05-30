@@ -143,14 +143,17 @@ $(document).ready(function () {
                              parseFloat(sitResult[i].innerHTML) + parseFloat(cardioResult[i].innerHTML)) / 6, -1).toFixed(1);
         
         // Unlike the police certificates, all city certificates will be initially hidden and then displayed based on scores
-        if (75.0 <= parseFloat(ave[i].innerHTML) && parseFloat(ave[i].innerHTML) < 85.0) {
+        if (75.0 <= parseFloat(ave[i].innerHTML) && parseFloat(ave[i].innerHTML) < 85.0 && !hasFailed) {
             if (ave[i].parentElement.parentElement.parentElement.parentElement.className === "new-page a-certificate") {
                 ave[i].parentElement.parentElement.parentElement.parentElement.hidden = false;
             }
-        } else if (85.0 <= parseFloat(ave[i].innerHTML)) {
+        } else if (85.0 <= parseFloat(ave[i].innerHTML) && !hasFailed) {
             if (ave[i].parentElement.parentElement.parentElement.parentElement.className === "new-page b-certificate") {
                 ave[i].parentElement.parentElement.parentElement.parentElement.hidden = false;
             }
         }
+        
+        // reset the fail flag for the next participant
+        hasFailed = false;
     }
 });
