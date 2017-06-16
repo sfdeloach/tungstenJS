@@ -4,6 +4,7 @@
 * ver 1.0.1 - deployed on 05-26-2017
 * ver 1.0.2 - deployed on 05-27-2017 (city certificate feature add)
 * ver 1.0.3 - deployed on 05-30-2017 (certificate bug fix)
+* ver 1.0.4 - deployed on 06-16-2017 (security feature added)
 
 A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org) featuring a MongoDB backend and authentication
 

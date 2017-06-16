@@ -6,6 +6,7 @@
 // Setup dependencies
 var express = require('express'),
     mongoose = require('mongoose'),
+    helmet = require('helmet'),
     nunjucks = require('nunjucks'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
@@ -19,8 +20,6 @@ var express = require('express'),
     User = require('./models/user'),
     Worksheet = require('./models/worksheet');
 
-var app = express();
-app.use(express['static'](__dirname + '/public'));
 
 // Prepare database
 var connectionURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/tungsten';
@@ -31,6 +30,15 @@ if (process.env.DATABASE_URL) {
 }
 mongoose.Promise = global.Promise;
 mongoose.connect(connectionURL);
+
+// Initialize express, serve static files
+var app = express();
+
+// Make the app more secure with helmetjs
+app.use(helmet());
+
+// Built-in middleware, serve static files from 'public' folder
+app.use(express['static'](__dirname + '/public'));
 
 // Configure Passport
 app.use(require("express-session")({
@@ -56,10 +64,12 @@ app.use(methodOverride("_method"));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(flash());
 
-// allow req.user and flash messages to be visible in all routes
+// App-level middleware, allow req.user and flash messages to be visible in all routes
 app.use(function (req, res, next) {
+    var user;
     if (req.user) {
-        req.user.name = req.user.username.slice(0, req.user.username.indexOf('@'));
+        user = req.user.username;
+        req.user.name = user.slice(0, user.indexOf('@'));
     }
     res.locals.user = req.user;
     res.locals.error = req.flash("error");
