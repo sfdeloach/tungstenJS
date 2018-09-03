@@ -53,7 +53,7 @@ router.put('/worksheets/:worksheet_id', authorization.isEditor, function (req, r
     updateData.cardio.heart_rate = (updateData.cardio.type === 'walk' && updateData.cardio.heart_rate.length > 0) ?
                     parseInt(updateData.cardio.heart_rate, 10) : null;
     
-    Worksheet.update({
+    Worksheet.updateOne({
         'assessments._id': updateData.assessment_id
     }, {
         '$set': {

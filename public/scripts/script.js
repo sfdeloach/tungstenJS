@@ -83,7 +83,7 @@ function showParticipant(row) {
         '<td class="col-width12">' +
         '<a id="' + row.dept_id + '" href="' + row.href + '">' + row.name + '</a>' +
         '</td>' +
-        '<td>' + new Date(row.eval_date).toLocaleDateString() + '</td>' +
+        '<td>' + new Date(row.eval_date).toLocaleDateString('en-US') + '</td>' +
         '<td>' + row.weight + '</td>' +
         '<td>' + row.heart_rate + '</td>' +
         '<td>' + row.blood_pressure + '</td>' +

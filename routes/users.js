@@ -11,7 +11,7 @@ var express = require("express"),
 // user index
 router.get('/', authorization.isAdmin, function (req, res) {
     var totalUsers = 0;
-    User.count({}, function (err, count) {
+    User.countDocuments({}, function (err, count) {
         if (err) {
             req.flash("error", err.message);
             res.redirect('/');
