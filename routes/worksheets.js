@@ -1,40 +1,38 @@
-/*jslint node: true*/
-/*jslint nomen: true*/
-"use strict";
+'use strict';
 
-var express = require("express"),
+var express = require('express'),
   router = express.Router(),
-  dateHelper = require("../helpers/myDatetime"),
-  Participant = require("../models/participant"),
-  User = require("../models/user"),
-  Worksheet = require("../models/worksheet"),
-  authorization = require("../helpers/authorization.js");
+  dateHelper = require('../helpers/myDatetime'),
+  Participant = require('../models/participant'),
+  User = require('../models/user'),
+  Worksheet = require('../models/worksheet'),
+  authorization = require('../helpers/authorization.js');
 
 // worksheet index
-router.get("/", authorization.isViewer, function(req, res) {
+router.get('/', authorization.isViewer, function(req, res) {
   var totalWorksheets = 0;
   Worksheet.countDocuments({}, function(err, count) {
     if (err) {
-      req.flash("error", err.message);
-      res.redirect("/");
+      req.flash('error', err.message);
+      res.redirect('/');
     }
     Worksheet.find({}, function(err, foundWorksheets) {
       if (err) {
-        req.flash("error", err.message);
-        res.redirect("/");
+        req.flash('error', err.message);
+        res.redirect('/');
       } else if (count === 0) {
-        res.render("worksheets/index.njk", {
-          worksheets: foundWorksheets
+        res.render('worksheets/index.njk', {
+          worksheets: foundWorksheets,
         });
       } else {
         foundWorksheets.forEach(function(worksheet) {
           worksheet.prettyDate = new Date(worksheet.created).toLocaleDateString(
-            "en-US"
+            'en-US'
           );
           totalWorksheets += 1;
           if (totalWorksheets === count) {
-            res.render("worksheets/index.njk", {
-              worksheets: foundWorksheets
+            res.render('worksheets/index.njk', {
+              worksheets: foundWorksheets,
             });
           }
         });
@@ -44,16 +42,16 @@ router.get("/", authorization.isViewer, function(req, res) {
 });
 
 // new worksheet form
-router.get("/new", authorization.isEditor, function(req, res) {
-  res.render("worksheets/new.njk");
+router.get('/new', authorization.isEditor, function(req, res) {
+  res.render('worksheets/new.njk');
 });
 
 // create new worksheet
-router.post("/", authorization.isEditor, function(req, res) {
+router.post('/', authorization.isEditor, function(req, res) {
   User.findOne({ username: req.user.username }, function(err, foundUser) {
     if (err) {
-      req.flash("error", err.message);
-      res.redirect("/worksheets");
+      req.flash('error', err.message);
+      res.redirect('/worksheets');
     } else {
       var newWorksheet = req.body.worksheet;
       newWorksheet.created = new Date();
@@ -63,11 +61,11 @@ router.post("/", authorization.isEditor, function(req, res) {
       newWorksheet.assessments = [];
       Worksheet.create(newWorksheet, function(err, createdWorksheet) {
         if (err) {
-          req.flash("error", err.message);
-          res.redirect("/worksheets");
+          req.flash('error', err.message);
+          res.redirect('/worksheets');
         } else {
-          req.flash("success", "A new worksheet was successfully created.");
-          res.redirect("/worksheets");
+          req.flash('success', 'A new worksheet was successfully created.');
+          res.redirect('/worksheets');
         }
       });
     }
@@ -75,20 +73,20 @@ router.post("/", authorization.isEditor, function(req, res) {
 });
 
 // show a worksheet and its assessments
-router.get("/:worksheet_id", authorization.isViewer, function(req, res) {
+router.get('/:worksheet_id', authorization.isViewer, function(req, res) {
   var worksheet_id = req.params.worksheet_id;
   Worksheet.findById(worksheet_id, function(err, foundWorksheet) {
     if (err) {
-      req.flash("error", err.message);
-      res.redirect("/worksheets");
+      req.flash('error', err.message);
+      res.redirect('/worksheets');
     } else {
       foundWorksheet.prettyDate = function(date) {
-        return new Date(date).toLocaleDateString("en-US");
+        return new Date(date).toLocaleDateString('en-US');
       };
       Participant.find({}, function(err, foundParticipants) {
-        res.render("worksheets/show.njk", {
+        res.render('worksheets/show.njk', {
           worksheet: foundWorksheet,
-          participants: foundParticipants
+          participants: foundParticipants,
         });
       });
     }
@@ -96,17 +94,17 @@ router.get("/:worksheet_id", authorization.isViewer, function(req, res) {
 });
 
 // edit a worksheet's title and description
-router.get("/:worksheet_id/edit", authorization.isEditor, function(req, res) {
+router.get('/:worksheet_id/edit', authorization.isEditor, function(req, res) {
   var worksheet_id = req.params.worksheet_id;
   Worksheet.findById(worksheet_id, function(err, foundWorksheet) {
-    res.render("worksheets/edit.njk", {
-      worksheet: foundWorksheet
+    res.render('worksheets/edit.njk', {
+      worksheet: foundWorksheet,
     });
   });
 });
 
 // update worksheet's title and description
-router.put("/:worksheet_id", authorization.isEditor, function(req, res) {
+router.put('/:worksheet_id', authorization.isEditor, function(req, res) {
   var worksheet_id = req.params.worksheet_id,
     updatedWorksheet = req.body.worksheet;
   Worksheet.findByIdAndUpdate(worksheet_id, updatedWorksheet, function(
@@ -114,17 +112,17 @@ router.put("/:worksheet_id", authorization.isEditor, function(req, res) {
     updatedWorksheet
   ) {
     if (err) {
-      req.flash("error", err.message);
-      res.redirect("/worksheets/" + worksheet_id);
+      req.flash('error', err.message);
+      res.redirect('/worksheets/' + worksheet_id);
     } else {
-      req.flash("success", "Worksheet was successfully updated.");
-      res.redirect("/worksheets/" + worksheet_id);
+      req.flash('success', 'Worksheet was successfully updated.');
+      res.redirect('/worksheets/' + worksheet_id);
     }
   });
 });
 
 // create and append a new assessment to a worksheet
-router.post("/:worksheet_id", authorization.isEditor, function(req, res) {
+router.post('/:worksheet_id', authorization.isEditor, function(req, res) {
   var worksheet_id = req.params.worksheet_id,
     newAssessment = req.body.assessment;
 
@@ -133,41 +131,41 @@ router.post("/:worksheet_id", authorization.isEditor, function(req, res) {
     min: parseInt(newAssessment.cardio_min, 10),
     sec: parseInt(newAssessment.cardio_sec, 10),
     heart_rate:
-      newAssessment.cardio_type === "walk"
+      newAssessment.cardio_type === 'walk'
         ? newAssessment.cardio_heartrate
-        : null
+        : null,
   };
   newAssessment.cardio.time =
     newAssessment.cardio.min +
-    ":" +
+    ':' +
     (newAssessment.cardio.sec < 10
-      ? "0" + newAssessment.cardio.sec
+      ? '0' + newAssessment.cardio.sec
       : newAssessment.cardio.sec);
   newAssessment.inactive_on = null;
   newAssessment.created = new Date();
   newAssessment.eval_date = dateHelper.htmlToDb(newAssessment.eval_date);
   Worksheet.findById(worksheet_id, function(err, foundWorksheet) {
     if (err) {
-      req.flash("error", err.message);
-      res.redirect("/worksheets");
+      req.flash('error', err.message);
+      res.redirect('/worksheets');
     }
     Participant.findOne(
       {
-        dept_id: newAssessment.dept_id
+        dept_id: newAssessment.dept_id,
       },
       function(err, foundParticipant) {
         newAssessment.participant = foundParticipant;
         foundWorksheet.assessments.push(newAssessment);
         foundWorksheet.save(function(err, updatedWorksheet) {
           if (err) {
-            req.flash("error", err.message);
-            res.redirect("/worksheets");
+            req.flash('error', err.message);
+            res.redirect('/worksheets');
           } else {
             req.flash(
-              "success",
-              "New assessment successfully saved to the worksheet."
+              'success',
+              'New assessment successfully saved to the worksheet.'
             );
-            res.redirect("/worksheets/" + worksheet_id);
+            res.redirect('/worksheets/' + worksheet_id);
           }
         });
       }
@@ -176,16 +174,16 @@ router.post("/:worksheet_id", authorization.isEditor, function(req, res) {
 });
 
 // calculate worksheet and display results
-router.get("/:worksheet_id/calc", authorization.isViewer, function(req, res) {
+router.get('/:worksheet_id/calc', authorization.isViewer, function(req, res) {
   var worksheet_id = req.params.worksheet_id;
 
   Worksheet.findById(worksheet_id, function(err, foundWorksheet) {
     if (!foundWorksheet) {
-      req.flash("error", "The requested worksheet results are not available.");
-      res.redirect("/worksheets");
+      req.flash('error', 'The requested worksheet results are not available.');
+      res.redirect('/worksheets');
     } else if (err) {
-      req.flash("error", err.message);
-      res.redirect("/worksheets");
+      req.flash('error', err.message);
+      res.redirect('/worksheets');
     } else {
       foundWorksheet.assessments = foundWorksheet.assessments.sort(function(
         a,
@@ -196,28 +194,28 @@ router.get("/:worksheet_id/calc", authorization.isViewer, function(req, res) {
 
       // add function to prettify date for use inside the template
       foundWorksheet.prettyDate = function(date) {
-        return new Date(date).toLocaleDateString("en-US");
+        return new Date(date).toLocaleDateString('en-US');
       };
 
-      res.render("worksheets/calc.njk", {
-        worksheet: foundWorksheet
+      res.render('worksheets/calc.njk', {
+        worksheet: foundWorksheet,
       });
     }
   });
 });
 
 // certificate form
-router.get("/:worksheet_id/certificates", authorization.isEditor, function(
+router.get('/:worksheet_id/certificates', authorization.isEditor, function(
   req,
   res
 ) {
-  res.render("worksheets/certificate_form.njk", {
-    worksheet_id: req.params.worksheet_id
+  res.render('worksheets/certificate_form.njk', {
+    worksheet_id: req.params.worksheet_id,
   });
 });
 
 // create certificates
-router.post("/:worksheet_id/certificates", authorization.isEditor, function(
+router.post('/:worksheet_id/certificates', authorization.isEditor, function(
   req,
   res
 ) {
@@ -227,19 +225,19 @@ router.post("/:worksheet_id/certificates", authorization.isEditor, function(
     dateTime;
 
   // if the user does not provide an expiration date, the program will
-  if (!certData.expireDate && certData.season === "fall") {
-    certData.expireDate = "9/15/" + (new Date().getFullYear() + 1);
-  } else if (!certData.expireDate && certData.season === "spring") {
-    certData.expireDate = "9/15/" + new Date().getFullYear();
+  if (!certData.expireDate && certData.season === 'fall') {
+    certData.expireDate = '9/15/' + (new Date().getFullYear() + 1);
+  } else if (!certData.expireDate && certData.season === 'spring') {
+    certData.expireDate = '9/15/' + new Date().getFullYear();
   }
 
   Worksheet.findById(worksheet_id, function(err, foundWorksheet) {
     if (!foundWorksheet) {
-      req.flash("error", "The requested worksheet results is not available.");
-      res.redirect("/worksheets");
+      req.flash('error', 'The requested worksheet results is not available.');
+      res.redirect('/worksheets');
     } else if (err) {
-      req.flash("error", err.message);
-      res.redirect("/worksheets");
+      req.flash('error', err.message);
+      res.redirect('/worksheets');
     } else {
       foundWorksheet.assessments = foundWorksheet.assessments.sort(function(
         a,
@@ -253,19 +251,19 @@ router.post("/:worksheet_id/certificates", authorization.isEditor, function(
       foundWorksheet.prettyDate = function(date) {
         dateTime = new Date(date).getTime() + 6 * 60 * 60 * 1000;
         dateResult = new Date(dateTime);
-        return dateResult.toLocaleDateString("en-US");
+        return dateResult.toLocaleDateString('en-US');
       };
 
       // route certs to either police or city views
-      if (certData.type === "police") {
-        res.render("worksheets/certificate_police.njk", {
+      if (certData.type === 'police') {
+        res.render('worksheets/certificate_police.njk', {
           worksheet: foundWorksheet,
-          certificateData: certData
+          certificateData: certData,
         });
-      } else if (certData.type === "city") {
-        res.render("worksheets/certificate_city.njk", {
+      } else if (certData.type === 'city') {
+        res.render('worksheets/certificate_city.njk', {
           worksheet: foundWorksheet,
-          certificateData: certData
+          certificateData: certData,
         });
       }
     }
@@ -273,30 +271,30 @@ router.post("/:worksheet_id/certificates", authorization.isEditor, function(
 });
 
 // remove an assessment from a worksheet
-router["delete"](
-  "/:worksheet_id/:assessment_id",
+router['delete'](
+  '/:worksheet_id/:assessment_id',
   authorization.isEditor,
   function(req, res) {
     var worksheetID = req.params.worksheet_id,
       assessmentID = req.params.assessment_id;
     Worksheet.updateOne(
       {
-        _id: worksheetID
+        _id: worksheetID,
       },
       {
         $pull: {
           assessments: {
-            _id: assessmentID
-          }
-        }
+            _id: assessmentID,
+          },
+        },
       },
       function(err, obj) {
         if (err) {
-          req.flash("error", err.message);
-          res.redirect("/worksheets");
+          req.flash('error', err.message);
+          res.redirect('/worksheets');
         } else {
-          req.flash("success", "Assessment removed from the worksheet.");
-          res.redirect("/worksheets/" + worksheetID);
+          req.flash('success', 'Assessment removed from the worksheet.');
+          res.redirect('/worksheets/' + worksheetID);
         }
       }
     );
@@ -304,9 +302,9 @@ router["delete"](
 );
 
 // destroy a worksheet
-router["delete"]("/:id", authorization.isEditor, function(req, res) {
+router['delete']('/:id', authorization.isEditor, function(req, res) {
   Worksheet.findByIdAndRemove(req.params.id, function(err) {
-    res.redirect("/worksheets");
+    res.redirect('/worksheets');
   });
 });
 

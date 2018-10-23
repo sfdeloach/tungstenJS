@@ -1,180 +1,179 @@
 body {
-    padding-top: 70px;
-    background: #ECE9E6;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFFFFF, #ECE9E6);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    font-family: 'Ubuntu', sans-serif;
+  padding-top: 70px;
+  background: #ece9e6;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ffffff, #ece9e6);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffffff, #ece9e6);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .btn-xs {
-    margin: 2px 2px;
+  margin: 2px 2px;
 }
 
 .header-fixed {
-    width: 100%
+  width: 100%;
 }
 
-.header-fixed>thead,
-.header-fixed>tbody,
-.header-fixed>thead>tr,
-.header-fixed>tbody>tr,
-.header-fixed>thead>tr>th,
-.header-fixed>tbody>tr>td {
-    display: block;
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+  display: block;
 }
 
-.header-fixed>tbody>tr:after,
-.header-fixed>thead>tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
 }
 
-.header-fixed>tbody {
-    overflow-y: auto;
-    height: 60vh;
+.header-fixed > tbody {
+  overflow-y: auto;
+  height: 60vh;
 }
-
 
 /*default column width*/
 
-.table>tbody>tr>td,
-.table>thead>tr>th {
-    width: 6.333%;
-    float: left;
-    text-align: center;
+.table > tbody > tr > td,
+.table > thead > tr > th {
+  width: 6.333%;
+  float: left;
+  text-align: center;
 }
 
-.table>tbody>tr>td.col-width70,
-.table>thead>tr>th.col-width70 {
-    width: 70%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width70,
+.table > thead > tr > th.col-width70 {
+  width: 70%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width40,
-.table>thead>tr>th.col-width40 {
-    width: 40%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width40,
+.table > thead > tr > th.col-width40 {
+  width: 40%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width30,
-.table>thead>tr>th.col-width30 {
-    width: 30%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width30,
+.table > thead > tr > th.col-width30 {
+  width: 30%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width20,
-.table>thead>tr>th.col-width20 {
-    width: 20%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width20,
+.table > thead > tr > th.col-width20 {
+  width: 20%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width18,
-.table>thead>tr>th.col-width18 {
-    width: 18%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width18,
+.table > thead > tr > th.col-width18 {
+  width: 18%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width16,
-.table>thead>tr>th.col-width16 {
-    width: 16%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width16,
+.table > thead > tr > th.col-width16 {
+  width: 16%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width12,
-.table>thead>tr>th.col-width12 {
-    width: 12%;
-    float: left;
-    text-align: center;
+.table > tbody > tr > td.col-width12,
+.table > thead > tr > th.col-width12 {
+  width: 12%;
+  float: left;
+  text-align: center;
 }
 
-.table>tbody>tr>td.col-width11,
-.table>thead>tr>th.col-width11 {
-    width: 11%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width11,
+.table > thead > tr > th.col-width11 {
+  width: 11%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width10-right,
-.table>thead>tr>th.col-width10-right {
-    width: 10%;
-    float: left;
-    text-align: right;
+.table > tbody > tr > td.col-width10-right,
+.table > thead > tr > th.col-width10-right {
+  width: 10%;
+  float: left;
+  text-align: right;
 }
 
-.table>tbody>tr>td.col-width10-left,
-.table>thead>tr>th.col-width10-left {
-    width: 10%;
-    float: left;
-    text-align: left;
+.table > tbody > tr > td.col-width10-left,
+.table > thead > tr > th.col-width10-left {
+  width: 10%;
+  float: left;
+  text-align: left;
 }
 
-.table>tbody>tr>td.col-width10-center,
-.table>thead>tr>th.col-width10-center {
-    width: 10%;
-    float: left;
-    text-align: center;
+.table > tbody > tr > td.col-width10-center,
+.table > thead > tr > th.col-width10-center {
+  width: 10%;
+  float: left;
+  text-align: center;
 }
 
-.table>tbody>tr>td.col-width09,
-.table>thead>tr>th.col-width09 {
-    width: 9%;
-    float: left;
-    text-align: center;
+.table > tbody > tr > td.col-width09,
+.table > thead > tr > th.col-width09 {
+  width: 9%;
+  float: left;
+  text-align: center;
 }
 
-.table>tbody>tr>td.col-width05-right,
-.table>thead>tr>th.col-width05-right {
-    width: 5%;
-    float: left;
-    text-align: right;
+.table > tbody > tr > td.col-width05-right,
+.table > thead > tr > th.col-width05-right {
+  width: 5%;
+  float: left;
+  text-align: right;
 }
 
-.table>tbody>tr>td.col-width05,
-.table>thead>tr>th.col-width05 {
-    width: 5%;
-    float: left;
-    text-align: center;
+.table > tbody > tr > td.col-width05,
+.table > thead > tr > th.col-width05 {
+  width: 5%;
+  float: left;
+  text-align: center;
 }
 
-.table>tbody>tr>td.col-width03,
-.table>thead>tr>th.col-width03 {
-    width: 5%;
-    float: left;
-    text-align: center;
+.table > tbody > tr > td.col-width03,
+.table > thead > tr > th.col-width03 {
+  width: 5%;
+  float: left;
+  text-align: center;
 }
 
 .empty-row {
-    height: 25px;
+  height: 25px;
 }
 
 .delete-form {
-    display: inline;
+  display: inline;
 }
 
-.form-inline>.controls-row>div>span.space-out,
-.form-inline>.controls-row>label>span.space-out {
-    margin-right: 16px;
-    margin-left: 4px;
+.form-inline > .controls-row > div > span.space-out,
+.form-inline > .controls-row > label > span.space-out {
+  margin-right: 16px;
+  margin-left: 4px;
 }
 
-.form-inline>.controls-row>label.control-label {
-    margin-top: 8px;
+.form-inline > .controls-row > label.control-label {
+  margin-top: 8px;
 }
 
 .wellness-footer {
-    margin-top: 30px;
-    margin-right: 10px;
-    font-size: 90%;
-    color: lightgray;
+  margin-top: 30px;
+  margin-right: 10px;
+  font-size: 90%;
+  color: lightgray;
 }

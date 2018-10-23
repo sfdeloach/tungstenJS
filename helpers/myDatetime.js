@@ -1,8 +1,7 @@
-/*jslint node: true */
-"use strict";
+'use strict';
 
 var dateTimeHelperObject = {
-    /*
+  /*
      *  When a HTML input date type is received, it is a string in the format of "YYYY-MM-DD".
      *  If this raw string is used to insert into MongoDB, it assumes the time is midnight
      *  UTC. This causes the date to later appear to be one day before the date that was
@@ -18,19 +17,21 @@ var dateTimeHelperObject = {
      *
      *  "2017-04-10T00:00:00.000Z" --> date object --> +timezone offset --> date object midnight local time
      */
-    htmlToDb: function (htmlDateString) {
-        var dateObject = new Date(htmlDateString),
-            timezoneOffsetInMinutes = dateObject.getTimezoneOffset();
-        dateObject.setTime(dateObject.getTime() + (timezoneOffsetInMinutes * 60 * 1000));
-        return dateObject;
-    },
-    /*
+  htmlToDb: function(htmlDateString) {
+    var dateObject = new Date(htmlDateString),
+      timezoneOffsetInMinutes = dateObject.getTimezoneOffset();
+    dateObject.setTime(
+      dateObject.getTime() + timezoneOffsetInMinutes * 60 * 1000
+    );
+    return dateObject;
+  },
+  /*
      *  date object --> "2017-04-10T00:00:00.000Z" --> "2017-04-10"
      */
-    dbToHtml: function (dbDateObject) {
-        var dbDateString = dbDateObject.toJSON();
-        return dbDateString.slice(0, dbDateString.indexOf('T'));
-    }
+  dbToHtml: function(dbDateObject) {
+    var dbDateString = dbDateObject.toJSON();
+    return dbDateString.slice(0, dbDateString.indexOf('T'));
+  },
 };
 
 module.exports = dateTimeHelperObject;

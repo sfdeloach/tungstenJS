@@ -5,7 +5,7 @@ A sincere thank you to [TablesGenerator.com](http://www.tablesgenerator.com/mark
 ### AJAX Routing
 
 | route                          | action | auth   | description                                |
-|--------------------------------|--------|--------|--------------------------------------------|
+| ------------------------------ | ------ | ------ | ------------------------------------------ |
 | /ajax/participants/get_ids     | GET    | editor | returns all pd dept_id's as an array       |
 | /ajax/participants/id_exists   | POST   | editor | returns true if a valid dept_id is entered |
 | /ajax/worksheets/:worksheet_id | PUT    | editor | updates an assessment within a worksheet   |
@@ -13,7 +13,7 @@ A sincere thank you to [TablesGenerator.com](http://www.tablesgenerator.com/mark
 ### Index Routing
 
 | route                 | action | auth                      | description                              |
-|-----------------------|--------|---------------------------|------------------------------------------|
+| --------------------- | ------ | ------------------------- | ---------------------------------------- |
 | /                     | GET    | viewer                    | main page                                |
 | /login                | GET    | no authorization required | login form                               |
 | /login                | POST   | no authorization required | login verification                       |
@@ -27,7 +27,7 @@ A sincere thank you to [TablesGenerator.com](http://www.tablesgenerator.com/mark
 ### JSON Routing
 
 | route              | action | auth  | description                 |
-|--------------------|--------|-------|-----------------------------|
+| ------------------ | ------ | ----- | --------------------------- |
 | /json              | GET    | admin | index of db views           |
 | /json/participants | GET    | admin | participant json result set |
 | /json/users        | GET    | admin | user json result set        |
@@ -36,7 +36,7 @@ A sincere thank you to [TablesGenerator.com](http://www.tablesgenerator.com/mark
 ### Participants Routing
 
 | route                 | action | auth   | description                 |
-|-----------------------|--------|--------|-----------------------------|
+| --------------------- | ------ | ------ | --------------------------- |
 | /particpants          | GET    | editor | index of participants       |
 | /particpants/new      | GET    | editor | new participant form        |
 | /particpants          | POST   | editor | new participant saved to db |
@@ -47,7 +47,7 @@ A sincere thank you to [TablesGenerator.com](http://www.tablesgenerator.com/mark
 ### Users Routing
 
 | route           | action | auth  | description          |
-|-----------------|--------|-------|----------------------|
+| --------------- | ------ | ----- | -------------------- |
 | /users          | GET    | admin | index of users       |
 | /users/new      | GET    | admin | new user form        |
 | /users          | POST   | admin | new user saved to db |
@@ -58,7 +58,7 @@ A sincere thank you to [TablesGenerator.com](http://www.tablesgenerator.com/mark
 ### Worksheets Routing
 
 | route                                    | action | auth   | description                                |
-|------------------------------------------|--------|--------|--------------------------------------------|
+| ---------------------------------------- | ------ | ------ | ------------------------------------------ |
 | /worksheets                              | GET    | editor | index of worksheets                        |
 | /worksheets/new                          | GET    | editor | new worksheet form                         |
 | /worksheets                              | POST   | editor | new worksheet saved to db                  |

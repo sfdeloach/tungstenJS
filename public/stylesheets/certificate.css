@@ -1,99 +1,99 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0px;
+  font-family: Arial, sans-serif;
+  margin: 0px;
 }
 
 @media print {
-    .new-page {
-        page-break-after: always;
-    }
+  .new-page {
+    page-break-after: always;
+  }
 }
 
 .text-center {
-    text-align: center;
-    padding: 5px;
+  text-align: center;
+  padding: 5px;
 }
 
 div.left-panel div.wellness-works {
-    color: #06f;
-    -ms-transform: rotate(-7deg); /* IE 9 */
-    -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
-    transform: rotate(-7deg);
-    font-size: 300%;
-    font-style: italic;
-    padding-top: 50px;
-    padding-bottom: 40px;
-    margin: 0px;
+  color: #06f;
+  -ms-transform: rotate(-7deg); /* IE 9 */
+  -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
+  transform: rotate(-7deg);
+  font-size: 300%;
+  font-style: italic;
+  padding-top: 50px;
+  padding-bottom: 40px;
+  margin: 0px;
 }
 
 .left-panel {
-    float: left;
-    width: 40%;
-    height: 90%;
+  float: left;
+  width: 40%;
+  height: 90%;
 }
 
 .right-panel {
-    float: left;
-    width: 60%;
-    height: 90%;
+  float: left;
+  width: 60%;
+  height: 90%;
 }
 
 .bottom-panel {
-    float: left;
-    width: 100%;
-    height: 10%;
-    position: relative;
+  float: left;
+  width: 100%;
+  height: 10%;
+  position: relative;
 }
 
 .right-panel div {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .bottom-panel div {
-   margin-top: 50px;
+  margin-top: 50px;
 }
 
 div.big {
-    font-size: 180%;
-    font-style: italic;
-    font-weight: 900;
+  font-size: 180%;
+  font-style: italic;
+  font-weight: 900;
 }
 
 img {
-    display: block;
-    margin: auto;
-    padding: 5px;
+  display: block;
+  margin: auto;
+  padding: 5px;
 }
 
 img.wellness-circle {
-    padding-top: 40px;
+  padding-top: 40px;
 }
 
 div.bottom-panel div.text-left,
 div.right-panel div.text-left {
-    margin: 0px;
-    padding: 0px;
-    display: inline-block;
-    text-align: left;
-    width: 33%;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  text-align: left;
+  width: 33%;
 }
 
 div.bottom-panel div.text-center,
 div.right-panel div.text-center {
-    margin: 0px;
-    padding: 0px;
-    display: inline-block;
-    text-align: center;
-    width: 33%;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  text-align: center;
+  width: 33%;
 }
 
 div.bottom-panel div.text-right,
 div.right-panel div.text-right {
-    margin: 0px;
-    padding: 0px;
-    display: inline-block;
-    text-align: right;
-    width: 33%;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  text-align: right;
+  width: 33%;
 }
 
 .hr,
@@ -120,5 +120,5 @@ div.right-panel div.text-right {
 .eval-date,
 .cardio-min,
 .cardio-sec {
-    display: none;
+  display: none;
 }
