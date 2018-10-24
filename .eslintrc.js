@@ -11,12 +11,13 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    indent: ['warning', 2],
+    indent: [1, 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'no-undef': 1,
     'no-console': 1,
     'no-unused-vars': 1,
+    'max-len': 80,
   },
 };
