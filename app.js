@@ -55,7 +55,7 @@ app.use(
 app.use(helmet());
 
 // Built-in middleware, serve static files from 'public' folder
-app.use(express['static'](__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 // Configure session ID
 var sessionSecret = process.env.SESSION_SECRET || 'the summer of george';
@@ -90,7 +90,7 @@ app.use(
   })
 );
 app.use(methodOverride('_method'));
-app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(flash());
 
 // App-level middleware, allow req.user and flash messages to be visible in all routes

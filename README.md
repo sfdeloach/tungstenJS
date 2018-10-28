@@ -7,9 +7,10 @@
 - ver 1.0.4 - deployed on 06-16-2017 (security feature added)
 - ver 1.0.5 - deployed on 07-14-2017 (security feature added)
 - ver 1.1.0 - deployed on 09-03-2018 (now compatible w/ MongoDB 3.6)
-- ver 1.1.1 - deployed on ??-??-2018 (security feature added) NOT YET DEPLOYED
+- ver 1.1.1 - deployed on 10-28-2018 (security feature added)
 
-A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org) featuring a MongoDB backend and authentication
+A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org)
+featuring a MongoDB backend and authentication
 
 - See info/notes.md for specifications, ideas, and objectives
 - See info/routes.md for routing tables including required authorization
