@@ -42,14 +42,8 @@ mongoose.connect(
 // Initialize express, serve static files
 var app = express();
 
-// Log messages from the server, skip function makes logging less verbose
-app.use(
-  morgan('[:date[iso]] :method :url from :remote-addr', {
-    skip: function(req, res) {
-      return res.statusCode != 200;
-    },
-  })
-);
+// Log messages from the server
+app.use(morgan('[:date[iso]] :method :url from :remote-addr'));
 
 // Make the app more secure with helmetjs
 app.use(helmet());
@@ -58,19 +52,33 @@ app.use(helmet());
 app.use(express.static(__dirname + '/public'));
 
 // Configure session ID
-var sessionSecret = process.env.SESSION_SECRET || 'the summer of george';
-if (process.env.SESSION_SECRET) {
-  console.log('Session secret defined by environment variable.');
-} else {
-  console.log('Using default session secret.');
-}
+// var sessionSecret = process.env.SESSION_SECRET || 'the summer of george';
+// if (process.env.SESSION_SECRET) {
+//   console.log('Session secret defined by environment variable.');
+// } else {
+//   console.log('Using default session secret.');
+// }
+// app.use(
+//   require('express-session')({
+//     secret: sessionSecret,
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
+
+// User session stored on client side with cookies
 app.use(
-  require('express-session')({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: false,
+  require('cookie-session')({
+    name: 'session',
+    keys: ['key1', 'key2'],
+    maxAge: 1000 * 60 * 30, // expires after 30 minutes
   })
 );
+// Session expiration is updated by the minute
+app.use(function(req, res, next) {
+  req.session.nowInMinutes = Math.floor(Date.now() / 60e3);
+  next();
+});
 
 // Configure local passport strategy
 app.use(passport.initialize());

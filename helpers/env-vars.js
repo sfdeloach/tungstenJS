@@ -1,8 +1,8 @@
 module.exports = function() {
   var prod = process.env.DEVELOPMENT ? false : true;
   prod
-    ? console.log('Checking environment variables...')
-    : console.log('Starting server under \x1b[34mdevelopment\x1b[0m mode...');
+    ? console.log('Starting server in \x1b[34mproduction\x1b[0m mode...')
+    : console.log('Starting server in \x1b[34mdevelopment\x1b[0m mode...');
 
   var port = process.env.PORT
       ? '\x1b[32m\u2714 defined\x1b[0m'
