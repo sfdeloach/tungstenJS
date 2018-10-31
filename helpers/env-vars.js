@@ -1,30 +1,28 @@
+const colors = require('colors');
+
+const CHECK = '\u2714';
+const X = '\u2716';
+const defined = `${CHECK} defined`.green;
+const notDefined = `${X} not defined`.red;
+
 module.exports = function() {
   var prod = process.env.DEVELOPMENT ? false : true;
   prod
-    ? console.log('Starting server in \x1b[34mproduction\x1b[0m mode...')
-    : console.log('Starting server in \x1b[34mdevelopment\x1b[0m mode...');
+    ? console.log('Starting server in ' + 'production'.blue.bold + ' mode...')
+    : console.log('Starting server in ' + 'development'.blue.bold + ' mode...');
 
-  var port = process.env.PORT
-      ? '\x1b[32m\u2714 defined\x1b[0m'
-      : '\x1b[31m\u2716 not defined\x1b[0m',
-    databaseURL = process.env.DATABASE_URL
-      ? '\x1b[32m\u2714 defined\x1b[0m'
-      : '\x1b[31m\u2716 not defined\x1b[0m',
-    sendgridUser = process.env.SENDGRID_USER
-      ? '\x1b[32m\u2714 defined\x1b[0m'
-      : '\x1b[31m\u2716 not defined\x1b[0m',
-    sendgridPass = process.env.SENDGRID_PASS
-      ? '\x1b[32m\u2714 defined\x1b[0m'
-      : '\x1b[31m\u2716 not defined\x1b[0m',
-    sessionSecret = process.env.SESSION_SECRET
-      ? '\x1b[32m\u2714 defined\x1b[0m'
-      : '\x1b[31m\u2716 not defined\x1b[0m';
+  const m = {};
+  m.port = process.env.PORT ? defined : notDefined;
+  m.databaseURL = process.env.DATABASE_URL ? defined : notDefined;
+  m.sendgridUser = process.env.SENDGRID_USER ? defined : notDefined;
+  m.sendgridPass = process.env.SENDGRID_PASS ? defined : notDefined;
+  m.sessionSecret = process.env.SESSION_SECRET ? defined : notDefined;
 
-  console.log('            PORT: ' + port);
-  console.log('    DATABASE_URL: ' + databaseURL);
-  console.log('   SENDGRID_USER: ' + sendgridUser);
-  console.log('   SENDGRID_PASS: ' + sendgridPass);
-  console.log('  SESSION_SECRET: ' + sessionSecret);
+  console.log('            PORT: ' + m.port);
+  console.log('    DATABASE_URL: ' + m.databaseURL);
+  console.log('   SENDGRID_USER: ' + m.sendgridUser);
+  console.log('   SENDGRID_PASS: ' + m.sendgridPass);
+  console.log('  SESSION_SECRET: ' + m.sessionSecret);
 
   if (
     prod &&
@@ -37,7 +35,7 @@ module.exports = function() {
     )
   ) {
     throw new Error(
-      'Application is set for production, however, environment variables have not been properly set.'
+      'Application flagged for production, but environment variables are not set.'
     );
   }
 };
