@@ -18,6 +18,6 @@ module.exports = {
     'no-undef': 1,
     'no-console': 1,
     'no-unused-vars': 1,
-    'max-len': 80,
+    'max-len': 1,
   },
 };
