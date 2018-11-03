@@ -9,6 +9,7 @@
 - ver 1.1.0 - deployed on 09-03-2018 (now compatible w/ MongoDB 3.6)
 - ver 1.1.1 - deployed on 10-28-2018 (security feature added)
 - ver 1.1.2 - deployed on 11-01-2018 (day off certificate update)
+- ver 1.1.3 - deployed on 11-03-2018 (session cookie update)
 
 A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org)
 featuring a MongoDB backend and authentication

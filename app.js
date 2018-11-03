@@ -28,7 +28,7 @@ if (process.env.DATABASE_URL) {
 }
 
 // Configure mongoose and connect to database, per mongoose documentation,
-//   connection options will prevent deprecation warnings
+// connection options will prevent deprecation warnings
 mongoose.Promise = global.Promise;
 mongoose.connect(
   connectionURL,
@@ -52,26 +52,19 @@ app.use(helmet());
 app.use(express.static(__dirname + '/public'));
 
 // Configure session ID
-// var sessionSecret = process.env.SESSION_SECRET || 'the summer of george';
-// if (process.env.SESSION_SECRET) {
-//   console.log('Session secret defined by environment variable.');
-// } else {
-//   console.log('Using default session secret.');
-// }
-// app.use(
-//   require('express-session')({
-//     secret: sessionSecret,
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
+var sessionSecret = process.env.SESSION_SECRET || 'not so secret';
+if (process.env.SESSION_SECRET) {
+  console.log('Session secret defined by environment variable.');
+} else {
+  console.log('Using default session secret.');
+}
 
 // User session stored on client side with cookies
 app.use(
   require('cookie-session')({
     name: 'session',
-    keys: ['key1', 'key2'],
-    maxAge: 1000 * 60 * 30, // expires after 30 minutes
+    keys: [sessionSecret],
+    maxAge: 1000 * 60 * 60, // expires after one hour
   })
 );
 // Session expiration is updated by the minute
@@ -101,7 +94,8 @@ app.use(methodOverride('_method'));
 app.use(favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(flash());
 
-// App-level middleware, allow req.user and flash messages to be visible in all routes
+// App-level middleware, allow req.user and flash messages to be
+// visible in all routes
 app.use(function(req, res, next) {
   var user;
   if (req.user) {

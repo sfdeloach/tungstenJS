@@ -8,7 +8,8 @@ var express = require('express'),
   Worksheet = require('../models/worksheet'),
   authorization = require('../helpers/authorization.js');
 
-// return a list of existing police dept id numbers, used at participants/new.njk when creating a new participant
+// return a list of existing police dept id numbers, used at 
+// participants/new.njk when creating a new participant
 router.get('/participants/get_ids', authorization.isEditor, function(req, res) {
   var key,
     result = [];
@@ -27,7 +28,8 @@ router.get('/participants/get_ids', authorization.isEditor, function(req, res) {
   });
 });
 
-// verify a participant exists, used at worksheets/show.njk when attempting to save a new assessment
+// verify a participant exists, used at worksheets/show.njk when attempting
+// to save a new assessment
 router.post('/participants/id_exists', authorization.isEditor, function(
   req,
   res
@@ -45,7 +47,8 @@ router.post('/participants/id_exists', authorization.isEditor, function(
   });
 });
 
-// update an assessment, used at worksheets/show.njk when an assessment is updated in the table body
+// update an assessment, used at worksheets/show.njk when an assessment is
+// updated in the table body
 router.put('/worksheets/:worksheet_id', authorization.isEditor, function(
   req,
   res
