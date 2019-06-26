@@ -224,7 +224,7 @@ router.post('/:worksheet_id/certificates', authorization.isEditor, function(
     dateResult,
     dateTime;
 
-  // if the user does not provide an expiration date, the program will
+  // set a default if the user does not provide an expiration date
   if (!certData.expireDate && certData.season === 'fall') {
     certData.expireDate = '9/15/' + (new Date().getFullYear() + 1);
   } else if (!certData.expireDate && certData.season === 'spring') {

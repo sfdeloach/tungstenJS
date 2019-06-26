@@ -185,19 +185,36 @@ $(document).ready(function() {
       -1
     ).toFixed(1);
 
-    // By default, all police certificates are visible. Certificates are turned off if the average is too low.
+    // By default, all police certificates are visible. Certificates are turned
+    // off if the average is too low.
     if (parseFloat(ave[i].innerHTML) < 75.0 || hasFailed) {
-      ave[
-        i
-      ].parentElement.parentElement.parentElement.parentElement.hidden = true;
+      ave[i]
+        .parentElement
+        .parentElement
+        .parentElement
+        .parentElement
+        .parentElement
+        .parentElement
+        .hidden = true;
     } else if (parseFloat(ave[i].innerHTML) < 85.0 || hasFailed) {
       if (
-        ave[i].parentElement.parentElement.parentElement.parentElement
+        ave[i]
+          .parentElement
+          .parentElement
+          .parentElement
+          .parentElement
+          .parentElement
+          .parentElement
           .className === 'new-page b-certificate'
       ) {
-        ave[
-          i
-        ].parentElement.parentElement.parentElement.parentElement.hidden = true;
+        ave[i]
+          .parentElement
+          .parentElement
+          .parentElement
+          .parentElement
+          .parentElement
+          .parentElement
+          .hidden = true;
       }
     }
 
