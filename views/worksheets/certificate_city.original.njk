@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <title>{{ worksheet.title }}</title>
+    <link rel="stylesheet" href="/stylesheets/certificate.css">
+</head>
+
+<body>
+    <div>
+        <div class="new-page">
+            <h1>City Certificate Instructions:</h1>
+            <h2>[{{ certificateData.season }} assessment]</h2>
+            <p>For best results, use Google Chrome and follow these steps:</p>
+            <ol>
+                <li>Select 'Print' from the menu, or press Ctrl-P</li>
+                <li>Change Destination to 'Save as PDF'</li>
+                <li>Set Pages to '2-' to avoid printing this instruction page</li>
+                <li>Set Layout to Landscape</li>
+                <li>If not already selected, click 'More Settings'</li>
+                <li>Set Paper Size to 'Letter'</li>
+                <li>Set Margins to 'Custom'</li>
+                <li>Manually adjust all margins to 1/2-inch</li>
+                <li>Set Scale to '100%'</li>
+                <li>Deselect the option 'Headers and footers'</li>
+                <li>Select the option 'Background graphics'</li>
+                <li>Select save</li>
+            </ol>
+            <h2>&#127895; FRIENDLY REMINDER: Print certificates single-sided! &#127895;</h2>
+        </div>
+        {% for assessment in worksheet.assessments %}
+        <div class="new-page a-certificate" hidden>
+            <div class="left-panel">
+                <div class="wellness-works text-center">Wellness Works!</div>
+                <div class="text-center big">&#189; Day Off Work Certificate</div>
+                <img src="/images/cityLogo.png">
+                <div class="text-center">This certificate entitles</div>
+                <div class="text-center"><strong>{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</strong></div>
+                <div class="text-center">to</div>
+                <div class="text-center"><em>&#189; WORKING DAY OFF WITH PAY!</em></div>
+                <div class="text-center">Congratulations on achieving <strong><span class="ave">?</span>%</strong> on the City's WELLNESS test!</div>
+                <div class="text-center">Pay type: <strong>335</strong> "Certificate for Day Off"</div>
+                <div class="text-center">Reason code: <strong>1025</strong> "Certificate for Day Off"</div>
+            </div>
+            <div class="right-panel">
+                <img class="wellness-circle" src="/images/wellnessCircle.png">
+                <div>
+                    <div class="text-left">HR Director Signature:</div>
+                    <div class="text-center">&emsp;&emsp;&emsp;&emsp;Date:</div>
+                </div>
+            </div>
+            <div class="bottom-panel">
+                <div>
+                    <div class="text-left"><strong>Non-Transferable</strong></div>
+                    <div class="text-center">100{{ assessment.participant.dept_id }}{% if certificateData.season === 'fall' %}A{% elif certificateData.season === 'spring' %}C{% endif %}</div>
+                    <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
+                </div>
+            </div>
+            <!-- items not visible on page -->
+            <span class="hr">{{ assessment.heart_rate }}</span>
+            <span class="bp">{{ assessment.blood_pressure }}</span>
+            <span class="weight">{{ assessment.weight }}</span>
+            <span class="age">?</span>
+            <span class="body">{{ assessment.body_fat }}</span>
+            <span class="body-result">?</span>
+            <span class="flex">{{ assessment.flex }}</span>
+            <span class="flex-result">?</span>
+            <span class="sit">{{ assessment.situp }}</span>
+            <span class="sit-result">?</span>
+            <span class="bench">{{ assessment.bench }}</span>
+            <span class="bench-result">?</span>
+            <span class="leg">{{ assessment.leg }}</span>
+            <span class="leg-result">?</span>
+            <span class="cardio-type">{{ assessment.cardio.type }}</span>
+            <span class="cardio-time">{{ assessment.cardio.time }}</span>
+            <span class="cardio-hr">
+                {% if assessment.cardio.heart_rate %}
+                    {{ assessment.cardio.heart_rate }}
+                {% else %}
+                    -
+                {% endif %}
+            </span>
+            <span class="cardio-result">?</span>
+            <span class="assessment-id">{{ assessment._id }}</span>
+            <span class="sex">{{ assessment.participant.sex }}</span>
+            <span class="dob">{{ assessment.participant.dob }}</span>
+            <span class="eval-date">{{ assessment.eval_date }}</span>
+            <span class="cardio-min">{{ assessment.cardio.min }}</span>
+            <span class="cardio-sec">{{ assessment.cardio.sec }}</span>
+        </div>
+        <div class="new-page b-certificate" hidden>
+            <div class="left-panel">
+                <div class="wellness-works text-center">Wellness Works!</div>
+                <div class="text-center big">Day Off Work Certificate</div>
+                <img src="/images/cityLogo.png">
+                <div class="text-center">This certificate entitles</div>
+                <div class="text-center"><strong>{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</strong></div>
+                <div class="text-center">to</div>
+                <div class="text-center"><em>ONE WORKING DAY OFF WITH PAY!</em></div>
+                <div class="text-center">Congratulations on achieving <strong><span class="ave">?</span>%</strong> on the City's WELLNESS test!</div>
+                <div class="text-center">Pay type: <strong>335</strong> "Certificate for Day Off"</div>
+                <div class="text-center">Reason code: <strong>1025</strong> "Certificate for Day Off"</div>
+            </div>
+            <div class="right-panel">
+                <img class="wellness-circle" src="/images/wellnessCircle.png">
+                <div>
+                    <div class="text-left">HR Director Signature:</div>
+                    <div class="text-center">&emsp;&emsp;&emsp;&emsp;Date:</div>
+                </div>
+            </div>
+            <div class="bottom-panel">
+                <div>
+                    <div class="text-left"><strong>Non-Transferable</strong></div>
+                    <div class="text-center">100{{ assessment.participant.dept_id }}{% if certificateData.season === 'fall' %}A{% elif certificateData.season === 'spring' %}C{% endif %}</div>
+                    <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
+                </div>
+            </div>
+            <!-- items not visible on page -->
+            <span class="hr">{{ assessment.heart_rate }}</span>
+            <span class="bp">{{ assessment.blood_pressure }}</span>
+            <span class="weight">{{ assessment.weight }}</span>
+            <span class="age">?</span>
+            <span class="body">{{ assessment.body_fat }}</span>
+            <span class="body-result">?</span>
+            <span class="flex">{{ assessment.flex }}</span>
+            <span class="flex-result">?</span>
+            <span class="sit">{{ assessment.situp }}</span>
+            <span class="sit-result">?</span>
+            <span class="bench">{{ assessment.bench }}</span>
+            <span class="bench-result">?</span>
+            <span class="leg">{{ assessment.leg }}</span>
+            <span class="leg-result">?</span>
+            <span class="cardio-type">{{ assessment.cardio.type }}</span>
+            <span class="cardio-time">{{ assessment.cardio.time }}</span>
+            <span class="cardio-hr">
+                {% if assessment.cardio.heart_rate %}
+                    {{ assessment.cardio.heart_rate }}
+                {% else %}
+                    -
+                {% endif %}
+            </span>
+            <span class="cardio-result">?</span>
+            <span class="assessment-id">{{ assessment._id }}</span>
+            <span class="sex">{{ assessment.participant.sex }}</span>
+            <span class="dob">{{ assessment.participant.dob }}</span>
+            <span class="eval-date">{{ assessment.eval_date }}</span>
+            <span class="cardio-min">{{ assessment.cardio.min }}</span>
+            <span class="cardio-sec">{{ assessment.cardio.sec }}</span>
+        </div>
+    {% endfor %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/scripts/calcTables.js"></script>
+    <script src="/scripts/certificateScriptCity.js"></script>
+</body>
+</html>
