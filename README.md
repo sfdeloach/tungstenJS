@@ -11,6 +11,7 @@
 - ver 1.1.2 - 11-01-2018 (day off certificate update)
 - ver 1.1.3 - 11-03-2018 (session cookie update)
 - ver 1.1.4 - 01-05-2019 (upgrade to heroku-18, successful migration to MongoDB Atlas)
+- ver 1.1.5 - 07-01-2019 (wellness certificate redesign)
 
 A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org)
 featuring a MongoDB backend and authentication
