@@ -1,6 +1,33 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
   margin: 0px;
+  font-size: 20px;
+}
+
+.fancy {
+  font-family: 'Sacramento', cursive;
+  font-size: 48px;
+}
+
+.cert-title {
+  height: 50%;
+}
+
+.large-text {
+  font-size: 26px;
+  /* padding-top: 20px; */
+  padding-top: 2%;
+  /* padding-right: 20px; */
+  padding-right: 2%;
+}
+
+.top-space {
+  /* padding-top: 12px; */
+  padding-top: 0.5%;
+}
+
+.small-text {
+  font-size: 14px;
 }
 
 @media print {
@@ -9,111 +36,86 @@ body {
   }
 }
 
+.frame {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 4px solid black;
+}
+
+.upper-panel {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 55%;
+  padding: 0px;
+}
+
+.upper-panel-col {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  width: 33.3333%;
+  height: 100%;
+  padding: 10px;
+}
+
+.lower-panel {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 45%;
+  padding-top: 50px;
+}
+
+.table-center {
+  margin-left: auto;
+  margin-right: auto;
+  /* padding: 12px; */
+  padding: 0.5%;
+}
+
+.underline {
+  border-bottom: 1px solid black;
+}
+
+.long-line {
+  width: 300px;
+}
+
+.short-line {
+  width: 100px;
+}
+
 .text-center {
   text-align: center;
-  padding: 5px;
 }
 
-div.left-panel div.wellness-works {
-  color: #06f;
-  -ms-transform: rotate(-7deg); /* IE 9 */
-  -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
-  transform: rotate(-7deg);
-  font-size: 300%;
-  font-style: italic;
-  padding-top: 50px;
-  padding-bottom: 40px;
-  margin: 0px;
+.text-right {
+  text-align: right;
 }
 
-.upper-left-panel {
-  float: left;
-  width: 33%;
-  height: 50%;
-}
-
-.upper-middle-panel {
-  float: left;
-  width: 34%;
-  height: 50%;
-  padding-top: 100px;
-}
-
-.upper-right-panel {
-  float: left;
-  width: 33%;
-  height: 50%;
-}
-
-.bottom-panel {
-  float: left;
-  width: 100%;
-  height: 50%;
-  position: relative;
-}
-
-.right-panel div {
-  margin-top: 10px;
-}
-
-.bottom-panel div {
-  margin-top: 50px;
-}
-
-div.big {
-  font-size: 180%;
-  font-style: italic;
-  font-weight: 900;
+.cert-name {
+  padding-top: 20%;
 }
 
 img {
   display: block;
   margin: auto;
-  padding: 5px;
+  padding-bottom: 16px;
 }
-
-/* TODO: remove  */
-/* img.wellness-circle {
-  padding-top: 40px;
-} */
 
 img.city-logo {
-  width: 275px;
+  height: 50%;
 }
 
-img.male-runner {
-  width: 160px;
-}
-
-img.female-runner {
-  width: 160px;
-}
-
-div.bottom-panel div.text-left,
-div.right-panel div.text-left {
-  margin: 0px;
-  padding: 0px;
-  display: inline-block;
-  text-align: left;
-  width: 33%;
-}
-
-div.bottom-panel div.text-center,
-div.right-panel div.text-center {
-  margin: 0px;
-  padding: 0px;
-  display: inline-block;
-  text-align: center;
-  width: 33%;
-}
-
-div.bottom-panel div.text-right,
-div.right-panel div.text-right {
-  margin: 0px;
-  padding: 0px;
-  display: inline-block;
-  text-align: right;
-  width: 33%;
+img.runners {
+  height: 50%;
 }
 
 .hr,

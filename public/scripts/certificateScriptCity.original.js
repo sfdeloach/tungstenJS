@@ -1,7 +1,7 @@
 $(document).ready(function() {
   'use strict';
-  var hasFailed = false,
-    resultRow = $('.result-row'),
+  var resultRow = $('.result-row'),
+    hasFailed = false,
     sex = [],
     dob = [],
     evalDate = [],
@@ -185,20 +185,28 @@ $(document).ready(function() {
       -1
     ).toFixed(1);
 
-    // By default, all police certificates are visible. Certificates are turned
-    // off if the average is too low.
-    if (parseFloat(ave[i].innerHTML) < 75.0 || hasFailed) {
-      ave[
-        i
-      ].parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.hidden = true;
-    } else if (parseFloat(ave[i].innerHTML) < 85.0 || hasFailed) {
+    // Unlike the police certificates, all city certificates will be initially hidden and then displayed based on scores
+    if (
+      75.0 <= parseFloat(ave[i].innerHTML) &&
+      parseFloat(ave[i].innerHTML) < 85.0 &&
+      !hasFailed
+    ) {
       if (
         ave[i].parentElement.parentElement.parentElement.parentElement
-          .parentElement.parentElement.className === 'new-page b-certificate'
+          .className === 'new-page a-certificate'
       ) {
         ave[
           i
-        ].parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.hidden = true;
+        ].parentElement.parentElement.parentElement.parentElement.hidden = false;
+      }
+    } else if (85.0 <= parseFloat(ave[i].innerHTML) && !hasFailed) {
+      if (
+        ave[i].parentElement.parentElement.parentElement.parentElement
+          .className === 'new-page b-certificate'
+      ) {
+        ave[
+          i
+        ].parentElement.parentElement.parentElement.parentElement.hidden = false;
       }
     }
 

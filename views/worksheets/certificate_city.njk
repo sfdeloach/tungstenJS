@@ -2,6 +2,7 @@
 
 <head>
     <title>{{ worksheet.title }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Sacramento|Source+Sans+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/certificate.css">
 </head>
 
@@ -29,30 +30,62 @@
         </div>
         {% for assessment in worksheet.assessments %}
         <div class="new-page a-certificate" hidden>
-            <div class="left-panel">
-                <div class="wellness-works text-center">Wellness Works!</div>
-                <div class="text-center big">&#189; Day Off Work Certificate</div>
-                <img src="/images/cityLogo.png">
-                <div class="text-center">This certificate entitles</div>
-                <div class="text-center"><strong>{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</strong></div>
-                <div class="text-center">to</div>
-                <div class="text-center"><em>&#189; WORKING DAY OFF WITH PAY!</em></div>
-                <div class="text-center">Congratulations on achieving <strong><span class="ave">?</span>%</strong> on the City's WELLNESS test!</div>
-                <div class="text-center">Pay type: <strong>335</strong> "Certificate for Day Off"</div>
-                <div class="text-center">Reason code: <strong>1025</strong> "Certificate for Day Off"</div>
-            </div>
-            <div class="right-panel">
-                <img class="wellness-circle" src="/images/wellnessCircle.png">
-                <div>
-                    <div class="text-left">HR Director Signature:</div>
-                    <div class="text-center">&emsp;&emsp;&emsp;&emsp;Date:</div>
+            <div class="frame">
+                <div class="upper-panel">
+                    <div class="upper-panel-col">
+                        <img class="city-logo" src="/images/cityLogoLarge.png">
+                        <img class="runners" src="/images/male.png">
+                    </div>
+                    <div class="upper-panel-col cert-name">
+                        <div class="text-center">This Certificate entitles</div>
+                        <div class="text-center fancy">{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</div>
+                        <div class="text-center">ONE DAY OFF WITH PAY</div>
+                    </div>
+                    <div class="upper-panel-col">
+                        <div class="cert-title">
+                            <div class="text-right large-text">
+                                City of Altamonte Springs
+                            </div>
+                            <div class="text-right large-text">
+                                <strong><em>Day Off Certificate</em></strong>
+                            </div>
+                        </div>
+                        <img class="runners" src="/images/female.png">
+                    </div>
                 </div>
-            </div>
-            <div class="bottom-panel">
-                <div>
-                    <div class="text-left"><strong>Non-Transferable</strong></div>
-                    <div class="text-center">100{{ assessment.participant.dept_id }}{% if certificateData.season === 'fall' %}A{% elif certificateData.season === 'spring' %}C{% endif %}</div>
-                    <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
+                <div class="lower-panel">
+                    <div>
+                        <div class="text-center">Congratulations on achieving <strong>
+                            <span class="ave">?</span>%</strong> on the City's WELLNESS ASSESSMENT.
+                        </div>
+                        <div class="text-center">
+                            Thank you for taking part in Level II of the City of Altamonte Springs WELLNESS Program.
+                        </div>
+                        <div class="text-center fancy top-space">
+                            Wellness Works!
+                        </div>
+                        <table class="table-center">
+                            <tr>
+                                <td>Signature:</td>
+                                <td class="underline long-line"></td>
+                                <td>Date:</td>
+                                <td class="underline short-line"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-center">Allison Marcous, HR Director</td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                        </table>
+                        <div class="text-center">
+                            Expires: {{ worksheet.prettyDate(certificateData.expireDate) }}
+                        </div>
+                        <div class="text-center small-text top-space">
+                            Date Used: ____________&nbsp;&nbsp;&nbsp;&nbsp;Non-Transferable - Use Pay Type 335: "Certificate for Day Off" &amp; Reason Code 1025: "Certificate for Day Off"
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- items not visible on page -->
@@ -88,30 +121,62 @@
             <span class="cardio-sec">{{ assessment.cardio.sec }}</span>
         </div>
         <div class="new-page b-certificate" hidden>
-            <div class="left-panel">
-                <div class="wellness-works text-center">Wellness Works!</div>
-                <div class="text-center big">Day Off Work Certificate</div>
-                <img src="/images/cityLogo.png">
-                <div class="text-center">This certificate entitles</div>
-                <div class="text-center"><strong>{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</strong></div>
-                <div class="text-center">to</div>
-                <div class="text-center"><em>ONE WORKING DAY OFF WITH PAY!</em></div>
-                <div class="text-center">Congratulations on achieving <strong><span class="ave">?</span>%</strong> on the City's WELLNESS test!</div>
-                <div class="text-center">Pay type: <strong>335</strong> "Certificate for Day Off"</div>
-                <div class="text-center">Reason code: <strong>1025</strong> "Certificate for Day Off"</div>
-            </div>
-            <div class="right-panel">
-                <img class="wellness-circle" src="/images/wellnessCircle.png">
-                <div>
-                    <div class="text-left">HR Director Signature:</div>
-                    <div class="text-center">&emsp;&emsp;&emsp;&emsp;Date:</div>
+            <div class="frame">
+                <div class="upper-panel">
+                    <div class="upper-panel-col">
+                        <img class="city-logo" src="/images/cityLogoLarge.png">
+                        <img class="runners" src="/images/male.png">
+                    </div>
+                    <div class="upper-panel-col cert-name">
+                        <div class="text-center">This Certificate entitles</div>
+                        <div class="text-center fancy">{{ assessment.participant.name.first }} {{ assessment.participant.name.last }}</div>
+                        <div class="text-center">HALF DAY OFF WITH PAY</div>
+                    </div>
+                    <div class="upper-panel-col">
+                        <div class="cert-title">
+                            <div class="text-right large-text">
+                                City of Altamonte Springs
+                            </div>
+                            <div class="text-right large-text">
+                                <strong><em>Half Day Off Certificate</em></strong>
+                            </div>
+                        </div>
+                        <img class="runners" src="/images/female.png">
+                    </div>
                 </div>
-            </div>
-            <div class="bottom-panel">
-                <div>
-                    <div class="text-left"><strong>Non-Transferable</strong></div>
-                    <div class="text-center">100{{ assessment.participant.dept_id }}{% if certificateData.season === 'fall' %}A{% elif certificateData.season === 'spring' %}C{% endif %}</div>
-                    <div class="text-right">Expiration Date: {{ worksheet.prettyDate(certificateData.expireDate) }}</div>
+                <div class="lower-panel">
+                    <div>
+                        <div class="text-center">Congratulations on achieving <strong>
+                            <span class="ave">?</span>%</strong> on the City's WELLNESS ASSESSMENT.
+                        </div>
+                        <div class="text-center">
+                            Thank you for taking part in Level II of the City of Altamonte Springs WELLNESS Program.
+                        </div>
+                        <div class="text-center fancy top-space">
+                            Wellness Works!
+                        </div>
+                        <table class="table-center">
+                            <tr>
+                                <td>Signature:</td>
+                                <td class="underline long-line"></td>
+                                <td>Date:</td>
+                                <td class="underline short-line"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-center">Allison Marcous, HR Director</td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                        </table>
+                        <div class="text-center">
+                            Expires: {{ worksheet.prettyDate(certificateData.expireDate) }}
+                        </div>
+                        <div class="text-center small-text top-space">
+                            Date Used: ____________&nbsp;&nbsp;&nbsp;&nbsp;Non-Transferable - Use Pay Type 335: "Certificate for Day Off" &amp; Reason Code 1025: "Certificate for Day Off"
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- items not visible on page -->
