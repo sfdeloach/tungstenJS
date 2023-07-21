@@ -14,6 +14,7 @@
 - ver 1.1.5 - 07-01-2019 (wellness certificate redesign)
 - ver 1.1.6 - 10-30-2019 (wellness certificate redesign - police only)
 - ver 1.1.7 - 10-18-2021 (update HR director name on certificate)
+- ver 1.1.8 - 07-21-2023 (update training coordinator, general app maintenance)
 
 A NodeJS deployed wellness app for the [City of Altamonte Springs](http://www.altamonte.org)
 featuring a MongoDB backend and authentication
